@@ -8,7 +8,8 @@
       "@contexts/*": ["./contexts/*"],
       "@atoms/*": ["./atoms/*"],
       "@hooks/*": ["./hooks/*"],
-      "@libs/*": ["./libs/*"]
+      "@libs/*": ["./libs/*"],
+      "@assets/*": ["./assets/*"]
     }
   }
 }

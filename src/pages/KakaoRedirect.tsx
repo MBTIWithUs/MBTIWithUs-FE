@@ -1,14 +1,24 @@
-import React, { useEffect } from 'react';
+import { Container, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const KakaoRedirect = () => {
   const { search } = useLocation();
 
+  const [token, setToken] = useState('no response');
+  const [code, setCode] = useState('');
+
   const confirmLogin = async () => {
     const params = new URLSearchParams(search);
     const code = params.get('code');
     if (code) {
-      console.log();
+      setCode(code);
+
+      // TODO
+      // api request
+      // fetch(``)
+      //   .then((res) => res.json())
+      //   .then((data) => console.log(data));
     }
   };
 
@@ -16,7 +26,13 @@ const KakaoRedirect = () => {
     confirmLogin();
   }, []);
 
-  return <div>confirm</div>;
+  return (
+    <Container>
+      <Typography variant="h4">Confirm Page</Typography>
+      <Typography>code: {code}</Typography>
+      <Typography>token: {token}</Typography>
+    </Container>
+  );
 };
 
 export default KakaoRedirect;
