@@ -28,6 +28,7 @@ const KakaoRedirect = () => {
 
   return (
     <Container>
+      <br />
       <Typography variant="h4">Confirm Page</Typography>
       <Typography>code: {code}</Typography>
       <Typography>token: {token}</Typography>
