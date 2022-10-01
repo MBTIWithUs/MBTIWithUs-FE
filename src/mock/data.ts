@@ -197,5 +197,5 @@ const DATA = [
 
 export const getQuestion = () =>
   new Promise<IQuestion[]>((resolve, reject) =>
-    setTimeout(() => resolve(DATA), 1000),
+    setTimeout(() => resolve(DATA), 50),
   );
