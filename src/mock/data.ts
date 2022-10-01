@@ -198,7 +198,7 @@ const DATA = [
 export const getQuestion = () =>
   new Promise<IQuestion[]>((resolve, reject) => {
     try {
-      setTimeout(() => resolve(DATA), 5000);
+      setTimeout(() => resolve(DATA), 100);
     } catch (e) {
       reject(e);
     }

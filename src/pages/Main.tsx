@@ -1,12 +1,12 @@
-import { Container } from '@mui/material';
+import Banner from '@components/main/Banner';
+import { Container, Paper } from '@mui/material';
 import React from 'react';
 
 const Main = () => {
   return (
-    <Container>
-      <br />
-      <Container maxWidth="sm">1</Container>
-    </Container>
+    <div>
+      <Banner />
+    </div>
   );
 };
 
