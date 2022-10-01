@@ -130,10 +130,7 @@ const Header = () => {
                 },
               }}
             >
-              <ThemeSwitch
-                defaultChecked={mode !== 'light'}
-                onChange={toggleMode}
-              />
+              <ThemeSwitch value={mode !== 'light'} onChange={toggleMode} />
               {user ? (
                 <IconButton
                   size="large"

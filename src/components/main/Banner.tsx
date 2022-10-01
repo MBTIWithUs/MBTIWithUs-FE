@@ -11,6 +11,7 @@ import BannerImg from '@assets/banner.png';
 
 const Banner = () => {
   const theme = useTheme();
+
   return (
     <Box bgcolor={theme.palette.primary.main}>
       <Container>

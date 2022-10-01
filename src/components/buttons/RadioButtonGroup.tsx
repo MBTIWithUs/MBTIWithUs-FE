@@ -3,6 +3,7 @@ import {
   Chip,
   FormControl,
   FormLabel,
+  Paper,
   RadioGroup,
   Typography,
 } from '@mui/material';
@@ -81,12 +82,12 @@ const RadioButtonsGroup = ({
   };
 
   return (
-    <Box my={2}>
+    <Paper sx={{ my: 2, p: 2, boxShadow: 0 }}>
       <FormControl fullWidth>
-        <Typography variant="h6" fontWeight={900} sx={{ mb: 2 }}>
+        <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>
           Q{index + 1}.
         </Typography>
-        <Typography variant="h6" fontWeight={900} sx={{ mb: 2 }}>
+        <Typography variant="h6" fontWeight={600} sx={{ mb: 2 }}>
           {title}
         </Typography>
         <FormLabel>
@@ -106,7 +107,7 @@ const RadioButtonsGroup = ({
           <Chip label={rightQuestion} color={right} />
         </FormLabel>
       </FormControl>
-    </Box>
+    </Paper>
   );
 };
 
