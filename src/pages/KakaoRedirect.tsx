@@ -13,7 +13,7 @@ const KakaoRedirect = () => {
     const code = params.get('code');
     if (code) {
       setCode(code);
-
+      setToken('not run');
       // TODO
       // api request
       // fetch(``)
