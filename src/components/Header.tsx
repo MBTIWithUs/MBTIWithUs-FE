@@ -23,7 +23,7 @@ import Drawer from './Drawer';
 const PAGE = [
   { title: 'Test', route: '/test' },
   { title: 'Mbti', route: '/mbti' },
-  { title: 'Login', route: '/login' },
+  { title: 'Board', route: '/Board' },
 ];
 
 const USER_PAGE = [
@@ -146,7 +146,9 @@ const Header = () => {
                 <IconButton
                   size="large"
                   edge="end"
-                  onClick={handleOpenUserMenu}
+                  LinkComponent="a"
+                  href="/login"
+                  // onClick={handleOpenUserMenu}
                 >
                   <AccountCirlce sx={{ width: 30, height: 30 }} />
                 </IconButton>

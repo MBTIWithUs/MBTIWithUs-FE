@@ -9,7 +9,6 @@ import {
   ListItemText,
 } from '@mui/material';
 import React from 'react';
-import BugReportIcon from '@mui/icons-material/BugReport';
 import useUser from '@hooks/useUser';
 import { useRecoilState } from 'recoil';
 import { appThemeMode } from '@atoms/theme';
