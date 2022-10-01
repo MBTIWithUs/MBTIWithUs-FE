@@ -70,6 +70,22 @@ const Header = () => {
           >
             LOGIN
           </Typography>
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/mbti"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            MBTI
+          </Typography>
           <Switch checked={mode === 'dark'} onChange={toggleMode} />
         </Toolbar>
       </AppBar>

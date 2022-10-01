@@ -6,6 +6,7 @@ import Test from '@pages/Test';
 import Login from '@pages/Login';
 import KakaoRedirect from '@pages/KakaoRedirect';
 import Header from '@components/Header';
+import MbtiPage from '@pages/Mbti';
 
 export default function Routes() {
   const router = createBrowserRouter([
@@ -20,6 +21,10 @@ export default function Routes() {
     {
       path: '/login',
       element: <Login />,
+    },
+    {
+      path: '/mbti',
+      element: <MbtiPage />,
     },
     {
       path: '/oauth/kakao',

@@ -81,7 +81,7 @@ const RadioButtonsGroup = ({
   };
 
   return (
-    <Box>
+    <Box my={2}>
       <FormControl fullWidth>
         <Typography variant="h6" fontWeight={900} sx={{ mb: 2 }}>
           Q{index + 1}.
