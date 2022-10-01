@@ -21,6 +21,9 @@ function AppThemeProvider({ children }: Props): ReactElement {
           //   main: '#EB9612CC',
           // },
         },
+        // typography: {
+        //   fontFamily: ['WorkSans-Regular'].join(','),
+        // },
       }),
     [mode],
   );
