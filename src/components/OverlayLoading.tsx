@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Dialog, Modal } from '@mui/material';
+import { Box, CircularProgress, Modal } from '@mui/material';
 import React from 'react';
 
 const style = {

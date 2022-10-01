@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 import { IUser } from 'types';
 
@@ -12,16 +11,16 @@ export default function useUser() {
   const { data, error } = useSWR<ProfileResponse>(
     typeof window === 'undefined' ? null : '/api/users/me',
   );
-  const router = useNavigate();
+  // const router = useNavigate();
   useEffect(() => {
     console.log(data, error, !data && !error);
 
     if (data && !data.ok) {
       console.log(data.ok);
 
-      router('/');
+      // router('/');
     }
-  }, [data, router]);
+  }, [data]);
 
   return { user: data?.profile, isLoading: !data && !error };
 }
