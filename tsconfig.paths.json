@@ -9,7 +9,8 @@
       "@atoms/*": ["./atoms/*"],
       "@hooks/*": ["./hooks/*"],
       "@libs/*": ["./libs/*"],
-      "@assets/*": ["./assets/*"]
+      "@assets/*": ["./assets/*"],
+      "@mock/*": ["./mock/*"]
     }
   }
 }

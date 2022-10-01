@@ -15,7 +15,7 @@ function AppThemeProvider({ children }: Props): ReactElement {
         palette: {
           mode,
           // primary: {
-          //   main: '#61dafb',
+          //   main: '#74c69d',
           // },
           // secondary: {
           //   main: '#EB9612CC',
