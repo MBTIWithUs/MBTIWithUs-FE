@@ -88,7 +88,7 @@ const DATA = [
   },
 ];
 
-const MAX_CONTENTS = 4;
+const MAX_CONTENTS = 3;
 
 const CardGroup = () => {
   const [page, setPage] = useState(1);
@@ -97,20 +97,20 @@ const CardGroup = () => {
   };
 
   return (
-    <Box py={3}>
+    <Box>
       <TopDescription
-        type="team"
+        type="TYPES"
         title="Our Talents"
         content="Lorem ipsum, dolor sit amet consectetur Suscipit nemo hic quos, ab,"
       />
-      <Grid container spacing={3}>
+      <Grid container columnSpacing={6} rowSpacing={3} justifyContent="center">
         {DATA.slice((page - 1) * MAX_CONTENTS, page * MAX_CONTENTS).map(
           (item) => (
             <MbtiCard key={item.title} {...item} />
           ),
         )}
       </Grid>
-      <Box sx={{ display: 'flex', justifyContent: 'center' }} py={2}>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }} py={2} mt={2}>
         <Pagination
           page={page}
           count={Math.ceil(DATA.length / MAX_CONTENTS)}

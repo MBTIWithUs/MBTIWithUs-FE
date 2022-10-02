@@ -18,14 +18,14 @@ const MbtiCard = ({
   content: string;
 }) => {
   return (
-    <Grid item md={3}>
+    <Grid item xs={12} sm={4} md={4}>
       <Card sx={{ boxShadow: 5 }}>
         <CardActionArea sx={{ p: 2 }}>
           <CardMedia
             component="img"
             image={src}
             alt={title + 'image'}
-            sx={{ border: '2px solid black', borderRadius: '50%' }}
+            sx={{ borderRadius: '50%' }}
           />
           <CardContent>
             <Typography
@@ -39,9 +39,9 @@ const MbtiCard = ({
             </Typography>
             <Typography
               fontWeight={500}
-              variant="body2"
+              sx={{ opacity: 0.7 }}
               color="text.secondary"
-              minHeight={50}
+              minHeight={70}
             >
               {content}
             </Typography>
