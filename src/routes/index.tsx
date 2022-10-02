@@ -9,6 +9,7 @@ import Header from '@components/Header';
 import MbtiPage from '@pages/Mbti';
 import { Box } from '@mui/material';
 import Footer from '@components/Footer';
+import api from '@libs/api';
 
 export default function Routes() {
   const router = createBrowserRouter([
@@ -29,13 +30,13 @@ export default function Routes() {
       element: <MbtiPage />,
     },
     {
-      path: '/oauth/kakao',
+      path: '/auth/kakao/callback',
       element: <KakaoRedirect />,
     },
   ]);
   return (
     <SWRConfig
-      value={{ fetcher: (url: string) => fetch(url).then((res) => res.json()) }}
+      value={{ fetcher: (url: string) => api.get(url).then((res) => res.data) }}
     >
       <Header />
       <Box minWidth={400}>

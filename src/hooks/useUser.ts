@@ -1,26 +1,35 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { IUser } from 'types';
+import { IToken, IUser } from 'types';
+import api from '@libs/api';
 
-interface ProfileResponse {
+interface ProfileResponse extends IUser {
   ok: boolean;
-  profile: IUser;
 }
 
 export default function useUser() {
   const { data, error } = useSWR<ProfileResponse>(
-    typeof window === 'undefined' ? null : '/api/users/me',
+    typeof window === 'undefined' ? null : '/api/v1/user',
   );
+  const [user, setUser] = useState();
   // const router = useNavigate();
   useEffect(() => {
-    console.log(data, error, !data && !error);
-
-    if (data && !data.ok) {
-      console.log(data.ok);
-
+    if (data) {
       // router('/');
     }
   }, [data]);
 
-  return { user: data?.profile, isLoading: !data && !error };
+  const setToken = ({ access_token }: IToken) => {
+    api.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+  };
+
+  return {
+    user: {
+      nickname: data?.nickname,
+      profile: data?.profile_image_url,
+      id: data?.id,
+    },
+    isLoading: !data && !error,
+    setToken,
+  };
 }

@@ -43,7 +43,6 @@ const Header = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  // const user = useUser();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -145,7 +144,7 @@ const Header = () => {
                   edge="end"
                   onClick={handleOpenUserMenu}
                 >
-                  <Avatar />
+                  <Avatar src={user.profile} alt={user.nickname} />
                 </IconButton>
               ) : (
                 <IconButton
@@ -153,7 +152,6 @@ const Header = () => {
                   edge="end"
                   LinkComponent="a"
                   href="/login"
-                  // onClick={handleOpenUserMenu}
                 >
                   <AccountCirlce sx={{ width: 30, height: 30 }} />
                 </IconButton>

@@ -1,19 +1,32 @@
+import useUser from '@hooks/useUser';
 import { Container, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const KakaoRedirect = () => {
   const { search } = useLocation();
+  const navigate = useNavigate();
 
-  const [token, setToken] = useState('no response');
   const [code, setCode] = useState('');
+  const { setToken } = useUser();
 
   const confirmLogin = async () => {
     const params = new URLSearchParams(search);
     const code = params.get('code');
     if (code) {
       setCode(code);
-      setToken('not run');
+      const raw = await fetch(`/api/v1/auth/kakao/token?code=${code}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+      const json = await raw.json();
+      await setToken(json);
+
+      localStorage.setItem('token', JSON.stringify(json));
+      navigate('/');
+
       // TODO
       // api request
       // fetch(``)
@@ -28,10 +41,8 @@ const KakaoRedirect = () => {
 
   return (
     <Container>
-      <br />
       <Typography variant="h4">Confirm Page</Typography>
       <Typography>code: {code}</Typography>
-      <Typography>token: {token}</Typography>
     </Container>
   );
 };

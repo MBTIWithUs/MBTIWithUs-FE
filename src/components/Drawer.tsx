@@ -44,12 +44,16 @@ const Drawer = () => {
         width: 300,
       }}
     >
-      <ListItemButton sx={{ py: 4 }} LinkComponent="a" href="/login">
+      <ListItemButton
+        sx={{ py: 4 }}
+        LinkComponent="a"
+        href={user.nickname ? '/profile' : '/login'}
+      >
         <ListItemIcon>
-          <Avatar />
+          <Avatar src={user?.profile} />
         </ListItemIcon>
         <ListItemText>
-          {user ? `{user}님 안녕하세요!` : `로그인이 필요합니다.`}
+          {user ? `${user.nickname}님 안녕하세요!` : `로그인이 필요합니다.`}
         </ListItemText>
       </ListItemButton>
       <Divider />
