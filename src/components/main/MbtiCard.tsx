@@ -18,7 +18,7 @@ const MbtiCard = ({
   content: string;
 }) => {
   return (
-    <Grid item xs={12} sm={4} md={4}>
+    <Grid item xs={6} sm={6} md={3}>
       <Card sx={{ boxShadow: 5 }}>
         <CardActionArea sx={{ p: 2 }}>
           <CardMedia

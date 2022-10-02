@@ -91,7 +91,7 @@ const RadioButtonsGroup = ({
           {title}
         </Typography>
         <FormLabel>
-          <Chip label={leftQuestion} color={left} />
+          <Chip label={leftQuestion} color={left} sx={{ fontSize: 14 }} />
         </FormLabel>
         <RadioGroup
           row
@@ -104,7 +104,7 @@ const RadioButtonsGroup = ({
           ))}
         </RadioGroup>
         <FormLabel sx={{ textAlign: 'right' }}>
-          <Chip label={rightQuestion} color={right} />
+          <Chip label={rightQuestion} color={right} sx={{ fontSize: 14 }} />
         </FormLabel>
       </FormControl>
     </Paper>

@@ -88,7 +88,7 @@ const DATA = [
   },
 ];
 
-const MAX_CONTENTS = 3;
+const MAX_CONTENTS = 4;
 
 const CardGroup = () => {
   const [page, setPage] = useState(1);
@@ -97,7 +97,7 @@ const CardGroup = () => {
   };
 
   return (
-    <Box>
+    <Box pb={10}>
       <TopDescription
         type="TYPES"
         title="Our Talents"
