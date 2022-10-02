@@ -20,6 +20,7 @@ const TopDescription = ({
         fontFamily="CrimsonText"
         fontWeight={700}
         letterSpacing={3}
+        lineHeight={1.25}
         mb={2}
       >
         {title}
