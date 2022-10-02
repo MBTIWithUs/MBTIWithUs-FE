@@ -38,7 +38,12 @@ const Drawer = () => {
   };
 
   return (
-    <Box role="presentation" sx={{ width: 300 }}>
+    <Box
+      role="presentation"
+      sx={{
+        width: 300,
+      }}
+    >
       <ListItemButton sx={{ py: 4 }} LinkComponent="a" href="/login">
         <ListItemIcon>
           <Avatar />
@@ -68,7 +73,7 @@ const Drawer = () => {
       <Divider />
       <ListItem sx={{ justifyContent: 'flex-end' }}>
         <ListItemText>ThemeMode: {mode}</ListItemText>
-        <ThemeSwitch defaultChecked={mode !== 'light'} onChange={toggleMode} />
+        <ThemeSwitch value={mode !== 'light'} onChange={toggleMode} />
       </ListItem>
     </Box>
   );

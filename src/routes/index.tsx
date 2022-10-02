@@ -7,6 +7,7 @@ import Login from '@pages/Login';
 import KakaoRedirect from '@pages/KakaoRedirect';
 import Header from '@components/Header';
 import MbtiPage from '@pages/Mbti';
+import { Box } from '@mui/material';
 
 export default function Routes() {
   const router = createBrowserRouter([
@@ -36,7 +37,9 @@ export default function Routes() {
       value={{ fetcher: (url: string) => fetch(url).then((res) => res.json()) }}
     >
       <Header />
-      <RouterProvider router={router} />
+      <Box minWidth={400}>
+        <RouterProvider router={router} />
+      </Box>
     </SWRConfig>
   );
 }

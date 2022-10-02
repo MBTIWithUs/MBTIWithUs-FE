@@ -35,16 +35,16 @@ const MbtiPage = () => {
       ) : (
         <Container maxWidth="md">
           <Box py={3}>
-            <Typography variant="h5" fontWeight={900} py={1}>
+            <Typography variant="h5" fontWeight={700} py={1}>
               성격 유형 퀴즈
             </Typography>
             <Typography variant="subtitle2" py={2}>
               퀴즈를 만들고 친구들이 나를 어떤 유형으로 생각하는지 알아보세요.
             </Typography>
-            <Typography variant="h5" fontWeight={900} py={2}>
+            <Typography variant="h5" fontWeight={700} py={2}>
               다음 질문에 응답해 주세요.
             </Typography>
-            <Typography variant="subtitle2" py={2} fontWeight={900}>
+            <Typography variant="subtitle2" py={2} fontWeight={700}>
               {page + 1} / {Math.ceil(questions.length / MAX_QUESTIONS)}
             </Typography>
           </Box>
@@ -63,11 +63,16 @@ const MbtiPage = () => {
           <Divider />
           <Box sx={{ textAlign: 'center' }} mt={2}>
             {page < Math.ceil(questions.length / MAX_QUESTIONS) - 1 ? (
-              <Button variant="contained" size="large" onClick={onNextClick}>
+              <Button
+                variant="contained"
+                size="large"
+                onClick={onNextClick}
+                sx={{ width: 170 }}
+              >
                 NEXT
               </Button>
             ) : (
-              <Button variant="contained" size="large">
+              <Button variant="contained" size="large" sx={{ width: 170 }}>
                 SUBMIT
               </Button>
             )}
