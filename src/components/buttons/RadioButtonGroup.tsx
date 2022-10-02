@@ -1,5 +1,4 @@
 import {
-  Box,
   Chip,
   FormControl,
   FormLabel,

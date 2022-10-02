@@ -29,12 +29,12 @@ const MbtiPage = () => {
   }, []);
 
   return (
-    <Container>
+    <Container sx={{ py: 3 }}>
       {isLoading ? (
         <OverlayLoading isLoading />
       ) : (
         <Container maxWidth="md">
-          <Box py={3}>
+          <Box>
             <Typography variant="h5" fontWeight={700} py={1}>
               성격 유형 퀴즈
             </Typography>
