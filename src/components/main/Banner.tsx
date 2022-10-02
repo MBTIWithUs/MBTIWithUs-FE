@@ -18,8 +18,8 @@ const Banner = () => {
         <Grid container py={10}>
           <Grid item xs={12} sm={12} md={6} order={{ xs: 2, sm: 2, md: 1 }}>
             <Typography
-              color={theme.palette.common.white}
-              fontWeight={700}
+              color={theme.palette.primary.contrastText}
+              fontWeight={900}
               sx={{ letterSpacing: 5 }}
               pb={2}
             >
@@ -28,7 +28,7 @@ const Banner = () => {
             <Typography
               variant="h4"
               fontWeight={900}
-              color={theme.palette.common.white}
+              color={theme.palette.primary.contrastText}
               pb={2}
               lineHeight={1.5}
             >
@@ -36,7 +36,7 @@ const Banner = () => {
             </Typography>
             <Typography
               variant="subtitle2"
-              color={theme.palette.common.white}
+              color={theme.palette.primary.contrastText}
               sx={{ opacity: 0.5 }}
               pb={2}
             >
