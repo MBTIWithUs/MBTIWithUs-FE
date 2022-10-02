@@ -8,6 +8,7 @@ import KakaoRedirect from '@pages/KakaoRedirect';
 import Header from '@components/Header';
 import MbtiPage from '@pages/Mbti';
 import { Box } from '@mui/material';
+import Footer from '@components/Footer';
 
 export default function Routes() {
   const router = createBrowserRouter([
@@ -40,6 +41,7 @@ export default function Routes() {
       <Box minWidth={400}>
         <RouterProvider router={router} />
       </Box>
+      <Footer />
     </SWRConfig>
   );
 }
