@@ -62,7 +62,13 @@ const Header = () => {
       <AppBar position="static" sx={{ py: 0.5, boxShadow: 0 }}>
         <Container>
           <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
-            <Box sx={{ display: 'flex' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                verticalAlign: 'middle',
+              }}
+            >
               <Typography
                 variant="h6"
                 noWrap
@@ -70,6 +76,8 @@ const Header = () => {
                 href="/"
                 sx={{
                   mr: 3,
+                  ml: 3,
+                  mt: 2,
                   fontWeight: 700,
                   color: 'inherit',
                   textDecoration: 'none',
