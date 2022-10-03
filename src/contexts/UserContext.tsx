@@ -57,13 +57,34 @@ export const UserContextProvider = ({
       api
         .get(url, {
           headers: {
-            Authorization: state.token
-              ? `Bearer ${state.token?.access_token}`
-              : '',
+            // Authorization: state.token
+            //   ? `Bearer ${state.token?.access_token}`
+            //   : '',
           },
         })
         .then((res) => res.data),
   );
+
+  const refresh = async () => {
+    try {
+      const res = await api.post(`/api/v1/auth/jwt/accessToken`, null, {
+        headers: {
+          Authorization: state.token
+            ? `Bearer ${state.token?.refresh_token}`
+            : '',
+        },
+      });
+
+      dispatch({ type: 'LOGIN', token: res.data });
+    } catch (e) {
+      dispatch({ type: 'LOGOUT' });
+    }
+  };
+
+  // if (error?.response?.status === 401) {
+  //   refresh();
+  // }
+
   useEffect(() => {
     if (data) {
       dispatch({ type: 'SET_USER', user: data });
