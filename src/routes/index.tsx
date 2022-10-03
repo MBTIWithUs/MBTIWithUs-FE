@@ -10,6 +10,7 @@ import MbtiPage from '@pages/Mbti';
 import { Box } from '@mui/material';
 import Footer from '@components/Footer';
 import api from '@libs/api';
+import { UserContextProvider } from '@contexts/UserContext';
 
 export default function Routes() {
   const router = createBrowserRouter([
@@ -38,11 +39,13 @@ export default function Routes() {
     <SWRConfig
       value={{ fetcher: (url: string) => api.get(url).then((res) => res.data) }}
     >
-      <Header />
-      <Box minWidth={400}>
-        <RouterProvider router={router} />
-      </Box>
-      <Footer />
+      <UserContextProvider>
+        <Header />
+        <Box minWidth={400}>
+          <RouterProvider router={router} />
+        </Box>
+        <Footer />
+      </UserContextProvider>
     </SWRConfig>
   );
 }

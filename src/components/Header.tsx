@@ -19,6 +19,7 @@ import AccountCirlce from '@mui/icons-material/AccountCircle';
 import ThemeSwitch from './buttons/ThemeSwitch';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from './Drawer';
+import { authState } from '@atoms/auth';
 
 const PAGE = [
   { title: 'Test', route: '/test' },
@@ -34,6 +35,7 @@ const USER_PAGE = [
 const Header = () => {
   const { user } = useUser();
   const [mode, setMode] = useRecoilState(appThemeMode);
+  const [authToken, setAuthToken] = useRecoilState(authState);
   const toggleMode = () => {
     setMode((prevState) => (prevState === 'light' ? 'dark' : 'light'));
   };
@@ -186,6 +188,22 @@ const Header = () => {
                     </Typography>
                   </MenuItem>
                 ))}
+                <MenuItem
+                  onClick={() => {
+                    setAuthToken(null);
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      mr: 3,
+                      fontWeight: 600,
+                      textDecoration: 'none',
+                    }}
+                    color="error"
+                  >
+                    Logout
+                  </Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>

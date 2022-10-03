@@ -47,7 +47,7 @@ const Drawer = () => {
       <ListItemButton
         sx={{ py: 4 }}
         LinkComponent="a"
-        href={user.nickname ? '/profile' : '/login'}
+        href={user ? '/profile' : '/login'}
       >
         <ListItemIcon>
           <Avatar src={user?.profile} />
