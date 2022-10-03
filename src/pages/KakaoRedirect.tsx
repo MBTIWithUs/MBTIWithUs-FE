@@ -1,15 +1,15 @@
 import { authState } from '@atoms/auth';
-import useUser from '@hooks/useUser';
+import { UserDispatchContext, UserStateContext } from '@contexts/UserContext';
 import { Container, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 const KakaoRedirect = () => {
   const { search } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useContext(UserDispatchContext);
 
-  const { setToken } = useUser();
   const [, setAuthToken] = useRecoilState(authState);
 
   const confirmLogin = async () => {
@@ -23,8 +23,10 @@ const KakaoRedirect = () => {
         },
       });
       const json = await raw.json();
-      await setAuthToken(json);
-      await setToken(json);
+      if (dispatch) {
+        await dispatch({ type: 'LOGIN', token: json });
+        await setAuthToken(json);
+      }
       navigate('/');
     }
   };

@@ -1,24 +1,34 @@
-import React, { createContext, Dispatch, useReducer } from 'react';
-import { IProfile } from 'types';
+import { authState } from '@atoms/auth';
+import api from '@libs/api';
+import React, { createContext, Dispatch, useEffect, useReducer } from 'react';
+import { useRecoilState } from 'recoil';
+import useSWR from 'swr';
+import { IProfile, IToken, IUser } from 'types';
 
-const UserStateContext = createContext<IProfile | undefined>(undefined);
+export const UserStateContext = createContext<IProfile | undefined>(undefined);
 type Action =
-  | { type: 'CREATE'; text: string }
-  | { type: 'TOGGLE'; id: number }
-  | { type: 'REMOVE'; id: number };
+  | { type: 'LOGIN'; token: IToken }
+  | { type: 'SET_USER'; user: IUser }
+  | { type: 'LOGOUT' };
 type TodosDispatch = Dispatch<Action>;
-const UserDispatchContext = createContext<TodosDispatch | undefined>(undefined);
+export const UserDispatchContext = createContext<TodosDispatch | undefined>(
+  undefined,
+);
 
 const userReducers = (state: IProfile, action: Action): IProfile => {
   switch (action.type) {
-    case 'CREATE':
-      return state;
+    case 'LOGIN':
+      return { user: state.user, token: action.token };
+    case 'SET_USER':
+      return { token: state.token, user: action.user };
+    case 'LOGOUT':
+      return initializedValue;
     default:
       throw new Error('unhandled action');
   }
 };
 
-const initializeValue: IProfile = {
+const initializedValue: IProfile = {
   user: null,
   token: null,
 };
@@ -28,7 +38,38 @@ export const UserContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [state, dispatch] = useReducer(userReducers, initializeValue);
+  const [token, setToken] = useRecoilState(authState);
+  const [state, dispatch] = useReducer(userReducers, initializedValue);
+
+  if (state.token) {
+    setToken(state.token);
+  }
+
+  if (!state.token && token) {
+    dispatch({ type: 'LOGIN', token });
+  }
+
+  const { data, mutate, error } = useSWR<IUser>(
+    typeof window === 'undefined' || !state.token || state.user
+      ? null
+      : '/api/v1/user',
+    (url) =>
+      api
+        .get(url, {
+          headers: {
+            Authorization: state.token
+              ? `Bearer ${state.token?.access_token}`
+              : '',
+          },
+        })
+        .then((res) => res.data),
+  );
+  useEffect(() => {
+    if (data) {
+      dispatch({ type: 'SET_USER', user: data });
+    }
+  }, [data]);
+
   return (
     <UserDispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={state}>

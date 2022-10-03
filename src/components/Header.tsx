@@ -11,15 +11,16 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import Logo from '@assets/logo.png';
-import useUser from '@hooks/useUser';
 import AccountCirlce from '@mui/icons-material/AccountCircle';
 import ThemeSwitch from './buttons/ThemeSwitch';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from './Drawer';
+import { UserDispatchContext, UserStateContext } from '@contexts/UserContext';
 import { authState } from '@atoms/auth';
+import { Link } from 'react-router-dom';
 
 const PAGE = [
   { title: 'Test', route: '/test' },
@@ -33,9 +34,10 @@ const USER_PAGE = [
 ];
 
 const Header = () => {
-  const { user } = useUser();
+  const auth = useContext(UserStateContext);
   const [mode, setMode] = useRecoilState(appThemeMode);
-  const [authToken, setAuthToken] = useRecoilState(authState);
+  const [, setToken] = useRecoilState(authState);
+  const dispatch = useContext(UserDispatchContext);
   const toggleMode = () => {
     setMode((prevState) => (prevState === 'light' ? 'dark' : 'light'));
   };
@@ -73,8 +75,8 @@ const Header = () => {
               <Typography
                 variant="h6"
                 noWrap
-                component="a"
-                href="/"
+                component={Link}
+                to="/"
                 sx={{
                   mr: 3,
                   ml: 3,
@@ -91,8 +93,8 @@ const Header = () => {
                   key={item.title}
                   variant="h6"
                   noWrap
-                  component="a"
-                  href={item.route}
+                  component={Link}
+                  to={item.route}
                   sx={{
                     mr: 3,
                     color: 'inherit',
@@ -140,20 +142,23 @@ const Header = () => {
               }}
             >
               <ThemeSwitch value={mode !== 'light'} onChange={toggleMode} />
-              {user ? (
+              {auth?.user ? (
                 <IconButton
                   size="large"
                   edge="end"
                   onClick={handleOpenUserMenu}
                 >
-                  <Avatar src={user.profile} alt={user.nickname} />
+                  <Avatar
+                    src={auth?.user?.profile_image_url}
+                    alt={auth?.user?.nickname}
+                  />
                 </IconButton>
               ) : (
                 <IconButton
                   size="large"
                   edge="end"
-                  LinkComponent="a"
-                  href="/login"
+                  component={Link}
+                  to="/login"
                 >
                   <AccountCirlce sx={{ width: 30, height: 30 }} />
                 </IconButton>
@@ -175,8 +180,8 @@ const Header = () => {
                 {USER_PAGE.map((item) => (
                   <MenuItem key={item.title} onClick={handleCloseUserMenu}>
                     <Typography
-                      component="a"
-                      href={item.route}
+                      component={Link}
+                      to={item.route}
                       sx={{
                         mr: 3,
                         fontWeight: 600,
@@ -190,7 +195,12 @@ const Header = () => {
                 ))}
                 <MenuItem
                   onClick={() => {
-                    setAuthToken(null);
+                    // setAuthToken(null);
+                    if (dispatch) {
+                      dispatch({ type: 'LOGOUT' });
+                    }
+                    setToken(null);
+                    setAnchorElUser(null);
                   }}
                 >
                   <Typography
