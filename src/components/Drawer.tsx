@@ -81,7 +81,7 @@ const Drawer = () => {
       <Divider />
       <ListItem sx={{ justifyContent: 'flex-end' }}>
         <ListItemText>ThemeMode: {mode}</ListItemText>
-        <ThemeSwitch value={mode !== 'light'} onChange={toggleMode} />
+        <ThemeSwitch checked={mode !== 'light'} onChange={toggleMode} />
       </ListItem>
     </Box>
   );

@@ -141,7 +141,7 @@ const Header = () => {
                 },
               }}
             >
-              <ThemeSwitch value={mode !== 'light'} onChange={toggleMode} />
+              <ThemeSwitch checked={mode !== 'light'} onChange={toggleMode} />
               {auth?.user ? (
                 <IconButton
                   size="large"
