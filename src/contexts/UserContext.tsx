@@ -57,9 +57,9 @@ export const UserContextProvider = ({
       api
         .get(url, {
           headers: {
-            // Authorization: state.token
-            //   ? `Bearer ${state.token?.access_token}`
-            //   : '',
+            Authorization: state.token
+              ? `Bearer ${state.token?.access_token}`
+              : '',
           },
         })
         .then((res) => res.data),
