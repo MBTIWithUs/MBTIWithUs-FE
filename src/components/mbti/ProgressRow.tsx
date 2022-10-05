@@ -21,10 +21,11 @@ const ProgressRow = ({
     <Box
       sx={{
         display: 'flex',
-        justifyContent: 'space-bewteen',
+        justifyContent: 'center',
         alignItems: 'center',
       }}
       py={2}
+      mx="auto"
     >
       <Box textAlign="center">
         <Typography fontWeight={900} fontSize={24}>
@@ -32,7 +33,7 @@ const ProgressRow = ({
         </Typography>
         <Typography fontWeight={900}>{leftLabel}</Typography>
       </Box>
-      <Box sx={{ width: '80%' }} px={2}>
+      <Box sx={{ width: '75%' }} px={2}>
         <Box sx={{ display: 'flex', justifyContent: 'space-bewteen' }}>
           <Typography mr="auto" fontWeight={700} fontSize={14}>
             {Math.round((leftScore / (leftScore + rightScore)) * 100)}%

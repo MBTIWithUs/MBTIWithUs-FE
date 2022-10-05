@@ -29,6 +29,9 @@ const ResultPage = () => {
     <Container sx={{ py: 3 }}>
       <Container maxWidth="sm">
         <Box py={3}>
+          <Typography fontSize={25} fontWeight={700} mb={5}>
+            친구들과 함께 MBTI 결과를 확인해보세요!
+          </Typography>
           <Avatar
             src={auth?.user?.profile_image_url}
             sx={{ width: 80, height: 80 }}
@@ -49,6 +52,7 @@ const ResultPage = () => {
           </Typography>
           <LinkMui
             target="_blank"
+            underline="none"
             href={`https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-${mbti}`}
           >
             {mbti} 성격 확인하기
