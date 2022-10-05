@@ -194,12 +194,3 @@ const DATA = [
     type: 0,
   },
 ];
-
-export const getQuestion = () =>
-  new Promise<IQuestion[]>((resolve, reject) => {
-    try {
-      setTimeout(() => resolve(DATA), 100);
-    } catch (e) {
-      reject(e);
-    }
-  });

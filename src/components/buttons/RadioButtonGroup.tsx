@@ -1,3 +1,4 @@
+import { questionState } from '@atoms/question';
 import {
   Chip,
   FormControl,
@@ -7,6 +8,8 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { IQuestionAnswer } from 'types';
 import RadioButton from './RadioButton';
 
 enum ColorType {
@@ -58,12 +61,15 @@ const RadioButtonsGroup = ({
   title,
   leftQuestion,
   rightQuestion,
+  id,
 }: {
+  id: number;
   index: number;
   title: string;
   leftQuestion: string;
   rightQuestion: string;
 }) => {
+  const [qa, setQa] = useRecoilState(questionState);
   const [value, setValue] = useState('');
   const [left, setLeft] = useState<ChipColorType>(ChipColorType.default);
   const [right, setRight] = useState<ChipColorType>(ChipColorType.default);
@@ -71,12 +77,29 @@ const RadioButtonsGroup = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = (event.target as HTMLInputElement).value;
     setValue(val);
+    const fi = qa.findIndex((item) => item.id === id);
+    const tmp: IQuestionAnswer = {
+      id,
+      score: Math.abs(parseInt(val, 10)),
+      score_type: '',
+    };
+
     if (parseInt(val, 10) < 0) {
       setLeft(ChipColorType.primary);
       setRight(ChipColorType.default);
+      tmp.score_type = 'left';
     } else {
       setRight(ChipColorType.primary);
       setLeft(ChipColorType.default);
+      tmp.score_type = 'right';
+    }
+
+    if (fi === -1) {
+      setQa([...qa, tmp]);
+    } else {
+      const arr = [...qa];
+      arr.splice(fi, 1);
+      setQa([...arr, tmp]);
     }
   };
 

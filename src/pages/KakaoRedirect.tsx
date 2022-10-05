@@ -1,24 +1,33 @@
+import { authState } from '@atoms/auth';
+import { UserDispatchContext, UserStateContext } from '@contexts/UserContext';
 import { Container, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 const KakaoRedirect = () => {
   const { search } = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useContext(UserDispatchContext);
 
-  const [token, setToken] = useState('no response');
-  const [code, setCode] = useState('');
+  const [, setAuthToken] = useRecoilState(authState);
 
   const confirmLogin = async () => {
     const params = new URLSearchParams(search);
     const code = params.get('code');
     if (code) {
-      setCode(code);
-      setToken('not run');
-      // TODO
-      // api request
-      // fetch(``)
-      //   .then((res) => res.json())
-      //   .then((data) => console.log(data));
+      const raw = await fetch(`/api/v1/auth/kakao/token?code=${code}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+      const json = await raw.json();
+      if (dispatch) {
+        await dispatch({ type: 'LOGIN', token: json });
+        await setAuthToken(json);
+      }
+      navigate('/');
     }
   };
 
@@ -28,10 +37,7 @@ const KakaoRedirect = () => {
 
   return (
     <Container>
-      <br />
       <Typography variant="h4">Confirm Page</Typography>
-      <Typography>code: {code}</Typography>
-      <Typography>token: {token}</Typography>
     </Container>
   );
 };

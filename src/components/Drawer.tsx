@@ -8,8 +8,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
-import React from 'react';
-import useUser from '@hooks/useUser';
+import React, { useContext } from 'react';
 import { useRecoilState } from 'recoil';
 import { appThemeMode } from '@atoms/theme';
 import ThemeSwitch from './buttons/ThemeSwitch';
@@ -18,6 +17,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import CommentIcon from '@mui/icons-material/Comment';
 import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { UserStateContext } from '@contexts/UserContext';
+import { Link } from 'react-router-dom';
 
 const PAGE = [
   { title: 'Main', route: '/', icon: <HomeIcon /> },
@@ -31,7 +32,8 @@ const USER_PAGE = [
 ];
 
 const Drawer = () => {
-  const { user } = useUser();
+  // const { auth.user } = useauth.user();
+  const auth = useContext(UserStateContext);
   const [mode, setMode] = useRecoilState(appThemeMode);
   const toggleMode = () => {
     setMode((prevState) => (prevState === 'light' ? 'dark' : 'light'));
@@ -44,18 +46,24 @@ const Drawer = () => {
         width: 300,
       }}
     >
-      <ListItemButton sx={{ py: 4 }} LinkComponent="a" href="/login">
+      <ListItemButton
+        sx={{ py: 4 }}
+        component={Link}
+        to={auth?.user ? '/profile' : '/login'}
+      >
         <ListItemIcon>
-          <Avatar />
+          <Avatar src={auth?.user?.profile_image_url} />
         </ListItemIcon>
         <ListItemText>
-          {user ? `{user}님 안녕하세요!` : `로그인이 필요합니다.`}
+          {auth?.user
+            ? `${auth?.user?.nickname}님 안녕하세요!`
+            : `로그인이 필요합니다.`}
         </ListItemText>
       </ListItemButton>
       <Divider />
       <List>
         {PAGE.map((item) => (
-          <ListItemButton key={item.title} LinkComponent="a" href={item.route}>
+          <ListItemButton key={item.title} component={Link} to={item.route}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText>{item.title}</ListItemText>
           </ListItemButton>
@@ -64,7 +72,7 @@ const Drawer = () => {
       <Divider />
       <List>
         {USER_PAGE.map((item) => (
-          <ListItemButton key={item.title} LinkComponent="a" href={item.route}>
+          <ListItemButton key={item.title} component={Link} to={item.route}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText>{item.title}</ListItemText>
           </ListItemButton>
@@ -73,7 +81,7 @@ const Drawer = () => {
       <Divider />
       <ListItem sx={{ justifyContent: 'flex-end' }}>
         <ListItemText>ThemeMode: {mode}</ListItemText>
-        <ThemeSwitch value={mode !== 'light'} onChange={toggleMode} />
+        <ThemeSwitch checked={mode !== 'light'} onChange={toggleMode} />
       </ListItem>
     </Box>
   );

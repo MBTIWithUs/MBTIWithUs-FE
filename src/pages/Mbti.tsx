@@ -1,20 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Button, Container, Divider, Typography } from '@mui/material';
 import RadioButtonsGroup from '@components/buttons/RadioButtonGroup';
-import { getQuestion } from '@mock/data';
 import { IQuestion } from 'types';
 import OverlayLoading from '@components/OverlayLoading';
+import { UserStateContext } from '@contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
+import api from '@libs/api';
+import { useRecoilValue } from 'recoil';
+import { questionState } from '@atoms/question';
 
 const MAX_QUESTIONS = 6;
 
 const MbtiPage = () => {
+  const auth = useContext(UserStateContext);
+  const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [questions, setQuestions] = useState<IQuestion[]>([]);
+  const qa = useRecoilValue(questionState);
 
   const getData = async () => {
-    const data: IQuestion[] = await getQuestion();
-
+    const { data } = await api.get<IQuestion[]>(
+      `/api/v1/mbti/question?target_id=${auth?.user?.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${auth?.token?.access_token}`,
+        },
+      },
+    );
     setQuestions(data);
     setLoading(false);
   };
@@ -24,9 +37,33 @@ const MbtiPage = () => {
     setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
   };
 
+  const onSubmit = async () => {
+    try {
+      const { data } = await api.post(
+        `/api/v1/mbti/result`,
+        {
+          target_id: auth?.user?.id,
+          input: qa,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth?.token?.access_token}`,
+          },
+        },
+      );
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  if (!auth?.user) {
+    navigate('/login');
+  }
+
   useEffect(() => {
-    getData();
-  }, []);
+    if (auth?.user) getData();
+  }, [auth]);
 
   return (
     <Container sx={{ py: 3 }}>
@@ -58,6 +95,7 @@ const MbtiPage = () => {
                 title={item.question}
                 leftQuestion={item.left_answer}
                 rightQuestion={item.right_answer}
+                id={item.id}
               />
             ))}
           <Divider />
@@ -68,11 +106,18 @@ const MbtiPage = () => {
                 size="large"
                 onClick={onNextClick}
                 sx={{ width: 170 }}
+                disabled={qa.length !== (page + 1) * MAX_QUESTIONS}
               >
                 NEXT
               </Button>
             ) : (
-              <Button variant="contained" size="large" sx={{ width: 170 }}>
+              <Button
+                variant="contained"
+                size="large"
+                sx={{ width: 170 }}
+                onClick={onSubmit}
+                disabled={qa.length !== (page + 1) * MAX_QUESTIONS}
+              >
                 SUBMIT
               </Button>
             )}
