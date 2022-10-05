@@ -17,10 +17,31 @@ export interface IProfile {
 }
 
 export interface IQuestion {
+  id: number;
   question: string;
   left_answer: string;
   right_answer: string;
-  left_answer_type: string;
-  right_answer_type: string;
-  type: number;
+}
+
+export interface IQuestionAnswer {
+  id: number;
+  score_type: string;
+  score: number;
+}
+
+export interface IMbtiResult {
+  created_at: number;
+  id: number;
+  target_id: number;
+  writer_id: number;
+  target_nickname: string;
+  writer_nickname: string;
+  e_score: number;
+  f_score: number;
+  i_score: number;
+  j_score: number;
+  n_score: number;
+  p_score: number;
+  s_score: number;
+  t_score: number;
 }

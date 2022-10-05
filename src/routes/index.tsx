@@ -8,6 +8,7 @@ import Header from '@components/Header';
 import MbtiPage from '@pages/Mbti';
 import { Box } from '@mui/material';
 import Footer from '@components/Footer';
+import ProfilePage from '@pages/profile';
 
 export default function Routes() {
   const router = createBrowserRouter([
@@ -56,6 +57,15 @@ export default function Routes() {
           ),
         },
         {
+          path: '/profile',
+          element: (
+            <>
+              <Header />
+              <ProfilePage />
+            </>
+          ),
+        },
+        {
           path: '*',
           element: (
             <>
@@ -69,10 +79,10 @@ export default function Routes() {
   ]);
   return (
     <>
-      <Box minWidth={400}>
+      <Box sx={{ height: '100vh' }}>
         <RouterProvider router={router} />
+        <Footer />
       </Box>
-      <Footer />
     </>
   );
 }

@@ -67,23 +67,26 @@ export const UserContextProvider = ({
 
   const refresh = async () => {
     try {
-      const res = await api.post(`/api/v1/auth/jwt/accessToken`, null, {
+      const res = await api.post<IToken>(`/api/v1/auth/jwt/accessToken`, null, {
         headers: {
           Authorization: state.token
             ? `Bearer ${state.token?.refresh_token}`
             : '',
         },
       });
-
+      setToken(res.data);
       dispatch({ type: 'LOGIN', token: res.data });
+      mutate();
     } catch (e) {
       dispatch({ type: 'LOGOUT' });
     }
   };
 
-  // if (error?.response?.status === 401) {
-  //   refresh();
-  // }
+  if (error?.response?.status === 403) {
+    console.warn('refresh running!');
+
+    refresh();
+  }
 
   useEffect(() => {
     if (data) {
