@@ -9,6 +9,7 @@ import MbtiPage from '@pages/Mbti';
 import { Box } from '@mui/material';
 import Footer from '@components/Footer';
 import ProfilePage from '@pages/profile';
+import ResultPage from '@pages/profile/Result';
 
 export default function Routes() {
   const router = createBrowserRouter([
@@ -62,6 +63,15 @@ export default function Routes() {
             <>
               <Header />
               <ProfilePage />
+            </>
+          ),
+        },
+        {
+          path: '/profile/result',
+          element: (
+            <>
+              <Header />
+              <ResultPage />
             </>
           ),
         },

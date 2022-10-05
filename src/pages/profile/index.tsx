@@ -18,7 +18,7 @@ import {
   useTheme,
 } from '@mui/material';
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 import { IMbtiResult } from 'types';
 import MbtiSymbol from '@assets/mbti.png';
@@ -130,7 +130,15 @@ const ProfilePage = () => {
                       </IconButton>
                     }
                   >
-                    <ListItemButton sx={{ height: 80 }} dense>
+                    <ListItemButton
+                      sx={{ height: 80 }}
+                      dense
+                      component={Link}
+                      to={{
+                        pathname: '/profile/result',
+                      }}
+                      state={item}
+                    >
                       <ListItemAvatar>
                         <Avatar src={MbtiSymbol} />
                       </ListItemAvatar>
