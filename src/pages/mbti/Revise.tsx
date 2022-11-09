@@ -4,14 +4,16 @@ import RadioButtonsGroup from '@components/buttons/RadioButtonGroup';
 import { IQuestion } from 'types';
 import OverlayLoading from '@components/OverlayLoading';
 import { UserStateContext } from '@contexts/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import api from '@libs/api';
 import { useRecoilValue } from 'recoil';
 import { questionState } from '@atoms/question';
 
 const MAX_QUESTIONS = 6;
 
-const MbtiPage = () => {
+const MbtiRevisePage = () => {
+  const location = useLocation();
+  const target: number = location.state;
   const auth = useContext(UserStateContext);
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
@@ -130,4 +132,4 @@ const MbtiPage = () => {
   );
 };
 
-export default MbtiPage;
+export default MbtiRevisePage;

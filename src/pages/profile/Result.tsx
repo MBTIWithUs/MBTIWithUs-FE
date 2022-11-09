@@ -1,13 +1,6 @@
 import ProgressRow from '@components/mbti/ProgressRow';
 import { UserStateContext } from '@contexts/UserContext';
-import {
-  Avatar,
-  Box,
-  Container,
-  Divider,
-  LinearProgress,
-  Typography,
-} from '@mui/material';
+import { Avatar, Box, Container, Divider, Typography } from '@mui/material';
 import LinkMui from '@mui/material/Link';
 import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -30,7 +23,18 @@ const ResultPage = () => {
       <Container maxWidth="sm">
         <Box py={3}>
           <Typography fontSize={25} fontWeight={700} mb={5}>
-            친구들과 함께 MBTI 결과를 확인해보세요!
+            친구들과 함께
+            <Typography
+              component="span"
+              fontSize={30}
+              fontWeight={700}
+              fontFamily={'Kanit'}
+              mx={1}
+              // color="primary"
+            >
+              MBTI
+            </Typography>
+            결과를 확인해보세요!
           </Typography>
           <Avatar
             src={auth?.user?.profile_image_url}
@@ -45,6 +49,7 @@ const ResultPage = () => {
               ml={1}
               mr={1}
               color="primary"
+              fontFamily={'Kanit'}
             >
               {mbti}
             </Typography>
@@ -55,7 +60,16 @@ const ResultPage = () => {
             underline="none"
             href={`https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-${mbti}`}
           >
-            {mbti} 성격 확인하기
+            <Typography
+              fontWeight={700}
+              fontFamily="Kanit"
+              component="span"
+              mr={1}
+              fontSize={20}
+            >
+              {mbti}
+            </Typography>
+            성격 확인하기
           </LinkMui>
         </Box>
         <Divider />

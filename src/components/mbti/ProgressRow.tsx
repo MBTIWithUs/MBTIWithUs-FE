@@ -28,7 +28,7 @@ const ProgressRow = ({
       mx="auto"
     >
       <Box textAlign="center">
-        <Typography fontWeight={900} fontSize={24}>
+        <Typography fontWeight={900} fontSize={30} fontFamily={'Kanit'}>
           {leftName}
         </Typography>
         <Typography fontWeight={900}>{leftLabel}</Typography>
@@ -57,7 +57,7 @@ const ProgressRow = ({
         />
       </Box>
       <Box textAlign="center">
-        <Typography fontWeight={900} fontSize={24}>
+        <Typography fontWeight={900} fontSize={30} fontFamily={'Kanit'}>
           {rightName}
         </Typography>
         <Typography fontWeight={900}>{rightLabel}</Typography>

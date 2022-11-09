@@ -11,7 +11,7 @@ import { questionState } from '@atoms/question';
 
 const MAX_QUESTIONS = 6;
 
-const MbtiPage = () => {
+const MbtiSelfPage = () => {
   const auth = useContext(UserStateContext);
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
@@ -130,4 +130,4 @@ const MbtiPage = () => {
   );
 };
 
-export default MbtiPage;
+export default MbtiSelfPage;

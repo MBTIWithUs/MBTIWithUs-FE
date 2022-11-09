@@ -5,7 +5,8 @@ import Test from '@pages/Test';
 import Login from '@pages/Login';
 import KakaoRedirect from '@pages/KakaoRedirect';
 import Header from '@components/Header';
-import MbtiPage from '@pages/Mbti';
+import MbtiSelfPage from '@pages/mbti/Self';
+import MbtiRevisePage from '@pages/mbti/Revise';
 import { Box } from '@mui/material';
 import Footer from '@components/Footer';
 import ProfilePage from '@pages/profile';
@@ -42,10 +43,18 @@ export default function Routes() {
           ),
         },
         {
-          path: '/mbti',
+          path: '/mbti/self',
           element: (
             <>
-              <Header /> <MbtiPage />
+              <Header /> <MbtiSelfPage />
+            </>
+          ),
+        },
+        {
+          path: '/mbti/revise',
+          element: (
+            <>
+              <Header /> <MbtiRevisePage />
             </>
           ),
         },

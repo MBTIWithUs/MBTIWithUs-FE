@@ -39,6 +39,7 @@ const ProfilePage = () => {
 
   const [tab, setTab] = useState(0);
   const [open, setOpen] = useState(false);
+  const [target, setTarget] = useState(-1);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
@@ -56,10 +57,10 @@ const ProfilePage = () => {
     setOpen(false);
   };
 
-  const { data, error } = useSWR<IMbtiResult[]>(
+  const { data, mutate, error } = useSWR<IMbtiResult[]>(
     typeof window === 'undefined' || !auth?.token
       ? null
-      : `/api/v1/mbti/result/sent`,
+      : `/api/v1/mbti/result/recieved/all`,
     (url) =>
       api
         .get(url, {
@@ -70,6 +71,25 @@ const ProfilePage = () => {
         .then((res) => res.data),
   );
 
+  const deleteResult = async () => {
+    try {
+      if (target !== -1) {
+        const { status } = await api.delete(`/api/v1/mbti/result/${target}`, {
+          headers: {
+            Authorization: `Bearer ${auth?.token?.access_token}`,
+          },
+        });
+        if (status === 200) {
+          mutate();
+        }
+      }
+    } catch (e) {
+      console.log('err', e);
+    } finally {
+      handleModalClose();
+    }
+  };
+
   return (
     <Container sx={{ py: 3 }}>
       <Dialog open={open} onClose={handleModalClose} fullWidth maxWidth="xs">
@@ -77,17 +97,31 @@ const ProfilePage = () => {
           <ListItemButton
             divider
             sx={{ justifyContent: 'center' }}
-            onClick={handleModalClose}
+            // onClick={handleModalClose}
+            component={Link}
+            to={{
+              pathname: '/mbti/revise',
+            }}
+            state={target}
+          >
+            <Typography fontWeight={600} color="primary">
+              수정
+            </Typography>
+          </ListItemButton>
+          <ListItemButton
+            divider
+            sx={{ justifyContent: 'center' }}
+            onClick={deleteResult}
           >
             <Typography fontWeight={600} color="error">
-              Delete
+              삭제
             </Typography>
           </ListItemButton>
           <ListItemButton
             sx={{ justifyContent: 'center' }}
             onClick={handleModalClose}
           >
-            <Typography fontWeight={600}>Close</Typography>
+            <Typography fontWeight={600}>닫기</Typography>
           </ListItemButton>
         </List>
       </Dialog>
@@ -125,7 +159,12 @@ const ProfilePage = () => {
                     key={item.id}
                     disablePadding
                     secondaryAction={
-                      <IconButton onClick={handleModal}>
+                      <IconButton
+                        onClick={() => {
+                          setTarget(item.id);
+                          handleModal();
+                        }}
+                      >
                         <MoreHorizIcon />
                       </IconButton>
                     }
@@ -157,7 +196,12 @@ const ProfilePage = () => {
                     key={item.id}
                     disablePadding
                     secondaryAction={
-                      <IconButton onClick={handleModal}>
+                      <IconButton
+                        onClick={() => {
+                          setTarget(item.id);
+                          handleModal();
+                        }}
+                      >
                         <MoreHorizIcon />
                       </IconButton>
                     }

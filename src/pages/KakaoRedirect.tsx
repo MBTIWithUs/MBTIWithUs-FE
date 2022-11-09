@@ -4,6 +4,7 @@ import { Container, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { IToken } from 'types';
 
 const KakaoRedirect = () => {
   const { search } = useLocation();
@@ -24,8 +25,20 @@ const KakaoRedirect = () => {
       });
       const json = await raw.json();
       if (dispatch) {
-        await dispatch({ type: 'LOGIN', token: json });
-        await setAuthToken(json);
+        const token: IToken = {
+          access_token: json.access_token.value,
+          access_token_expires_in: json.access_token.expires_in,
+          refresh_token: json.refresh_token.value,
+          refresh_token_expires_in: json.refresh_token.expires_in,
+          server_current_time: json.server_current_time,
+          type: 'kakao',
+        };
+
+        await dispatch({
+          type: 'LOGIN',
+          token,
+        });
+        await setAuthToken(token);
       }
       navigate('/');
     }
