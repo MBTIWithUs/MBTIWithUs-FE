@@ -1,36 +1,59 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Button, Container, Divider, Typography } from '@mui/material';
-import RadioButtonsGroup from '@components/buttons/RadioButtonGroup';
-import { IQuestion } from 'types';
+import RadioButtonsGroup from '@components/buttons/RadioReviseButtonGroup';
+import { IQuestion, IQuestionAnswer } from 'types';
 import OverlayLoading from '@components/OverlayLoading';
 import { UserStateContext } from '@contexts/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '@libs/api';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { questionState } from '@atoms/question';
 
 const MAX_QUESTIONS = 6;
 
 const MbtiRevisePage = () => {
   const location = useLocation();
-  const target: number = location.state;
+  const target: { id: number; target_id: number } = location.state;
   const auth = useContext(UserStateContext);
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [questions, setQuestions] = useState<IQuestion[]>([]);
-  const qa = useRecoilValue(questionState);
+  const [qa, setQa] = useRecoilState(questionState);
 
   const getData = async () => {
-    const { data } = await api.get<IQuestion[]>(
-      `/api/v1/mbti/question/${auth?.user?.id}`,
+    const qd = await api.get<IQuestion[]>(
+      `/api/v1/mbti/question/${target.target_id}`,
       {
         headers: {
           Authorization: `Bearer ${auth?.token?.access_token}`,
         },
       },
     );
-    setQuestions(data);
+    setQuestions(qd.data);
+    const ad = await api.get<IQuestionAnswer[]>(
+      `/api/v1/mbti/log/${target.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${auth?.token?.access_token}`,
+        },
+      },
+    );
+    setQa(
+      ad.data.map((item) => ({
+        id: item.id,
+        score: item.score,
+        score_type: item.score_type,
+      })),
+    );
+    console.log(
+      ad.data.map((item) => ({
+        id: item.id,
+        score: item.score,
+        score_type: item.score_type,
+      })),
+    );
+
     setLoading(false);
   };
 
@@ -110,7 +133,7 @@ const MbtiRevisePage = () => {
                 size="large"
                 onClick={onNextClick}
                 sx={{ width: 170 }}
-                disabled={qa.length !== (page + 1) * MAX_QUESTIONS}
+                // disabled={qa.length !== (page + 1) * MAX_QUESTIONS}
               >
                 NEXT
               </Button>

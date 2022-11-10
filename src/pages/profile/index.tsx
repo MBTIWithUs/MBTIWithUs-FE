@@ -39,7 +39,10 @@ const ProfilePage = () => {
 
   const [tab, setTab] = useState(0);
   const [open, setOpen] = useState(false);
-  const [target, setTarget] = useState(-1);
+  const [target, setTarget] = useState<{
+    id: number;
+    target_id: number;
+  } | null>(null);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
@@ -73,12 +76,15 @@ const ProfilePage = () => {
 
   const deleteResult = async () => {
     try {
-      if (target !== -1) {
-        const { status } = await api.delete(`/api/v1/mbti/result/${target}`, {
-          headers: {
-            Authorization: `Bearer ${auth?.token?.access_token}`,
+      if (target) {
+        const { status } = await api.delete(
+          `/api/v1/mbti/result/${target.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${auth?.token?.access_token}`,
+            },
           },
-        });
+        );
         if (status === 200) {
           mutate();
         }
@@ -161,7 +167,7 @@ const ProfilePage = () => {
                     secondaryAction={
                       <IconButton
                         onClick={() => {
-                          setTarget(item.id);
+                          setTarget({ id: item.id, target_id: item.target_id });
                           handleModal();
                         }}
                       >
@@ -198,7 +204,7 @@ const ProfilePage = () => {
                     secondaryAction={
                       <IconButton
                         onClick={() => {
-                          setTarget(item.id);
+                          setTarget({ id: item.id, target_id: item.target_id });
                           handleModal();
                         }}
                       >
