@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Button, Container, Divider, Typography } from '@mui/material';
-import RadioButtonsGroup from '@components/buttons/RadioReviseButtonGroup';
+import RadioButtonsGroup from '@components/buttons/RadioButtonGroup';
 import { IQuestion } from 'types';
 import OverlayLoading from '@components/OverlayLoading';
 import { UserStateContext } from '@contexts/UserContext';

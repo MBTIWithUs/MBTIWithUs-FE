@@ -6,7 +6,7 @@ import OverlayLoading from '@components/OverlayLoading';
 import { UserStateContext } from '@contexts/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '@libs/api';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { questionState } from '@atoms/question';
 
 const MAX_QUESTIONS = 6;
@@ -53,7 +53,6 @@ const MbtiRevisePage = () => {
         score_type: item.score_type,
       })),
     );
-
     setLoading(false);
   };
 
@@ -64,10 +63,9 @@ const MbtiRevisePage = () => {
 
   const onSubmit = async () => {
     try {
-      const { data } = await api.post(
-        `/api/v1/mbti/result`,
+      const { data } = await api.put(
+        `/api/v1/mbti/result/${target.id}`,
         {
-          target_id: auth?.user?.id,
           input: qa,
         },
         {
@@ -81,6 +79,7 @@ const MbtiRevisePage = () => {
       }
     } catch (e) {
       console.log(e);
+      alert(e);
     }
   };
 
@@ -122,7 +121,7 @@ const MbtiRevisePage = () => {
                 title={item.question}
                 leftQuestion={item.left_answer}
                 rightQuestion={item.right_answer}
-                id={item.id}
+                id={qa[index].id}
               />
             ))}
           <Divider />

@@ -7,7 +7,7 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { IQuestionAnswer } from 'types';
 import RadioButton from './RadioButton';
@@ -74,10 +74,26 @@ const RadioButtonsGroup = ({
   const [left, setLeft] = useState<ChipColorType>(ChipColorType.default);
   const [right, setRight] = useState<ChipColorType>(ChipColorType.default);
 
+  useEffect(() => {
+    const idx = qa.findIndex((item) => item.id === id);
+    if (idx !== -1) {
+      if (qa[idx].score_type === 'left') {
+        setValue(`-${qa[idx].score}`);
+        setLeft(ChipColorType.primary);
+        setRight(ChipColorType.default);
+      } else {
+        setValue(`${qa[idx].score}`);
+        setLeft(ChipColorType.default);
+        setRight(ChipColorType.primary);
+      }
+    }
+  }, []);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = (event.target as HTMLInputElement).value;
     setValue(val);
     const fi = qa.findIndex((item) => item.id === id);
+
     const tmp: IQuestionAnswer = {
       id,
       score: Math.abs(parseInt(val, 10)),
