@@ -4,14 +4,18 @@ import RadioButtonsGroup from '@components/buttons/RadioButtonGroup';
 import { IQuestion } from 'types';
 import OverlayLoading from '@components/OverlayLoading';
 import { UserStateContext } from '@contexts/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import api from '@libs/api';
 import { useRecoilValue } from 'recoil';
 import { questionState } from '@atoms/question';
 
 const MAX_QUESTIONS = 6;
 
-const MbtiPage = () => {
+const MbtiSelfPage = () => {
+  const location = useLocation();
+  const search = new URLSearchParams(location.search);
+  const target_id = search.get('target_id');
+
   const auth = useContext(UserStateContext);
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
@@ -21,7 +25,9 @@ const MbtiPage = () => {
 
   const getData = async () => {
     const { data } = await api.get<IQuestion[]>(
-      `/api/v1/mbti/question/${auth?.user?.id}`,
+      `/api/v1/mbti/question/${
+        target_id !== null ? target_id : auth?.user?.id
+      }`,
       {
         headers: {
           Authorization: `Bearer ${auth?.token?.access_token}`,
@@ -42,7 +48,7 @@ const MbtiPage = () => {
       const { data } = await api.post(
         `/api/v1/mbti/result`,
         {
-          target_id: auth?.user?.id,
+          target_id: target_id !== null ? target_id : auth?.user?.id,
           input: qa,
         },
         {
@@ -130,4 +136,4 @@ const MbtiPage = () => {
   );
 };
 
-export default MbtiPage;
+export default MbtiSelfPage;

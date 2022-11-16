@@ -1,3 +1,4 @@
+import config from '@config';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
@@ -25,7 +26,7 @@ export default function useProvideAuth() {
 
   // Refresh token for persisting session
   const { data, error, isValidating } = useSWR(
-    isLoggedIn ? `${process.env.REACT_APP_BACKEND}/refresh-token.php` : null,
+    isLoggedIn ? `${config.baseUrl}/refresh-token.php` : null,
     (url) =>
       fetch(url, {
         credentials: 'include',
