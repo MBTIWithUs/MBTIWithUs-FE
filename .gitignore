@@ -70,3 +70,5 @@ sketch
 # End of https://www.toptal.com/developers/gitignore/api/yarn,react,macos
 
 .env*
+
+build/*
