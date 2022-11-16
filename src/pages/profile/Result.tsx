@@ -5,18 +5,14 @@ import LinkMui from '@mui/material/Link';
 import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { IMbtiResult } from 'types';
+import { getMbtiResult2String } from '@libs/mbti';
 
 const ResultPage = () => {
   const location = useLocation();
   const result: IMbtiResult = location.state;
   const auth = useContext(UserStateContext);
-  console.log(result);
 
-  const mbti =
-    (result.e_score > result.i_score ? 'E' : 'I') +
-    (result.s_score > result.n_score ? 'S' : 'N') +
-    (result.t_score > result.f_score ? 'T' : 'F') +
-    (result.p_score > result.j_score ? 'P' : 'J');
+  const mbti = getMbtiResult2String(result);
 
   return (
     <Container sx={{ py: 3 }}>
@@ -41,7 +37,7 @@ const ResultPage = () => {
             sx={{ width: 80, height: 80 }}
           />
           <Typography fontWeight={700} mt={5}>
-            {auth?.user?.nickname}님의 결과는
+            {result.target_nickname}님의 결과는
             <Typography
               fontSize={30}
               fontWeight={900}

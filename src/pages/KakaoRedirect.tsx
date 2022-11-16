@@ -1,7 +1,7 @@
 import { authState } from '@atoms/auth';
-import { UserDispatchContext, UserStateContext } from '@contexts/UserContext';
+import { UserDispatchContext } from '@contexts/UserContext';
 import { Container, Typography } from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { IToken } from 'types';

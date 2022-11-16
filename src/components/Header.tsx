@@ -24,7 +24,7 @@ import { Link } from 'react-router-dom';
 
 const PAGE = [
   { title: 'Test', route: '/test' },
-  { title: 'Mbti', route: '/mbti/self' },
+  { title: 'Mbti', route: '/mbti' },
   { title: 'Board', route: '/Board' },
 ];
 

@@ -30,12 +30,23 @@ export interface IQuestionAnswer {
 }
 
 export interface IMbtiResult {
-  created_at: number;
+  created_at: string;
   id: number;
   target_id: number;
   writer_id: number;
   target_nickname: string;
   writer_nickname: string;
+  e_score: number;
+  f_score: number;
+  i_score: number;
+  j_score: number;
+  n_score: number;
+  p_score: number;
+  s_score: number;
+  t_score: number;
+}
+
+export interface IMbtiScoreType {
   e_score: number;
   f_score: number;
   i_score: number;

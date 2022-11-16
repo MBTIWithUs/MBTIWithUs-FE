@@ -10,7 +10,8 @@
       "@hooks/*": ["./hooks/*"],
       "@libs/*": ["./libs/*"],
       "@assets/*": ["./assets/*"],
-      "@mock/*": ["./mock/*"]
+      "@mock/*": ["./mock/*"],
+      "@config": ["./config.ts"]
     }
   }
 }

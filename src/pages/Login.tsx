@@ -3,6 +3,7 @@ import React from 'react';
 import Logo from '@assets/logo.png';
 
 import ButtonLogo from '@assets/kakao_login_medium_narrow.png';
+import config from '@config';
 
 const Login = () => {
   return (
@@ -33,7 +34,7 @@ const Login = () => {
         </Box>
         <Box sx={{ textAlign: 'center', marginTop: 'auto' }}>
           <a
-            href={`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_KAKAOID}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}`}
+            href={`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${config.kakaoID}&redirect_uri=${config.kakaoRedirectUrl}`}
           >
             <img src={ButtonLogo} alt="kakao_login_button" />
           </a>

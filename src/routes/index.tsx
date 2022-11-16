@@ -43,7 +43,7 @@ export default function Routes() {
           ),
         },
         {
-          path: '/mbti/self',
+          path: '/mbti',
           element: (
             <>
               <Header /> <MbtiSelfPage />
