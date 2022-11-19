@@ -108,36 +108,43 @@ const ProfilePage = () => {
 
   const me2me: IMbtiResult[] | undefined =
     recievedData &&
-    recievedData.filter((item) => item.target_id === auth?.user?.id);
+    recievedData.filter((item) => item.writer_id === auth?.user?.id);
+
   const friends2me: IMbtiResult[] | undefined =
     recievedData &&
-    recievedData.filter((item) => item.target_id !== auth?.user?.id);
+    recievedData.filter((item) => item.writer_id !== auth?.user?.id);
+
   const me2friends: IMbtiResult[] | undefined =
     sentData && sentData.filter((item) => item.target_id !== auth?.user?.id);
   const friendsResult: IMbtiScoreType | undefined =
     friends2me && friends2me.length
-      ? friends2me.reduce(
-          (prev, cur) => ({
-            e_score: prev.e_score + cur.e_score,
-            f_score: prev.f_score + cur.f_score,
-            i_score: prev.i_score + cur.i_score,
-            j_score: prev.j_score + cur.j_score,
-            n_score: prev.n_score + cur.n_score,
-            p_score: prev.p_score + cur.p_score,
-            s_score: prev.s_score + cur.s_score,
-            t_score: prev.t_score + cur.t_score,
-          }),
-          {
-            e_score: 0,
-            f_score: 0,
-            i_score: 0,
-            j_score: 0,
-            n_score: 0,
-            p_score: 0,
-            s_score: 0,
-            t_score: 0,
-          },
-        )
+      ? friends2me
+          .filter(
+            (value, index, self) =>
+              self.findIndex((v) => v.writer_id === value.writer_id) === index,
+          )
+          .reduce(
+            (prev, cur) => ({
+              e_score: prev.e_score + cur.e_score,
+              f_score: prev.f_score + cur.f_score,
+              i_score: prev.i_score + cur.i_score,
+              j_score: prev.j_score + cur.j_score,
+              n_score: prev.n_score + cur.n_score,
+              p_score: prev.p_score + cur.p_score,
+              s_score: prev.s_score + cur.s_score,
+              t_score: prev.t_score + cur.t_score,
+            }),
+            {
+              e_score: 0,
+              f_score: 0,
+              i_score: 0,
+              j_score: 0,
+              n_score: 0,
+              p_score: 0,
+              s_score: 0,
+              t_score: 0,
+            },
+          )
       : undefined;
   // 5 : 5
   const meAndFriendsResult: IMbtiScoreType | undefined = me2me?.length
@@ -225,10 +232,20 @@ const ProfilePage = () => {
           <Container maxWidth="md">
             <Box sx={{ display: 'flex', justifyContent: 'center' }} my={5}>
               <Box textAlign="center">
-                <Avatar
-                  sx={{ width: 75, height: 75 }}
-                  src={auth?.user?.profile_image_url}
-                />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Avatar
+                    sx={{
+                      width: 75,
+                      height: 75,
+                    }}
+                    src={auth?.user?.profile_image_url}
+                  />
+                </Box>
                 <Typography mt={2} fontWeight={800} fontSize={20}>
                   {auth?.user?.nickname}
                 </Typography>

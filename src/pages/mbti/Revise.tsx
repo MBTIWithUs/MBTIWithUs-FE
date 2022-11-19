@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import api from '@libs/api';
 import { useRecoilState } from 'recoil';
 import { questionState } from '@atoms/question';
+import { toast } from 'react-toastify';
 
 const MAX_QUESTIONS = 6;
 
@@ -68,10 +69,11 @@ const MbtiRevisePage = () => {
         },
       );
       if (data) {
+        toast.success('수정 완료!');
         navigate('/profile');
       }
     } catch (e) {
-      console.log(e);
+      toast.error('수정 실패!');
       alert(e);
     }
   };
@@ -114,7 +116,7 @@ const MbtiRevisePage = () => {
                 title={item.question}
                 leftQuestion={item.left_answer}
                 rightQuestion={item.right_answer}
-                id={qa[index].id}
+                id={item.id}
               />
             ))}
           <Divider />
