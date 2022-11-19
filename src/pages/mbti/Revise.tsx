@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Button, Container, Divider, Typography } from '@mui/material';
 import RadioButtonsGroup from '@components/buttons/RadioReviseButtonGroup';
-import { IQuestion, IQuestionAnswer, IQuestionLog } from 'types';
+import { IQuestion, IQuestionLog } from 'types';
 import OverlayLoading from '@components/OverlayLoading';
 import { UserStateContext } from '@contexts/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -47,8 +47,6 @@ const MbtiRevisePage = () => {
       })),
     );
     setLoading(false);
-
-    console.log(qaData, qdData);
   };
 
   const onNextClick = () => {
