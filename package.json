@@ -2,7 +2,7 @@
   "name": "mbtiwithyou",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://3.35.171.213",
+  "proxy": "https://www.mbtiwithyou.com/api",
   "dependencies": {
     "@craco/craco": "^6.4.5",
     "@emotion/react": "^11.10.4",
@@ -68,6 +68,10 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "msw": "^0.49.0",
     "prettier": "^2.7.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
