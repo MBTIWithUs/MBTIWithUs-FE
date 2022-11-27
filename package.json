@@ -2,7 +2,7 @@
   "name": "mbtiwithyou",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://www.mbtiwithyou.com/api",
+  "proxy": "https://www.mbtiwithus.com",
   "dependencies": {
     "@craco/craco": "^6.4.5",
     "@emotion/react": "^11.10.4",

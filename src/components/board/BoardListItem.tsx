@@ -9,14 +9,9 @@ import {
 import { BoardItemType } from 'features/board/types';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
-const BoardListItem = ({
-  title,
-  content,
-  reply_cnt,
-  like,
-  nickname,
-}: BoardItemType) => {
+const BoardListItem = ({ title, summary, views, nickname }: BoardItemType) => {
   return (
     <ListItem sx={{ p: 0, border: '1px solid #e3e3e3' }}>
       <ListItemButton sx={{ p: 1, m: 0 }}>
@@ -29,7 +24,7 @@ const BoardListItem = ({
           secondary={
             <>
               <Typography fontSize={12} mb={1}>
-                {content}
+                {summary}
               </Typography>
               <Box sx={{ fontSize: 11 }}>
                 <Typography
@@ -56,10 +51,10 @@ const BoardListItem = ({
                     ml={1}
                     sx={{ float: 'right', color: '#0ca5af' }}
                   >
-                    <ChatBubbleOutlineIcon
+                    <VisibilityIcon
                       sx={{ fontSize: 11, verticalAlign: 'middle', mr: 0.2 }}
                     />
-                    {reply_cnt}
+                    {views}
                   </Typography>
                   <Typography
                     component={'li'}
@@ -70,7 +65,7 @@ const BoardListItem = ({
                     <ThumbUpOffAltIcon
                       sx={{ fontSize: 11, verticalAlign: 'middle', mr: 0.2 }}
                     />
-                    {like}
+                    {/* {like} */}1
                   </Typography>
                 </ul>
               </Box>

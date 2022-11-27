@@ -1,10 +1,21 @@
+export interface BoardCommentType {
+  id: number;
+  parentCommentId?: number;
+  isAnonymous: boolean;
+  content: string;
+}
+
 export interface BoardItemType {
   id: number;
   title: string;
-  content: string;
+  tag: string;
+  summary: string;
   nickname: string;
-  like: number;
-  reply_cnt: number;
+  // like: number;
+  views: number;
+  thumbnail: string;
+  created_at: string;
+  updated_at: string | null;
 }
 
 export interface BoardListType {
