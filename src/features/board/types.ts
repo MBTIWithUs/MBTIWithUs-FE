@@ -1,8 +1,13 @@
 export interface BoardCommentType {
   id: number;
-  parentCommentId?: number;
-  isAnonymous: boolean;
+  parent_comment_id: number | null;
+  is_anonymous: boolean;
   content: string;
+  created_at: string;
+  creator_id: number;
+  creator_nickname: string;
+  likes: number;
+  updated_at: string | null;
 }
 
 export interface BoardItemType {
@@ -10,12 +15,29 @@ export interface BoardItemType {
   title: string;
   tag: string;
   summary: string;
-  nickname: string;
-  // like: number;
+  creator_nickname: string;
+  likes: number;
   views: number;
+  is_anonymous: boolean;
   thumbnail: string;
   created_at: string;
   updated_at: string | null;
+}
+
+export interface BoardDetailType {
+  id: number;
+  title: string;
+  content: string;
+  tag: string;
+  summary: string;
+  thumbnail: string | null;
+  views: number;
+  comments: BoardCommentType[];
+  created_at: string;
+  updated_at: string | null;
+  creator_nickname: string;
+  is_anonymous: boolean;
+  likes: number;
 }
 
 export interface BoardListType {

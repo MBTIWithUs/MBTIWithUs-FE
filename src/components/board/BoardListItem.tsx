@@ -10,11 +10,22 @@ import { BoardItemType } from 'features/board/types';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { getMomentFromNow } from '@libs/time';
+import { Link } from 'react-router-dom';
 
-const BoardListItem = ({ title, summary, views, nickname }: BoardItemType) => {
+const BoardListItem = ({
+  title,
+  summary,
+  views,
+  creator_nickname,
+  is_anonymous,
+  created_at,
+  id,
+  likes,
+}: BoardItemType) => {
   return (
     <ListItem sx={{ p: 0, border: '1px solid #e3e3e3' }}>
-      <ListItemButton sx={{ p: 1, m: 0 }}>
+      <ListItemButton sx={{ p: 1, m: 0 }} component={Link} to={`${id}`}>
         <ListItemText
           primary={
             <Typography fontSize={14} fontWeight={600}>
@@ -33,7 +44,7 @@ const BoardListItem = ({ title, summary, views, nickname }: BoardItemType) => {
                   mr={1}
                   sx={{ float: 'left' }}
                 >
-                  1분 전
+                  {getMomentFromNow(new Date(Number(created_at)).toString())}
                 </Typography>
                 <Typography
                   component={'span'}
@@ -42,7 +53,11 @@ const BoardListItem = ({ title, summary, views, nickname }: BoardItemType) => {
                   mr={1}
                   sx={{ float: 'left' }}
                 >
-                  {nickname}
+                  {is_anonymous
+                    ? '익명'
+                    : creator_nickname === '<Unknown>'
+                    ? '삭제된 유저'
+                    : creator_nickname}
                 </Typography>
                 <ul style={{ listStyle: 'none' }}>
                   <Typography
@@ -65,7 +80,7 @@ const BoardListItem = ({ title, summary, views, nickname }: BoardItemType) => {
                     <ThumbUpOffAltIcon
                       sx={{ fontSize: 11, verticalAlign: 'middle', mr: 0.2 }}
                     />
-                    {/* {like} */}1
+                    {likes}
                   </Typography>
                 </ul>
               </Box>

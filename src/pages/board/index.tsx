@@ -15,8 +15,8 @@ const BoardPage = () => {
     typeof window === 'undefined'
       ? 'null'
       : !auth?.token
-      ? '/api/v1/community/search'
-      : '/api/v1/community/search/anonymous',
+      ? '/api/v1/community/search/anonymous'
+      : '/api/v1/community/search',
     (url) =>
       api
         .get(url, {
