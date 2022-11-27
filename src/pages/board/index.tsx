@@ -42,7 +42,7 @@ const BoardPage = () => {
           >
             자유게시판
           </Typography>
-          <BoardWriter />
+          <BoardWriter tag="" />
           <List>
             {data &&
               data?.items.map((item) => (
