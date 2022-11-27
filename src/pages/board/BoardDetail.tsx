@@ -11,6 +11,7 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import BoardCommentItem from '@components/board/BoardCommentItem';
+import BoardCommentInput from '@components/board/BoardCommentInput';
 
 const BoardDetailPage = () => {
   const { id } = useParams();
@@ -104,6 +105,7 @@ const BoardDetailPage = () => {
           {data?.comments.map((item) => (
             <BoardCommentItem key={item.id} {...item} />
           ))}
+          <BoardCommentInput />
         </Container>
       )}
     </Container>

@@ -8,19 +8,21 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useCallback, useState } from 'react';
+import CreateIcon from '@mui/icons-material/Create';
 
 const BoardCommentInput = () => {
   const [check, setCheck] = useState(false);
+  const [content, setContent] = useState('');
 
   const handleCheck = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setCheck(e.target.checked);
   }, []);
 
   return (
-    <FormControl fullWidth sx={{ mt: 2, border: '1px solid #e3e3e3' }}>
+    <FormControl fullWidth sx={{ border: '1px solid #e3e3e3' }}>
       <Input
         type="text"
-        placeholder="대댓글을 입력해주세요."
+        placeholder="글을 입력해주세요."
         disableUnderline
         sx={{
           fontSize: 13,
@@ -28,6 +30,8 @@ const BoardCommentInput = () => {
           p: 1,
           color: '#262626',
         }}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
         endAdornment={
           <InputAdornment position="end">
             <FormControlLabel
@@ -44,8 +48,11 @@ const BoardCommentInput = () => {
                   익명
                 </Typography>
               }
+              sx={{ mr: 0 }}
             />
-            <IconButton>123</IconButton>
+            <IconButton>
+              <CreateIcon color="primary" />
+            </IconButton>
           </InputAdornment>
         }
       />

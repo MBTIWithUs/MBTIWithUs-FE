@@ -6,6 +6,7 @@ import { BoardListType } from 'features/board/types';
 import useSWR from 'swr';
 import { UserStateContext } from '@contexts/UserContext';
 import api from '@libs/api';
+import BoardWriter from '@components/board/BoardWriter';
 
 const isLoading = false;
 
@@ -41,6 +42,7 @@ const BoardPage = () => {
           >
             자유게시판
           </Typography>
+          <BoardWriter />
           <List>
             {data &&
               data?.items.map((item) => (

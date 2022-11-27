@@ -81,7 +81,7 @@ const BoardCommentItem = ({
         )}
       </Typography>
       {open && (
-        <Box pl={2}>
+        <Box pl={2} pt={2}>
           <BoardCommentInput />
         </Box>
       )}
