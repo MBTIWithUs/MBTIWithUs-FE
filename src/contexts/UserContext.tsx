@@ -63,6 +63,12 @@ export const UserContextProvider = ({
           },
         })
         .then((res) => res.data),
+    {
+      // revalidateOnFocus: false,
+      // revalidateOnMount: false,
+      // refreshInterval: 0,
+      // revalidateIfStale: false,
+    },
   );
 
   const refresh = async () => {

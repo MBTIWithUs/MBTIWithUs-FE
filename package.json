@@ -2,7 +2,7 @@
   "name": "mbtiwithyou",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://3.35.171.213",
+  "proxy": "https://www.mbtiwithus.com",
   "dependencies": {
     "@craco/craco": "^6.4.5",
     "@emotion/react": "^11.10.4",
@@ -25,6 +25,7 @@
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
     "react-swipeable-views": "^0.14.0",
+    "react-toastify": "^9.1.1",
     "recoil": "^0.7.5",
     "recoil-persist": "^4.2.0",
     "swr": "^1.3.0",
@@ -67,6 +68,10 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "msw": "^0.49.0",
     "prettier": "^2.7.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

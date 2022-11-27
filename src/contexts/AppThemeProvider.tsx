@@ -2,6 +2,8 @@ import React, { ReactElement, useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { appThemeMode } from '@atoms/theme';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 interface Props {
   children: ReactElement;
@@ -52,6 +54,7 @@ function AppThemeProvider({ children }: Props): ReactElement {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {children}
+      <ToastContainer autoClose={1000} theme={mode} position="bottom-right" />
     </ThemeProvider>
   );
 }

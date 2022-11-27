@@ -4,6 +4,7 @@ import config from '@config';
 import styled from '@emotion/styled';
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { toast } from 'react-toastify';
 
 const MbtiShareBox = ({ target_id }: { target_id: number | undefined }) => {
   const url = `${config.baseUrl}/mbti?target_id=${target_id}`;
@@ -12,11 +13,11 @@ const MbtiShareBox = ({ target_id }: { target_id: number | undefined }) => {
     navigator.clipboard
       .writeText(url)
       .then(() => {
-        alert('success copy, todo maybe use popup action');
+        toast.info('Copy!');
       })
       .catch((err) => {
         console.log(err);
-        alert('브라우저 호환 문제' + err);
+        toast.error('브라우저 호환');
       });
   };
 

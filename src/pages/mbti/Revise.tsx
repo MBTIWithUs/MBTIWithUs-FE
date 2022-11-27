@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Button, Container, Divider, Typography } from '@mui/material';
 import RadioButtonsGroup from '@components/buttons/RadioReviseButtonGroup';
-import { IQuestion, IQuestionAnswer } from 'types';
+import { IQuestion, IQuestionLog } from 'types';
 import OverlayLoading from '@components/OverlayLoading';
 import { UserStateContext } from '@contexts/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '@libs/api';
 import { useRecoilState } from 'recoil';
 import { questionState } from '@atoms/question';
+import { toast } from 'react-toastify';
 
 const MAX_QUESTIONS = 6;
 
@@ -22,7 +23,7 @@ const MbtiRevisePage = () => {
   const [qa, setQa] = useRecoilState(questionState);
 
   const getData = async () => {
-    const qd = await api.get<IQuestion[]>(
+    const { data: qdData } = await api.get<IQuestion[]>(
       `/api/v1/mbti/question/${target.target_id}`,
       {
         headers: {
@@ -30,8 +31,8 @@ const MbtiRevisePage = () => {
         },
       },
     );
-    setQuestions(qd.data);
-    const ad = await api.get<IQuestionAnswer[]>(
+    setQuestions(qdData);
+    const { data: qaData } = await api.get<IQuestionLog[]>(
       `/api/v1/mbti/log/${target.id}`,
       {
         headers: {
@@ -40,15 +41,8 @@ const MbtiRevisePage = () => {
       },
     );
     setQa(
-      ad.data.map((item) => ({
-        id: item.id,
-        score: item.score,
-        score_type: item.score_type,
-      })),
-    );
-    console.log(
-      ad.data.map((item) => ({
-        id: item.id,
+      qaData.map((item) => ({
+        id: parseInt(item.sheet_id, 10),
         score: item.score,
         score_type: item.score_type,
       })),
@@ -75,10 +69,11 @@ const MbtiRevisePage = () => {
         },
       );
       if (data) {
+        toast.success('수정 완료!');
         navigate('/profile');
       }
     } catch (e) {
-      console.log(e);
+      toast.error('수정 실패!');
       alert(e);
     }
   };
@@ -121,7 +116,7 @@ const MbtiRevisePage = () => {
                 title={item.question}
                 leftQuestion={item.left_answer}
                 rightQuestion={item.right_answer}
-                id={qa[index].id}
+                id={item.id}
               />
             ))}
           <Divider />

@@ -11,6 +11,7 @@ import { Box } from '@mui/material';
 import Footer from '@components/Footer';
 import ProfilePage from '@pages/profile';
 import ResultPage from '@pages/profile/Result';
+import BoardPage from '@pages/board';
 
 export default function Routes() {
   const router = createBrowserRouter([
@@ -85,14 +86,23 @@ export default function Routes() {
           ),
         },
         {
-          path: '*',
+          path: '/board',
           element: (
             <>
               <Header />
-              404
+              <BoardPage />
             </>
           ),
         },
+        // {
+        //   path: '*',
+        //   element: (
+        //     <>
+        //       <Header />
+        //       404
+        //     </>
+        //   ),
+        // },
       ],
     },
   ]);

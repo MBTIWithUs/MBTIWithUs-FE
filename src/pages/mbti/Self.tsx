@@ -18,6 +18,11 @@ const MbtiSelfPage = () => {
 
   const auth = useContext(UserStateContext);
   const navigate = useNavigate();
+
+  if (!auth?.user) {
+    navigate('/login');
+  }
+
   const [page, setPage] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [questions, setQuestions] = useState<IQuestion[]>([]);

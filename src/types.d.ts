@@ -29,6 +29,10 @@ export interface IQuestionAnswer {
   score: number;
 }
 
+export interface IQuestionLog extends IQuestionAnswer {
+  sheet_id: string;
+}
+
 export interface IMbtiResult {
   created_at: string;
   id: number;
