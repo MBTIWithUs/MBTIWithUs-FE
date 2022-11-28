@@ -7,6 +7,7 @@ import {
   FormControlLabel,
   Checkbox,
   InputBase,
+  useTheme,
 } from '@mui/material';
 import React, {
   useCallback,
@@ -26,6 +27,7 @@ const BoardWriter = ({ tag }: { tag: string }) => {
   const [open, setOpen] = useState(false);
   const auth = useContext(UserStateContext);
   const quillRef = useRef<ReactQuill>(null);
+  const theme = useTheme();
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -76,12 +78,12 @@ const BoardWriter = ({ tag }: { tag: string }) => {
   const handleSubmit = useCallback(async () => {
     try {
       const { data } = await api.post(
-        `/api/v1/community/`,
+        `/api/v1/community`,
         {
           title: title,
           content: content,
           is_anonymous: check,
-          tag: tag,
+          tag: 'INFJ',
         },
         {
           headers: {
@@ -164,7 +166,7 @@ const BoardWriter = ({ tag }: { tag: string }) => {
       sx={{
         border: '2px solid #d6d6d6',
         color: '#a6a6a6',
-        backgroundColor: open ? '#ffffff' : '#f9f9f9',
+        backgroundColor: open ? theme.palette.background.paper : '#f9f9f9',
       }}
     >
       {open ? (
