@@ -1,14 +1,15 @@
 import React from 'react';
 import {
+  Avatar,
   Box,
   ListItem,
+  ListItemAvatar,
   ListItemButton,
   ListItemText,
   Typography,
 } from '@mui/material';
 import { BoardItemType } from 'features/board/types';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { getMomentFromNow } from '@libs/time';
 import { Link } from 'react-router-dom';
@@ -22,10 +23,16 @@ const BoardListItem = ({
   created_at,
   id,
   likes,
+  thumbnail,
 }: BoardItemType) => {
   return (
     <ListItem sx={{ p: 0, border: '1px solid #e3e3e3' }}>
-      <ListItemButton sx={{ p: 1, m: 0 }} component={Link} to={`${id}`}>
+      <ListItemButton
+        sx={{ p: 1, m: 0 }}
+        component={Link}
+        to={`${id}`}
+        style={{ alignItems: 'space-between' }}
+      >
         <ListItemText
           primary={
             <Typography fontSize={14} fontWeight={600}>
@@ -34,10 +41,10 @@ const BoardListItem = ({
           }
           secondary={
             <>
-              <Typography fontSize={12} mb={1}>
-                {summary}
-              </Typography>
-              <Box sx={{ fontSize: 11 }}>
+              <Box>
+                <Typography fontSize={12}>{summary}</Typography>
+              </Box>
+              <Box sx={{ fontSize: 11 }} mt={1}>
                 <Typography
                   component={'span'}
                   fontSize={11}
@@ -87,6 +94,15 @@ const BoardListItem = ({
             </>
           }
         />
+        {thumbnail && (
+          <ListItemAvatar sx={{ ml: 1 }}>
+            <Avatar
+              src={thumbnail}
+              sx={{ width: 80, height: 80 }}
+              variant="square"
+            />
+          </ListItemAvatar>
+        )}
       </ListItemButton>
     </ListItem>
   );

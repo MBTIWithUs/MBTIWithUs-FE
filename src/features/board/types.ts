@@ -19,7 +19,7 @@ export interface BoardItemType {
   likes: number;
   views: number;
   is_anonymous: boolean;
-  thumbnail: string;
+  thumbnail: string | null;
   created_at: string;
   updated_at: string | null;
 }
