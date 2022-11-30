@@ -8,6 +8,7 @@ import {
   Checkbox,
   InputBase,
   useTheme,
+  Button,
 } from '@mui/material';
 import React, {
   useCallback,
@@ -23,16 +24,36 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 import config from '@config';
 import { toast } from 'react-toastify';
+import ImageIcon from '@mui/icons-material/Image';
+import { useRecoilState } from 'recoil';
+import { doingState } from '@atoms/util';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const BoardWriter = ({ tag, mutate }: { tag: string; mutate: any }) => {
-  const [open, setOpen] = useState(false);
+const BoardWriter = ({
+  tag,
+  mutate,
+  previousTitle,
+  previousContent,
+  isRevise,
+  id,
+}: {
+  tag: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mutate: any;
+  isRevise?: boolean;
+  previousTitle?: string;
+  previousContent?: string;
+  id?: number;
+}) => {
+  // const [open, setOpen] = useState(false);
+  const [open, setOpen] = useRecoilState(doingState);
   const auth = useContext(UserStateContext);
   const quillRef = useRef<ReactQuill>(null);
   const theme = useTheme();
 
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState(previousTitle ? previousTitle : '');
+  const [content, setContent] = useState(
+    previousContent ? previousContent : '',
+  );
   const [check, setCheck] = useState(false);
 
   const handleCheck = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,14 +99,40 @@ const BoardWriter = ({ tag, mutate }: { tag: string; mutate: any }) => {
   };
 
   const handleSubmit = useCallback(async () => {
-    api
+    if (isRevise) {
+      return api
+        .put(
+          `/api/v1/community/${id}`,
+          {
+            title: title,
+            content: content,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${auth?.token?.access_token}`,
+            },
+          },
+        )
+        .then(() => {
+          mutate();
+          setTitle('');
+          setContent('');
+          setOpen(false);
+          toast.success('성공');
+        })
+        .catch((e) => {
+          console.log(e);
+          toast.error('에러');
+        });
+    }
+    return api
       .post(
         `/api/v1/community`,
         {
           title: title,
           content: content,
           is_anonymous: check,
-          tag: 'INFJ',
+          tag,
         },
         {
           headers: {
@@ -97,10 +144,12 @@ const BoardWriter = ({ tag, mutate }: { tag: string; mutate: any }) => {
         mutate();
         setTitle('');
         setContent('');
+        setOpen(false);
         toast.success('성공');
       })
       .catch((e) => {
         console.log(e);
+        toast.error('에러');
       });
   }, [title, content, check, tag]);
 
@@ -211,7 +260,9 @@ const BoardWriter = ({ tag, mutate }: { tag: string; mutate: any }) => {
           <Divider />
           <Box px={1} py={0.5} m={0} component="ul" sx={{ listStyle: 'none' }}>
             <li style={{ float: 'left' }}>
-              <Box onClick={handleImage}>test</Box>
+              <IconButton onClick={handleImage}>
+                <ImageIcon />
+              </IconButton>
             </li>
             <li style={{ float: 'right', marginRight: 1 }}>
               <IconButton onClick={handleSubmit}>
@@ -219,30 +270,37 @@ const BoardWriter = ({ tag, mutate }: { tag: string; mutate: any }) => {
               </IconButton>
             </li>
             <li style={{ float: 'right' }}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    size="small"
-                    sx={{ width: 24 }}
-                    checked={check}
-                    onChange={handleCheck}
-                  />
-                }
-                label={
-                  <Typography
-                    fontSize={11}
-                    color={check ? 'primary' : 'default'}
-                  >
-                    익명
-                  </Typography>
-                }
-                sx={{ mr: 0 }}
-              />
+              {!isRevise && (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      size="small"
+                      sx={{ width: 24 }}
+                      checked={check}
+                      onChange={handleCheck}
+                    />
+                  }
+                  label={
+                    <Typography
+                      fontSize={11}
+                      color={check ? 'primary' : 'default'}
+                    >
+                      익명
+                    </Typography>
+                  }
+                  sx={{ mr: 0 }}
+                />
+              )}
             </li>
           </Box>
+          {isRevise && (
+            <Box>
+              <Button onClick={() => setOpen(false)}>돌아가기</Button>
+            </Box>
+          )}
         </FormControl>
       ) : (
-        <Box onClick={() => setOpen((prev) => !prev)} p={1}>
+        <Box onClick={() => setOpen(true)} p={1}>
           <Typography>새 글을 작성해주세요!</Typography>
         </Box>
       )}

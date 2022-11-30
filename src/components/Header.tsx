@@ -21,17 +21,11 @@ import Drawer from './Drawer';
 import { UserDispatchContext, UserStateContext } from '@contexts/UserContext';
 import { authState } from '@atoms/auth';
 import { Link } from 'react-router-dom';
+import path from '@routes/path';
 
-const PAGE = [
-  { title: 'Test', route: '/test' },
-  { title: 'Mbti', route: '/mbti' },
-  { title: 'Board', route: '/Board' },
-];
+const PAGE = [path.mbti, path.board];
 
-const USER_PAGE = [
-  { title: 'Profile', route: '/profile' },
-  { title: 'Setting', route: '/setting' },
-];
+const USER_PAGE = [path.profile, path.setting];
 
 const Header = () => {
   const auth = useContext(UserStateContext);

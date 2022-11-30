@@ -104,15 +104,6 @@ export default function Routes() {
             </>
           ),
         },
-        // {
-        //   path: '*',
-        //   element: (
-        //     <>
-        //       <Header />
-        //       404
-        //     </>
-        //   ),
-        // },
       ],
     },
   ]);

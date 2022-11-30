@@ -27,6 +27,7 @@ const BoardCommentTemplate = ({
   is_anonymous,
   content,
   created_at,
+  creator_id,
   creator_nickname,
   likes,
   is_liked,
@@ -39,7 +40,7 @@ const BoardCommentTemplate = ({
       toast.error('로그인이 필요합니다.');
       return;
     }
-    api
+    return api
       .post(
         `/api/v1/community/comment/${id}/like`,
         {},
@@ -61,6 +62,30 @@ const BoardCommentTemplate = ({
         toast.error('실패');
       });
   }, []);
+  const handleDlete = useCallback(() => {
+    if (!auth) {
+      toast.error('로그인이 필요합니다.');
+      return;
+    }
+    return api
+      .delete(`/api/v1/community/comment/${id}`, {
+        headers: {
+          Authorization: `Bearer ${auth?.token?.access_token}`,
+        },
+      })
+      .then(() => {
+        toast.success('성공');
+        mutate(
+          !auth?.token
+            ? `/api/v1/community/anonymous/${community_id}`
+            : `/api/v1/community/${community_id}`,
+        );
+      })
+      .catch(() => {
+        toast.error('실패');
+      });
+  }, []);
+
   return (
     <Box sx={{ ...props }} pl={2} pt={1}>
       <Box pb={3}>
@@ -86,6 +111,18 @@ const BoardCommentTemplate = ({
           >
             {is_liked ? '공감 취소' : '공감'}
           </Typography>
+          {creator_id === auth?.user?.id && (
+            <Typography
+              fontSize={11}
+              onClick={handleDlete}
+              component="span"
+              mr={1}
+              sx={{ cursor: 'pointer' }}
+              color="#a6a6a6"
+            >
+              삭제
+            </Typography>
+          )}
         </Box>
       </Box>
       <Typography py={1} fontSize={14}>
@@ -127,6 +164,7 @@ const BoardCommentItem = ({
   likes,
   children,
   is_liked,
+  creator_id,
 }: IProps) => {
   const auth = useContext(UserStateContext);
   const { mutate } = useSWRConfig();
@@ -139,7 +177,7 @@ const BoardCommentItem = ({
       toast.error('로그인이 필요합니다.');
       return;
     }
-    api
+    return api
       .post(
         `/api/v1/community/comment/${id}/like`,
         {},
@@ -151,6 +189,29 @@ const BoardCommentItem = ({
       )
       .then(() => {
         toast.success(is_liked ? '취소' : '공감');
+        mutate(
+          !auth?.token
+            ? `/api/v1/community/anonymous/${community_id}`
+            : `/api/v1/community/${community_id}`,
+        );
+      })
+      .catch(() => {
+        toast.error('실패');
+      });
+  }, []);
+  const handleDlete = useCallback(() => {
+    if (!auth) {
+      toast.error('로그인이 필요합니다.');
+      return;
+    }
+    return api
+      .delete(`/api/v1/community/comment/${id}`, {
+        headers: {
+          Authorization: `Bearer ${auth?.token?.access_token}`,
+        },
+      })
+      .then(() => {
+        toast.success('성공');
         mutate(
           !auth?.token
             ? `/api/v1/community/anonymous/${community_id}`
@@ -197,6 +258,18 @@ const BoardCommentItem = ({
           >
             {is_liked ? '공감 취소' : '공감'}
           </Typography>
+          {creator_id === auth?.user?.id && (
+            <Typography
+              fontSize={11}
+              onClick={handleDlete}
+              component="span"
+              mr={1}
+              sx={{ cursor: 'pointer' }}
+              color="#a6a6a6"
+            >
+              삭제
+            </Typography>
+          )}
         </Box>
       </Box>
       <Typography py={1} fontSize={14}>

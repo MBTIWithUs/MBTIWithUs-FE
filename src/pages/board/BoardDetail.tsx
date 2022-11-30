@@ -4,7 +4,7 @@ import { UserStateContext } from '@contexts/UserContext';
 import api from '@libs/api';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { BoardCommentWrapperType, BoardDetailType } from 'features/board/types';
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
@@ -14,11 +14,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import BoardCommentItem from '@components/board/BoardCommentItem';
 import BoardCommentInput from '@components/board/BoardCommentInput';
 import { toast } from 'react-toastify';
+import BoardWriter from '@components/board/BoardWriter';
 
 const BoardDetailPage = () => {
   const { id } = useParams();
 
   const auth = useContext(UserStateContext);
+  const [doing, setDoing] = useState(false);
   const { data, mutate } = useSWR<BoardDetailType>(
     typeof window === 'undefined'
       ? 'null'
@@ -74,6 +76,15 @@ const BoardDetailPage = () => {
     <Container sx={{ py: 3 }}>
       {isLoading ? (
         <OverlayLoading isLoading />
+      ) : doing ? (
+        <BoardWriter
+          tag={data.tag}
+          mutate={mutate}
+          isRevise
+          previousTitle={data.title}
+          previousContent={data.content}
+          id={data.id}
+        />
       ) : (
         <Container maxWidth="md">
           <Typography
@@ -89,6 +100,10 @@ const BoardDetailPage = () => {
               is_anonymous={data.is_anonymous}
               created_at={data.created_at}
               creator_nickname={data.creator_nickname}
+              isMe={auth?.user?.id === data.creator_id}
+              id={id}
+              mutate={mutate}
+              setDoing={setDoing}
             />
             <Typography fontSize={22} fontWeight={600}>
               {data.title}

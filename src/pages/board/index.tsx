@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import BoardListItem from '@components/board/BoardListItem';
 import OverlayLoading from '@components/OverlayLoading';
 import { Container, List, Typography } from '@mui/material';
@@ -7,20 +7,23 @@ import useSWRInfinite, { SWRInfiniteKeyLoader } from 'swr/infinite';
 import { UserStateContext } from '@contexts/UserContext';
 import api from '@libs/api';
 import BoardWriter from '@components/board/BoardWriter';
+import { useLocation } from 'react-router-dom';
 
 const LIMIT = 10;
 
 const BoardPage = () => {
+  const location = useLocation();
+  const url = new URLSearchParams(location.search);
+  const mbti = url.get('mbti');
+
   const auth = useContext(UserStateContext);
-  const listRef = useRef(null);
   const [isEnd, setIsEnd] = useState(false);
 
   const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
-    if (previousPageData && pageIndex >= previousPageData.total_pages) {
+    if (previousPageData && pageIndex >= previousPageData.meta.total_pages) {
       setIsEnd(true);
       return null;
     }
-
     return !auth?.token
       ? `/api/v1/community/search/anonymous?page=${
           pageIndex + 1
@@ -29,14 +32,20 @@ const BoardPage = () => {
   };
 
   const { data, setSize, error, isValidating, mutate } =
-    useSWRInfinite<BoardListType>(getKey, (url) =>
-      api
-        .get(url, {
-          headers: {
-            Authorization: `Bearer ${auth?.token?.access_token}`,
-          },
-        })
-        .then((res) => res.data),
+    useSWRInfinite<BoardListType>(
+      getKey,
+      (url) =>
+        api
+          .get(mbti ? `${url}&tag=${mbti}` : url, {
+            headers: {
+              Authorization: `Bearer ${auth?.token?.access_token}`,
+            },
+          })
+          .then((res) => res.data),
+      {
+        refreshInterval: 0,
+        revalidateOnFocus: false,
+      },
     );
 
   const articles = data ? [...data.map((item) => item.items).flat()] : [];
@@ -52,7 +61,7 @@ const BoardPage = () => {
     };
     window.addEventListener('scroll', handleScroll, { capture: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isEnd]);
 
   const isLoading = !error && !data;
 
@@ -68,10 +77,10 @@ const BoardPage = () => {
             variant="h6"
             fontWeight={700}
           >
-            자유게시판
+            {mbti ? `${mbti} 게시판` : '자유게시판'}
           </Typography>
-          <BoardWriter tag="" mutate={mutate} />
-          <List ref={listRef}>
+          <BoardWriter tag={mbti} mutate={mutate} />
+          <List>
             {articles.map((item) => (
               <BoardListItem key={item.id} {...item} />
             ))}

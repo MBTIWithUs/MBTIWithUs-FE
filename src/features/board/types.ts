@@ -41,6 +41,7 @@ export interface BoardDetailType {
   created_at: string;
   updated_at: string | null;
   creator_nickname: string;
+  creator_id: number;
   is_anonymous: boolean;
   likes: number;
   is_liked?: boolean;
