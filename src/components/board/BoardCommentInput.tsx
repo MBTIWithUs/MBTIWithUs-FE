@@ -7,16 +7,54 @@ import {
   InputAdornment,
   Typography,
 } from '@mui/material';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import CreateIcon from '@mui/icons-material/Create';
+import { UserStateContext } from '@contexts/UserContext';
+import { toast } from 'react-toastify';
+import api from '@libs/api';
 
-const BoardCommentInput = () => {
+interface IProps {
+  community_id: number;
+  parrent_comment_id?: number;
+}
+
+const BoardCommentInput = ({ community_id, parrent_comment_id }: IProps) => {
   const [check, setCheck] = useState(false);
   const [content, setContent] = useState('');
+  const auth = useContext(UserStateContext);
 
   const handleCheck = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setCheck(e.target.checked);
   }, []);
+
+  const handleSubmit = useCallback(
+    async (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      if (!auth) {
+        toast.error('로그인이 필요합니다');
+      }
+      api
+        .post(
+          `/api/v1/community/comment`,
+          {
+            is_anonymous: check,
+            content,
+            community_id,
+            parrent_comment_id: parrent_comment_id ? parrent_comment_id : null,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${auth?.token?.access_token}`,
+            },
+          },
+        )
+        .then((res) => {
+          console.log(res);
+          toast.success('성공?');
+        });
+    },
+    [content, check],
+  );
 
   return (
     <FormControl fullWidth sx={{ border: '1px solid #e3e3e3' }}>
@@ -50,7 +88,7 @@ const BoardCommentInput = () => {
               }
               sx={{ mr: 0 }}
             />
-            <IconButton>
+            <IconButton onClick={handleSubmit}>
               <CreateIcon color="primary" />
             </IconButton>
           </InputAdornment>

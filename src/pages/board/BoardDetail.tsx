@@ -21,8 +21,8 @@ const BoardDetailPage = () => {
     typeof window === 'undefined'
       ? 'null'
       : !auth?.token
-      ? `/api/v1/community/${id}`
-      : `/api/v1/community/anonymous/${id}`,
+      ? `/api/v1/community/anonymous/${id}`
+      : `/api/v1/community/${id}`,
     (url) =>
       api
         .get(url, {
@@ -107,9 +107,9 @@ const BoardDetailPage = () => {
             </Box>
           </Box>
           {data?.comments.map((item) => (
-            <BoardCommentItem key={item.id} {...item} />
+            <BoardCommentItem key={item.id} {...item} community_id={data?.id} />
           ))}
-          <BoardCommentInput />
+          <BoardCommentInput community_id={data.id} />
         </Container>
       )}
     </Container>

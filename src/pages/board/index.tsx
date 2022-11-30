@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import BoardListItem from '@components/board/BoardListItem';
 import OverlayLoading from '@components/OverlayLoading';
-import { Button, Container, List, Typography } from '@mui/material';
+import { Container, List, Typography } from '@mui/material';
 import { BoardListType } from 'features/board/types';
 import useSWRInfinite, { SWRInfiniteKeyLoader } from 'swr/infinite';
 import { UserStateContext } from '@contexts/UserContext';

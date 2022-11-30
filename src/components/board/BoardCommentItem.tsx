@@ -6,14 +6,19 @@ import { getMomentFromNow } from '@libs/time';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import BoardCommentInput from './BoardCommentInput';
 
+interface IProps extends BoardCommentType {
+  community_id: number;
+}
+
 const BoardCommentItem = ({
   id,
+  community_id,
   is_anonymous,
   content,
   created_at,
   creator_nickname,
   likes,
-}: BoardCommentType) => {
+}: IProps) => {
   const [open, setOpen] = useState(false);
   const handleComment = useCallback(() => {
     setOpen((prev) => !prev);
@@ -82,7 +87,10 @@ const BoardCommentItem = ({
       </Typography>
       {open && (
         <Box pl={2} pt={2}>
-          <BoardCommentInput />
+          <BoardCommentInput
+            community_id={community_id}
+            parrent_comment_id={id}
+          />
         </Box>
       )}
     </Box>
