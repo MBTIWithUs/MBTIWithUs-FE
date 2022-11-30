@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import BoardListItem from '@components/board/BoardListItem';
 import OverlayLoading from '@components/OverlayLoading';
-import { Container, List, Typography } from '@mui/material';
+import { Button, Container, List, Typography } from '@mui/material';
 import { BoardListType } from 'features/board/types';
 import useSWRInfinite, { SWRInfiniteKeyLoader } from 'swr/infinite';
 import { UserStateContext } from '@contexts/UserContext';
@@ -13,18 +13,19 @@ const LIMIT = 10;
 
 const BoardPage = () => {
   const auth = useContext(UserStateContext);
-  const [page, setPage] = useState(1);
-  // <BoardListType>
 
   const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
-    if (previousPageData && !previousPageData.length) return null;
+    if (previousPageData && pageIndex >= previousPageData.total_pages)
+      return null;
 
     return !auth?.token
-      ? `/api/v1/community/search/anonymous?page=${pageIndex}&limit=${LIMIT}`
-      : `/api/v1/community/search?page=${pageIndex}&limit=${LIMIT}`;
+      ? `/api/v1/community/search/anonymous?page=${
+          pageIndex + 1
+        }&limit=${LIMIT}`
+      : `/api/v1/community/search?page=${pageIndex + 1}&limit=${LIMIT}`;
   };
 
-  const { data } = useSWRInfinite(getKey, (url) =>
+  const { data, size, setSize } = useSWRInfinite<BoardListType>(getKey, (url) =>
     api
       .get(url, {
         headers: {
@@ -34,8 +35,9 @@ const BoardPage = () => {
       .then((res) => res.data),
   );
 
-  const articles = data ? data.map((item) => item.items).flat() : [];
-  console.log(articles);
+  const articles = data ? [...data.map((item) => item.items).flat()] : [];
+
+  console.warn(size, articles, 111, data);
 
   return (
     <Container sx={{ py: 3 }}>
@@ -53,9 +55,11 @@ const BoardPage = () => {
           </Typography>
           <BoardWriter tag="" />
           <List>
-            {/* {articles &&
-              articles.map((item) => <BoardListItem key={item.id} {...item} />)} */}
+            {articles.map((item) => (
+              <BoardListItem key={item.id} {...item} />
+            ))}
           </List>
+          <Button onClick={() => setSize((prev) => prev + 1)}>test</Button>
         </Container>
       )}
     </Container>
