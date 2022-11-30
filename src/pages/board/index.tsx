@@ -51,7 +51,7 @@ const BoardPage = () => {
         !isEnd && setSize((prev) => prev + 1);
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { capture: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

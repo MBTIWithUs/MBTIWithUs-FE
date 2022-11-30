@@ -57,9 +57,13 @@ const BoardDetailPage = () => {
             <Typography fontSize={22} fontWeight={600}>
               {data.title}
             </Typography>
-            <Typography fontSize={14} mt={2}>
-              {data.content}
-            </Typography>
+            <Typography
+              fontSize={14}
+              mt={2}
+              component="div"
+              sx={{ img: { maxWidth: '100%' } }}
+              dangerouslySetInnerHTML={{ __html: data.content }}
+            />
             <Box py={2}>
               <Typography
                 fontSize={13}
