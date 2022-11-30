@@ -12,14 +12,16 @@ import CreateIcon from '@mui/icons-material/Create';
 import { UserStateContext } from '@contexts/UserContext';
 import { toast } from 'react-toastify';
 import api from '@libs/api';
+import { useSWRConfig } from 'swr';
 
 interface IProps {
   community_id: number;
-  parrent_comment_id?: number;
+  parent_comment_id?: number;
 }
 
-const BoardCommentInput = ({ community_id, parrent_comment_id }: IProps) => {
+const BoardCommentInput = ({ community_id, parent_comment_id }: IProps) => {
   const [check, setCheck] = useState(false);
+  const { mutate } = useSWRConfig();
   const [content, setContent] = useState('');
   const auth = useContext(UserStateContext);
 
@@ -32,6 +34,7 @@ const BoardCommentInput = ({ community_id, parrent_comment_id }: IProps) => {
       e.preventDefault();
       if (!auth) {
         toast.error('로그인이 필요합니다');
+        return;
       }
       api
         .post(
@@ -40,7 +43,7 @@ const BoardCommentInput = ({ community_id, parrent_comment_id }: IProps) => {
             is_anonymous: check,
             content,
             community_id,
-            parrent_comment_id: parrent_comment_id ? parrent_comment_id : null,
+            parent_comment_id: parent_comment_id ? parent_comment_id : null,
           },
           {
             headers: {
@@ -48,9 +51,17 @@ const BoardCommentInput = ({ community_id, parrent_comment_id }: IProps) => {
             },
           },
         )
-        .then((res) => {
-          console.log(res);
-          toast.success('성공?');
+        .then(() => {
+          mutate(
+            !auth?.token
+              ? `/api/v1/community/anonymous/${community_id}`
+              : `/api/v1/community/${community_id}`,
+          );
+          toast.success('성공');
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error('에러');
         });
     },
     [content, check],

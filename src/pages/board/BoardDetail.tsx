@@ -3,21 +3,23 @@ import OverlayLoading from '@components/OverlayLoading';
 import { UserStateContext } from '@contexts/UserContext';
 import api from '@libs/api';
 import { Box, Button, Container, Typography } from '@mui/material';
-import { BoardDetailType } from 'features/board/types';
-import React, { useContext } from 'react';
+import { BoardCommentWrapperType, BoardDetailType } from 'features/board/types';
+import React, { useCallback, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import useSWR from 'swr';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import BoardCommentItem from '@components/board/BoardCommentItem';
 import BoardCommentInput from '@components/board/BoardCommentInput';
+import { toast } from 'react-toastify';
 
 const BoardDetailPage = () => {
   const { id } = useParams();
 
   const auth = useContext(UserStateContext);
-  const { data } = useSWR<BoardDetailType>(
+  const { data, mutate } = useSWR<BoardDetailType>(
     typeof window === 'undefined'
       ? 'null'
       : !auth?.token
@@ -32,6 +34,40 @@ const BoardDetailPage = () => {
         })
         .then((res) => res.data),
   );
+
+  const handleLike = useCallback(async () => {
+    if (!auth) {
+      toast.error('로그인이 필요합니다.');
+      return;
+    }
+    api
+      .post(
+        `/api/v1/community/${id}/like`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${auth?.token?.access_token}`,
+          },
+        },
+      )
+      .then(() => {
+        toast.success(data?.is_liked ? '취소' : '공감');
+        mutate();
+      })
+      .catch(() => {
+        toast.error('실패');
+      });
+  }, [auth, id, data?.is_liked]);
+
+  const commentWrapper: BoardCommentWrapperType[] | undefined = data?.comments
+    .map((item) => ({
+      ...item,
+      children: data?.comments.filter(
+        (child) => item.id === child.parent_comment_id,
+      ),
+    }))
+    .filter((item) => item.parent_comment_id === null);
+
   const isLoading = !data;
 
   return (
@@ -99,16 +135,28 @@ const BoardDetailPage = () => {
             <Box mt={2}>
               <Button
                 variant="outlined"
-                startIcon={<ThumbUpOffAltIcon sx={{ mr: 0 }} />}
+                startIcon={
+                  data?.is_liked ? (
+                    <ThumbUpAltIcon sx={{ mr: 0 }} />
+                  ) : (
+                    <ThumbUpOffAltIcon sx={{ mr: 0 }} />
+                  )
+                }
                 size="small"
+                onClick={handleLike}
               >
-                추천
+                {data?.is_liked ? '취소' : '추천'}
               </Button>
             </Box>
           </Box>
-          {data?.comments.map((item) => (
-            <BoardCommentItem key={item.id} {...item} community_id={data?.id} />
-          ))}
+          {commentWrapper &&
+            commentWrapper.map((item) => (
+              <BoardCommentItem
+                key={item.id}
+                {...item}
+                community_id={data?.id}
+              />
+            ))}
           <BoardCommentInput community_id={data.id} />
         </Container>
       )}

@@ -28,9 +28,8 @@ const BoardPage = () => {
       : `/api/v1/community/search?page=${pageIndex + 1}&limit=${LIMIT}`;
   };
 
-  const { data, setSize, error, isValidating } = useSWRInfinite<BoardListType>(
-    getKey,
-    (url) =>
+  const { data, setSize, error, isValidating, mutate } =
+    useSWRInfinite<BoardListType>(getKey, (url) =>
       api
         .get(url, {
           headers: {
@@ -38,7 +37,7 @@ const BoardPage = () => {
           },
         })
         .then((res) => res.data),
-  );
+    );
 
   const articles = data ? [...data.map((item) => item.items).flat()] : [];
 
@@ -71,7 +70,7 @@ const BoardPage = () => {
           >
             자유게시판
           </Typography>
-          <BoardWriter tag="" />
+          <BoardWriter tag="" mutate={mutate} />
           <List ref={listRef}>
             {articles.map((item) => (
               <BoardListItem key={item.id} {...item} />

@@ -22,8 +22,10 @@ import { UserStateContext } from '@contexts/UserContext';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 import config from '@config';
+import { toast } from 'react-toastify';
 
-const BoardWriter = ({ tag }: { tag: string }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const BoardWriter = ({ tag, mutate }: { tag: string; mutate: any }) => {
   const [open, setOpen] = useState(false);
   const auth = useContext(UserStateContext);
   const quillRef = useRef<ReactQuill>(null);
@@ -76,8 +78,8 @@ const BoardWriter = ({ tag }: { tag: string }) => {
   };
 
   const handleSubmit = useCallback(async () => {
-    try {
-      const { data } = await api.post(
+    api
+      .post(
         `/api/v1/community`,
         {
           title: title,
@@ -90,11 +92,16 @@ const BoardWriter = ({ tag }: { tag: string }) => {
             Authorization: `Bearer ${auth?.token?.access_token}`,
           },
         },
-      );
-      console.log(data);
-    } catch (e) {
-      console.log(e);
-    }
+      )
+      .then(() => {
+        mutate();
+        setTitle('');
+        setContent('');
+        toast.success('성공');
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }, [title, content, check, tag]);
 
   const moudles = useMemo(

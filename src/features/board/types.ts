@@ -7,7 +7,12 @@ export interface BoardCommentType {
   creator_id: number;
   creator_nickname: string;
   likes: number;
+  is_liked?: boolean;
   updated_at: string | null;
+}
+
+export interface BoardCommentWrapperType extends BoardCommentType {
+  children: BoardCommentType[];
 }
 
 export interface BoardItemType {
@@ -38,6 +43,7 @@ export interface BoardDetailType {
   creator_nickname: string;
   is_anonymous: boolean;
   likes: number;
+  is_liked?: boolean;
 }
 
 export interface BoardListType {
