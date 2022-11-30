@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import BoardListItem from '@components/board/BoardListItem';
 import OverlayLoading from '@components/OverlayLoading';
 import { Button, Container, List, Typography } from '@mui/material';
@@ -8,15 +8,18 @@ import { UserStateContext } from '@contexts/UserContext';
 import api from '@libs/api';
 import BoardWriter from '@components/board/BoardWriter';
 
-const isLoading = false;
 const LIMIT = 10;
 
 const BoardPage = () => {
   const auth = useContext(UserStateContext);
+  const listRef = useRef(null);
+  const [isEnd, setIsEnd] = useState(false);
 
   const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
-    if (previousPageData && pageIndex >= previousPageData.total_pages)
+    if (previousPageData && pageIndex >= previousPageData.total_pages) {
+      setIsEnd(true);
       return null;
+    }
 
     return !auth?.token
       ? `/api/v1/community/search/anonymous?page=${
@@ -25,19 +28,34 @@ const BoardPage = () => {
       : `/api/v1/community/search?page=${pageIndex + 1}&limit=${LIMIT}`;
   };
 
-  const { data, size, setSize } = useSWRInfinite<BoardListType>(getKey, (url) =>
-    api
-      .get(url, {
-        headers: {
-          Authorization: `Bearer ${auth?.token?.access_token}`,
-        },
-      })
-      .then((res) => res.data),
+  const { data, setSize, error, isValidating } = useSWRInfinite<BoardListType>(
+    getKey,
+    (url) =>
+      api
+        .get(url, {
+          headers: {
+            Authorization: `Bearer ${auth?.token?.access_token}`,
+          },
+        })
+        .then((res) => res.data),
   );
 
   const articles = data ? [...data.map((item) => item.items).flat()] : [];
 
-  console.warn(size, articles, 111, data);
+  useEffect(() => {
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } =
+        document.documentElement;
+
+      if (scrollTop + clientHeight >= scrollHeight) {
+        !isEnd && setSize((prev) => prev + 1);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const isLoading = !error && !data;
 
   return (
     <Container sx={{ py: 3 }}>
@@ -54,12 +72,12 @@ const BoardPage = () => {
             자유게시판
           </Typography>
           <BoardWriter tag="" />
-          <List>
+          <List ref={listRef}>
             {articles.map((item) => (
               <BoardListItem key={item.id} {...item} />
             ))}
+            {isValidating && !isEnd && <OverlayLoading isLoading />}
           </List>
-          <Button onClick={() => setSize((prev) => prev + 1)}>test</Button>
         </Container>
       )}
     </Container>
