@@ -77,14 +77,25 @@ const BoardDetailPage = () => {
       {isLoading ? (
         <OverlayLoading isLoading />
       ) : doing ? (
-        <BoardWriter
-          tag={data.tag}
-          mutate={mutate}
-          isRevise
-          previousTitle={data.title}
-          previousContent={data.content}
-          id={data.id}
-        />
+        <>
+          <Typography
+            sx={{ border: '1px solid #e3e3e3' }}
+            p={1}
+            variant="h6"
+            fontWeight={700}
+          >
+            글 수정
+          </Typography>
+          <BoardWriter
+            tag={data.tag}
+            mutate={mutate}
+            isRevise
+            previousTitle={data.title}
+            previousContent={data.content}
+            id={data.id}
+            isOpen
+          />
+        </>
       ) : (
         <Container maxWidth="md">
           <Typography
@@ -93,7 +104,7 @@ const BoardDetailPage = () => {
             variant="h6"
             fontWeight={700}
           >
-            자유게시판
+            {data.tag === 'NULL' ? '자유게시판' : `${data.tag} 게시판`}
           </Typography>
           <Box sx={{ border: '1px solid #e3e3e3', mt: 2, p: 2, pb: 2 }}>
             <BoardDetailHeader

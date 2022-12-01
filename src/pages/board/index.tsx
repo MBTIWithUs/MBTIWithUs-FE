@@ -79,7 +79,7 @@ const BoardPage = () => {
           >
             {mbti ? `${mbti} 게시판` : '자유게시판'}
           </Typography>
-          <BoardWriter tag={mbti} mutate={mutate} />
+          <BoardWriter tag={mbti ? mbti : 'NULL'} mutate={mutate} />
           <List>
             {articles.map((item) => (
               <BoardListItem key={item.id} {...item} />

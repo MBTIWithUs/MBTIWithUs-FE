@@ -27,6 +27,7 @@ import { toast } from 'react-toastify';
 import ImageIcon from '@mui/icons-material/Image';
 import { useRecoilState } from 'recoil';
 import { doingState } from '@atoms/util';
+import { useNavigate } from 'react-router-dom';
 
 const BoardWriter = ({
   tag,
@@ -35,20 +36,23 @@ const BoardWriter = ({
   previousContent,
   isRevise,
   id,
+  isOpen,
 }: {
   tag: string | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mutate: any;
+  isOpen?: boolean;
   isRevise?: boolean;
   previousTitle?: string;
   previousContent?: string;
   id?: number;
 }) => {
-  // const [open, setOpen] = useState(false);
-  const [open, setOpen] = useRecoilState(doingState);
+  const [open, setOpen] = useState(isOpen ? isOpen : false);
+  // const [open, setOpen] = useRecoilState(doingState);
   const auth = useContext(UserStateContext);
   const quillRef = useRef<ReactQuill>(null);
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState(previousTitle ? previousTitle : '');
   const [content, setContent] = useState(
@@ -119,6 +123,7 @@ const BoardWriter = ({
           setContent('');
           setOpen(false);
           toast.success('성공');
+          isOpen && navigate(-1);
         })
         .catch((e) => {
           console.log(e);

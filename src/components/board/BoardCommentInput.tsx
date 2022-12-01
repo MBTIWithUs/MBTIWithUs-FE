@@ -36,7 +36,7 @@ const BoardCommentInput = ({ community_id, parent_comment_id }: IProps) => {
         toast.error('로그인이 필요합니다');
         return;
       }
-      api
+      return api
         .post(
           `/api/v1/community/comment`,
           {
@@ -56,7 +56,9 @@ const BoardCommentInput = ({ community_id, parent_comment_id }: IProps) => {
             !auth?.token
               ? `/api/v1/community/anonymous/${community_id}`
               : `/api/v1/community/${community_id}`,
-          );
+          ).then(() => {
+            setContent('');
+          });
           toast.success('성공');
         })
         .catch((err) => {
