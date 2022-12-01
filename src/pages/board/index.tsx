@@ -63,6 +63,10 @@ const BoardPage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isEnd]);
 
+  useEffect(() => {
+    mutate();
+  }, [mbti]);
+
   const isLoading = !error && !data;
 
   return (

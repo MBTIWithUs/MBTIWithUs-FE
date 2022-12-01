@@ -21,16 +21,24 @@ import { UserDispatchContext, UserStateContext } from '@contexts/UserContext';
 import { Link } from 'react-router-dom';
 import path from '@routes/path';
 import { authState } from '@atoms/auth';
+import { useState } from 'react';
 
 const PAGE = [
   { ...path.home, icon: <HomeIcon /> },
   { ...path.mbti, icon: <SearchIcon /> },
-  { ...path.board, icon: <CommentIcon /> },
+  // { ...path.board, icon: <CommentIcon /> },
 ];
 
 const USER_PAGE = [
   { ...path.profile, icon: <SettingsAccessibilityIcon /> },
   // { ...path.setting, icon: <SettingsIcon /> },
+];
+
+const MBTI_TYPES = [
+  ['ISTJ', 'ISTP', 'ISFJ', 'ISFP'],
+  ['INTJ', 'INTP', 'INFJ', 'INFP'],
+  ['ESTJ', 'ESTP', 'ESFJ', 'ESFP'],
+  ['ENTJ', 'ENTP', 'ENFJ', 'ENFP'],
 ];
 
 const Drawer = () => {
@@ -39,6 +47,7 @@ const Drawer = () => {
   const [, setToken] = useRecoilState(authState);
   const [mode, setMode] = useRecoilState(appThemeMode);
   const dispatch = useContext(UserDispatchContext);
+  const [boardOpen, setBoardOpen] = useState(false);
   const toggleMode = () => {
     setMode((prevState) => (prevState === 'light' ? 'dark' : 'light'));
   };
@@ -72,6 +81,26 @@ const Drawer = () => {
             <ListItemText>{item.title}</ListItemText>
           </ListItemButton>
         ))}
+        <ListItemButton onClick={() => setBoardOpen((prev) => !prev)}>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText>{path.board.title}</ListItemText>
+        </ListItemButton>
+        {boardOpen && (
+          <List>
+            {MBTI_TYPES.flat().map((item) => (
+              <ListItemButton
+                key={item}
+                component={Link}
+                to={`${path.board.route}?mbti=${item}`}
+                sx={{ ml: 3 }}
+              >
+                <ListItemText>{item}</ListItemText>
+              </ListItemButton>
+            ))}
+          </List>
+        )}
       </List>
       <Divider />
       <List>
