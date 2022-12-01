@@ -19,34 +19,34 @@ const MbtiCard = ({
 }) => {
   return (
     <Grid item xs={6} sm={6} md={3}>
-      <Card sx={{ boxShadow: 5 }}>
-        <CardActionArea sx={{ p: 2 }}>
-          <CardMedia
-            component="img"
-            image={src}
-            alt={title + 'image'}
-            sx={{ borderRadius: '50%' }}
-          />
-          <CardContent>
-            <Typography
-              gutterBottom
-              variant="h5"
-              component="div"
-              fontWeight={700}
-              letterSpacing={5}
-            >
-              {title}
-            </Typography>
-            <Typography
-              fontWeight={500}
-              sx={{ opacity: 0.7 }}
-              color="text.secondary"
-              minHeight={70}
-            >
-              {content}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
+      <Card sx={{ boxShadow: 5, p: 2 }}>
+        {/* <CardActionArea sx={{ p: 2 }}> */}
+        <CardMedia
+          component="img"
+          image={src}
+          alt={title + 'image'}
+          sx={{ borderRadius: '50%' }}
+        />
+        <CardContent>
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="div"
+            fontWeight={700}
+            letterSpacing={5}
+          >
+            {title}
+          </Typography>
+          <Typography
+            fontWeight={500}
+            sx={{ opacity: 0.7 }}
+            color="text.secondary"
+            minHeight={70}
+          >
+            {content}
+          </Typography>
+        </CardContent>
+        {/* </CardActionArea> */}
       </Card>
     </Grid>
   );

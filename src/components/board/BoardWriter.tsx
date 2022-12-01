@@ -9,6 +9,7 @@ import {
   InputBase,
   useTheme,
   Button,
+  FormHelperText,
 } from '@mui/material';
 import React, {
   useCallback,
@@ -25,9 +26,18 @@ import 'react-quill/dist/quill.bubble.css';
 import config from '@config';
 import { toast } from 'react-toastify';
 import ImageIcon from '@mui/icons-material/Image';
-import { useRecoilState } from 'recoil';
-import { doingState } from '@atoms/util';
 import { useNavigate } from 'react-router-dom';
+
+const REG = {
+  title: {
+    min: 5,
+    max: 64,
+  },
+  content: {
+    min: 10,
+    max: 1024,
+  },
+};
 
 const BoardWriter = ({
   tag,
@@ -53,6 +63,10 @@ const BoardWriter = ({
   const quillRef = useRef<ReactQuill>(null);
   const theme = useTheme();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<{
+    title: string;
+    content: string;
+  } | null>(null);
 
   const [title, setTitle] = useState(previousTitle ? previousTitle : '');
   const [content, setContent] = useState(
@@ -107,6 +121,21 @@ const BoardWriter = ({
       toast.error('로그인이 필요합니다');
       return;
     }
+    // check reg
+    if (
+      !(REG.title.min <= title.length && title.length <= REG.title.max) ||
+      !(REG.content.min <= content.length && content.length <= REG.content.max)
+    ) {
+      setErrorMessage({
+        title: '제목은 5~64자여야 합니다.',
+        content: '내용은 10~1024자여야 합니다.',
+      });
+
+      return;
+    }
+
+    setErrorMessage(null);
+
     if (isRevise) {
       return api
         .put(
@@ -160,7 +189,7 @@ const BoardWriter = ({
         console.log(e);
         toast.error('에러');
       });
-  }, [title, content, check, tag]);
+  }, [title, content, check, tag, errorMessage]);
 
   const moudles = useMemo(
     () => ({
@@ -241,19 +270,10 @@ const BoardWriter = ({
             placeholder="글 제목"
             value={title}
             onChange={handleTitle}
-            sx={{ p: 1, px: 2, fontWeight: 700 }}
+            sx={{ p: 1, px: 2, pb: 0, fontWeight: 700 }}
           />
+          <FormHelperText error>{errorMessage?.title}</FormHelperText>
           <Divider />
-          {/* <Input
-            fullWidth
-            disableUnderline
-            value={content}
-            onChange={handleContent}
-            placeholder="글 내용"
-            multiline
-            rows={10}
-            sx={{ p: 1, fontSize: 14 }}
-          /> */}
           <ReactQuill
             ref={quillRef}
             value={content}
@@ -266,6 +286,7 @@ const BoardWriter = ({
             }}
             modules={moudles}
           />
+          <FormHelperText error>{errorMessage?.content}</FormHelperText>
           <Divider />
           <Box px={1} py={0.5} m={0} component="ul" sx={{ listStyle: 'none' }}>
             <li style={{ float: 'left' }}>

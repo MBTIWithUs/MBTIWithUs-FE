@@ -2,6 +2,7 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   IconButton,
   Input,
   InputAdornment,
@@ -19,11 +20,19 @@ interface IProps {
   parent_comment_id?: number;
 }
 
+const REG = {
+  content: {
+    min: 5,
+    max: 256,
+  },
+};
+
 const BoardCommentInput = ({ community_id, parent_comment_id }: IProps) => {
   const [check, setCheck] = useState(false);
   const { mutate } = useSWRConfig();
   const [content, setContent] = useState('');
   const auth = useContext(UserStateContext);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleCheck = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setCheck(e.target.checked);
@@ -36,6 +45,21 @@ const BoardCommentInput = ({ community_id, parent_comment_id }: IProps) => {
         toast.error('로그인이 필요합니다');
         return;
       }
+      //reg
+      if (
+        !(
+          REG.content.min <= content.length && content.length <= REG.content.max
+        )
+      ) {
+        setErrorMessage(
+          `댓글은 ${REG.content.min}~${REG.content.max}자여야 합니다.`,
+        );
+
+        return;
+      }
+
+      setErrorMessage(null);
+
       return api
         .post(
           `/api/v1/community/comment`,
@@ -107,6 +131,7 @@ const BoardCommentInput = ({ community_id, parent_comment_id }: IProps) => {
           </InputAdornment>
         }
       />
+      <FormHelperText error>{errorMessage}</FormHelperText>
     </FormControl>
   );
 };
