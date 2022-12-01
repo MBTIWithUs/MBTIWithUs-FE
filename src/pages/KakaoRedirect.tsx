@@ -1,4 +1,5 @@
 import { authState } from '@atoms/auth';
+import { callbackState } from '@atoms/util';
 import { UserDispatchContext } from '@contexts/UserContext';
 import { Container, Typography } from '@mui/material';
 import React, { useContext, useEffect } from 'react';
@@ -10,12 +11,14 @@ const KakaoRedirect = () => {
   const { search } = useLocation();
   const navigate = useNavigate();
   const dispatch = useContext(UserDispatchContext);
+  const [callbackUrl, setCallbackUrl] = useRecoilState(callbackState);
 
   const [, setAuthToken] = useRecoilState(authState);
 
   const confirmLogin = async () => {
     const params = new URLSearchParams(search);
     const code = params.get('code');
+
     if (code) {
       const raw = await fetch(`/api/v1/auth/kakao/token?code=${code}`, {
         method: 'POST',
@@ -40,7 +43,8 @@ const KakaoRedirect = () => {
         });
         await setAuthToken(token);
       }
-      navigate('/');
+      navigate(callbackUrl ? callbackUrl : '/');
+      setCallbackUrl('');
     }
   };
 

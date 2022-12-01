@@ -6,8 +6,10 @@ import OverlayLoading from '@components/OverlayLoading';
 import { UserStateContext } from '@contexts/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '@libs/api';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { questionState } from '@atoms/question';
+import { callbackState } from '@atoms/util';
+import { toast } from 'react-toastify';
 
 const MAX_QUESTIONS = 6;
 
@@ -15,13 +17,10 @@ const MbtiSelfPage = () => {
   const location = useLocation();
   const search = new URLSearchParams(location.search);
   const target_id = search.get('target_id');
+  const [, setCallbackUrl] = useRecoilState(callbackState);
 
   const auth = useContext(UserStateContext);
   const navigate = useNavigate();
-
-  if (!auth?.user) {
-    navigate('/login');
-  }
 
   const [page, setPage] = useState(0);
   const [isLoading, setLoading] = useState(true);
@@ -70,13 +69,16 @@ const MbtiSelfPage = () => {
     }
   };
 
-  if (!auth?.user) {
-    navigate('/login');
-  }
-
   useEffect(() => {
     if (auth?.user) getData();
-  }, [auth]);
+
+    if (!auth?.user) {
+      toast.info('로그인이 필요합니다');
+
+      setCallbackUrl(location.pathname);
+      navigate(`/login`);
+    }
+  }, []);
 
   return (
     <Container sx={{ py: 3 }}>

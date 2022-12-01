@@ -14,6 +14,10 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { getMomentFromNow } from '@libs/time';
 import { Link } from 'react-router-dom';
 
+interface IProps extends BoardItemType {
+  mbti: string | null;
+}
+
 const BoardListItem = ({
   title,
   summary,
@@ -24,13 +28,15 @@ const BoardListItem = ({
   id,
   likes,
   thumbnail,
-}: BoardItemType) => {
+  mbti,
+}: IProps) => {
   return (
     <ListItem sx={{ p: 0, border: '1px solid #e3e3e3' }}>
       <ListItemButton
         sx={{ p: 1, m: 0 }}
         component={Link}
         to={`${id}`}
+        state={{ mbti }}
         style={{ alignItems: 'space-between' }}
       >
         <ListItemText

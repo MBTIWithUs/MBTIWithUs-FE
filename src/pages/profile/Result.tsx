@@ -37,7 +37,9 @@ const ResultPage = () => {
             sx={{ width: 80, height: 80 }}
           />
           <Typography fontWeight={700} mt={5}>
-            {result.target_nickname}님의 결과는
+            {result.writer_id === result.target_id
+              ? `${result.target_nickname}님의 결과는`
+              : `${result.writer_nickname}님이 작성한 ${result.target_nickname}님의 결과는`}
             <Typography
               fontSize={30}
               fontWeight={900}

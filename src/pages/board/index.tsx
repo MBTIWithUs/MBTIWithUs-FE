@@ -77,12 +77,12 @@ const BoardPage = () => {
             variant="h6"
             fontWeight={700}
           >
-            {mbti ? `${mbti} 게시판` : '자유게시판'}
+            {mbti ? `${mbti} 게시판` : '전체게시판'}
           </Typography>
           <BoardWriter tag={mbti ? mbti : 'NULL'} mutate={mutate} />
           <List>
             {articles.map((item) => (
-              <BoardListItem key={item.id} {...item} />
+              <BoardListItem key={item.id} {...item} mbti={mbti} />
             ))}
             {isValidating && !isEnd && <OverlayLoading isLoading />}
           </List>

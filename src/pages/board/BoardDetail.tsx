@@ -5,7 +5,7 @@ import api from '@libs/api';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { BoardCommentWrapperType, BoardDetailType } from 'features/board/types';
 import React, { useCallback, useContext, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
@@ -18,6 +18,8 @@ import BoardWriter from '@components/board/BoardWriter';
 
 const BoardDetailPage = () => {
   const { id } = useParams();
+  const { state } = useLocation();
+  const { mbti }: { mbti: string | null } = state;
 
   const auth = useContext(UserStateContext);
   const [doing, setDoing] = useState(false);
@@ -38,7 +40,7 @@ const BoardDetailPage = () => {
   );
 
   const handleLike = useCallback(async () => {
-    if (!auth) {
+    if (!auth?.token) {
       toast.error('로그인이 필요합니다.');
       return;
     }
@@ -72,6 +74,8 @@ const BoardDetailPage = () => {
 
   const isLoading = !data;
 
+  console.log(mbti);
+
   return (
     <Container sx={{ py: 3 }}>
       {isLoading ? (
@@ -104,7 +108,7 @@ const BoardDetailPage = () => {
             variant="h6"
             fontWeight={700}
           >
-            {data.tag === 'NULL' ? '자유게시판' : `${data.tag} 게시판`}
+            {mbti ? `${mbti} 게시판` : '전체게시판'}
           </Typography>
           <Box sx={{ border: '1px solid #e3e3e3', mt: 2, p: 2, pb: 2 }}>
             <BoardDetailHeader

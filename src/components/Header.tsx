@@ -25,7 +25,7 @@ import path from '@routes/path';
 
 const PAGE = [path.mbti, path.board];
 
-const USER_PAGE = [path.profile, path.setting];
+const USER_PAGE = [path.profile];
 
 const Header = () => {
   const auth = useContext(UserStateContext);

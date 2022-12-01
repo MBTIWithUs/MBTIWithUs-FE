@@ -72,7 +72,7 @@ const BoardDetailHeader = ({
         </Typography>
       </Box>
       <Box sx={{ float: 'right', listStyle: 'none' }}>
-        <Typography
+        {/* <Typography
           fontSize={11}
           component="span"
           mr={1}
@@ -89,7 +89,7 @@ const BoardDetailHeader = ({
           color="#a6a6a6"
         >
           신고
-        </Typography>
+        </Typography> */}
         {isMe && (
           <>
             <Typography
