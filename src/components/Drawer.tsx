@@ -14,7 +14,7 @@ import { appThemeMode } from '@atoms/theme';
 import ThemeSwitch from './buttons/ThemeSwitch';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
-import CommentIcon from '@mui/icons-material/Comment';
+// import CommentIcon from '@mui/icons-material/Comment';
 import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { UserDispatchContext, UserStateContext } from '@contexts/UserContext';

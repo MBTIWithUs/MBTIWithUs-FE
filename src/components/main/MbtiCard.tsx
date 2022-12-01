@@ -1,6 +1,6 @@
 import {
   Card,
-  CardActionArea,
+  // CardActionArea,
   CardContent,
   CardMedia,
   Grid,
