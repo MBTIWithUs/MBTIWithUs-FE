@@ -78,7 +78,7 @@ const MbtiSelfPage = () => {
       setCallbackUrl(location.pathname);
       navigate(`/login`);
     }
-  }, []);
+  }, [auth]);
 
   return (
     <Container sx={{ py: 3 }}>

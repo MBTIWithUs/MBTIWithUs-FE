@@ -16,25 +16,29 @@ import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import CommentIcon from '@mui/icons-material/Comment';
 import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { UserStateContext } from '@contexts/UserContext';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { UserDispatchContext, UserStateContext } from '@contexts/UserContext';
 import { Link } from 'react-router-dom';
+import path from '@routes/path';
+import { authState } from '@atoms/auth';
 
 const PAGE = [
-  { title: 'Main', route: '/', icon: <HomeIcon /> },
-  { title: 'Mbti', route: '/mbti', icon: <SearchIcon /> },
-  { title: 'Board', route: '/Board', icon: <CommentIcon /> },
+  { ...path.home, icon: <HomeIcon /> },
+  { ...path.mbti, icon: <SearchIcon /> },
+  { ...path.board, icon: <CommentIcon /> },
 ];
 
 const USER_PAGE = [
-  { title: 'Profile', route: '/profile', icon: <SettingsAccessibilityIcon /> },
-  { title: 'Setting', route: '/setting', icon: <SettingsIcon /> },
+  { ...path.profile, icon: <SettingsAccessibilityIcon /> },
+  // { ...path.setting, icon: <SettingsIcon /> },
 ];
 
 const Drawer = () => {
   // const { auth.user } = useauth.user();
   const auth = useContext(UserStateContext);
+  const [, setToken] = useRecoilState(authState);
   const [mode, setMode] = useRecoilState(appThemeMode);
+  const dispatch = useContext(UserDispatchContext);
   const toggleMode = () => {
     setMode((prevState) => (prevState === 'light' ? 'dark' : 'light'));
   };
@@ -77,10 +81,27 @@ const Drawer = () => {
             <ListItemText>{item.title}</ListItemText>
           </ListItemButton>
         ))}
+        {auth?.user && (
+          <ListItemButton
+            onClick={() => {
+              if (dispatch) {
+                if (dispatch) {
+                  dispatch({ type: 'LOGOUT' });
+                }
+                setToken(null);
+              }
+            }}
+          >
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText>Logout</ListItemText>
+          </ListItemButton>
+        )}
       </List>
       <Divider />
       <ListItem sx={{ justifyContent: 'flex-end' }}>
-        <ListItemText>ThemeMode: {mode}</ListItemText>
+        {/* <ListItemText>ThemeMode: {mode}</ListItemText> */}
         <ThemeSwitch checked={mode !== 'light'} onChange={toggleMode} />
       </ListItem>
     </Box>

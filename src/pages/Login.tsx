@@ -28,7 +28,7 @@ const Login = () => {
             fontWeight={700}
             lineHeight={1.5}
           >
-            타입스에 오신 것을
+            MbtiWithUs에 오신 것을
             <br /> 환영합니다.
           </Typography>
         </Box>
@@ -44,7 +44,7 @@ const Login = () => {
             sx={{ opacity: 0.5 }}
             mt={1}
           >
-            위 버튼을 클릭하면 types의 서비스 이용 약관과
+            위 버튼을 클릭하면 MbtiWithUs의 서비스 이용 약관과
             <br /> 개인정보 취급방침에 동의하게 됩니다.
           </Typography>
         </Box>
