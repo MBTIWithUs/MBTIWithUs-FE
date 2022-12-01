@@ -17,7 +17,7 @@ const TopDescription = ({
       </Typography>
       <Typography
         fontSize={40}
-        fontFamily="CrimsonText"
+        // fontFamily="CrimsonText"
         fontWeight={700}
         letterSpacing={3}
         lineHeight={1.25}
