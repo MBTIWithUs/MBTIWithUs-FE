@@ -74,8 +74,6 @@ const BoardDetailPage = () => {
 
   const isLoading = !data;
 
-  console.log(mbti);
-
   return (
     <Container sx={{ py: 3 }}>
       {isLoading ? (
