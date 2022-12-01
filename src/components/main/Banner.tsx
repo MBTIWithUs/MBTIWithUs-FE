@@ -32,7 +32,7 @@ const Banner = () => {
               pb={2}
               lineHeight={1.5}
             >
-              Lorem ipsum dolor sit amet consectetur
+              내가 생각하는 MBTI와 친구가 생각하는 MBTI를 비교해보세요!
             </Typography>
             <Typography
               variant="subtitle2"
@@ -40,9 +40,8 @@ const Banner = () => {
               sx={{ opacity: 0.5 }}
               pb={2}
             >
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit
-              nemo hic quos, ab, dolor aperiam nobis cum est eos error ipsum,
-              voluptate culpa nesciunt delectus iste?
+              내가 생각하는 내 모습과 친구가 생각하는 내 모습을 비교해볼 수 있고
+              여러분과 같은 생각을 갖고 있는 사람들과 소통하세요!
             </Typography>
             <Button
               sx={{

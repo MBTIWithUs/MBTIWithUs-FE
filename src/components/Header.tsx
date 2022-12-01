@@ -5,11 +5,16 @@ import {
   Box,
   Container,
   IconButton,
+  List,
+  ListItem,
   Menu,
   MenuItem,
+  Popover,
+  Stack,
   SwipeableDrawer,
   Toolbar,
   Typography,
+  useTheme,
 } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -21,16 +26,17 @@ import Drawer from './Drawer';
 import { UserDispatchContext, UserStateContext } from '@contexts/UserContext';
 import { authState } from '@atoms/auth';
 import { Link } from 'react-router-dom';
+import path from '@routes/path';
 
-const PAGE = [
-  { title: 'Test', route: '/test' },
-  { title: 'Mbti', route: '/mbti' },
-  { title: 'Board', route: '/Board' },
-];
+const PAGE = [path.mbti];
 
-const USER_PAGE = [
-  { title: 'Profile', route: '/profile' },
-  { title: 'Setting', route: '/setting' },
+const USER_PAGE = [path.profile];
+
+const MBTI_TYPES = [
+  ['ISTJ', 'ISTP', 'ISFJ', 'ISFP'],
+  ['INTJ', 'INTP', 'INFJ', 'INFP'],
+  ['ESTJ', 'ESTP', 'ESFJ', 'ESFP'],
+  ['ENTJ', 'ENTP', 'ENFJ', 'ENFP'],
 ];
 
 const Header = () => {
@@ -38,6 +44,16 @@ const Header = () => {
   const [mode, setMode] = useRecoilState(appThemeMode);
   const [, setToken] = useRecoilState(authState);
   const dispatch = useContext(UserDispatchContext);
+  const [menuOpen, setMenuOpen] = useState<HTMLDivElement | null>(null);
+  const theme = useTheme();
+
+  const handlePopoverClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    setMenuOpen(e.currentTarget);
+  };
+  const handlePopoverClose = () => {
+    setMenuOpen(null);
+  };
+
   const toggleMode = () => {
     setMode((prevState) => (prevState === 'light' ? 'dark' : 'light'));
   };
@@ -59,6 +75,9 @@ const Header = () => {
   const handleCloseSideMenu = () => {
     setSideMenu(null);
   };
+
+  const popoverOpen = Boolean(menuOpen);
+  const popoverId = popoverOpen ? 'simple-popover' : undefined;
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -109,6 +128,97 @@ const Header = () => {
                   {item.title}
                 </Typography>
               ))}
+              <Box
+                sx={{
+                  mr: 3,
+                  color: 'inherit',
+                  display: {
+                    xs: 'none',
+                    sm: 'none',
+                    md: 'flex',
+                  },
+                  textDecoration: 'none',
+                }}
+              >
+                <Box>
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    // component="button"
+                    // onMouseEnter={() => setMenuOpen(true)}
+                    // onMouseLeave={() => setMenuOpen(false)}
+                    // component={Link}
+                    // to={path.board.route}
+                    sx={{
+                      cursor: 'pointer',
+                      textDecoration: 'none',
+                      color: 'inherit',
+                    }}
+                    onClick={handlePopoverClick}
+                  >
+                    {path.board.title}
+                  </Typography>
+                  <Box sx={{ position: 'absolute' }}>
+                    <Popover
+                      id={popoverId}
+                      open={popoverOpen}
+                      anchorEl={menuOpen}
+                      onClose={handlePopoverClose}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                      }}
+                      sx={{ boxShadow: 'none' }}
+                    >
+                      <Stack
+                        direction="row"
+                        sx={{ backgroundColor: theme.palette.primary.main }}
+                        // sx={{ backgroundColor: 'red', zIndex: 999 }}
+                      >
+                        {menuOpen && (
+                          <>
+                            <List>
+                              <ListItem
+                                component={Link}
+                                to={`${path.board.route}`}
+                                sx={{
+                                  cursor: 'pointer',
+                                  textDecoration: 'none',
+                                  color: theme.palette.getContrastText(
+                                    theme.palette.primary.main,
+                                  ),
+                                }}
+                              >
+                                ALL
+                              </ListItem>
+                            </List>
+                            {MBTI_TYPES.map((item) => (
+                              <List key={item[0]}>
+                                {item.map((item1) => (
+                                  <ListItem
+                                    key={item1}
+                                    component={Link}
+                                    to={`${path.board.route}?mbti=${item1}`}
+                                    sx={{
+                                      cursor: 'pointer',
+                                      textDecoration: 'none',
+                                      color: theme.palette.getContrastText(
+                                        theme.palette.primary.main,
+                                      ),
+                                    }}
+                                  >
+                                    {item1}
+                                  </ListItem>
+                                ))}
+                              </List>
+                            ))}
+                          </>
+                        )}
+                      </Stack>
+                    </Popover>
+                  </Box>
+                </Box>
+              </Box>
             </Box>
             <Box
               sx={{

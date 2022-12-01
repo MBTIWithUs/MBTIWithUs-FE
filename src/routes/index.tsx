@@ -12,6 +12,7 @@ import Footer from '@components/Footer';
 import ProfilePage from '@pages/profile';
 import ResultPage from '@pages/profile/Result';
 import BoardPage from '@pages/board';
+import BoardDetailPage from '@pages/board/BoardDetail';
 
 export default function Routes() {
   const router = createBrowserRouter([
@@ -94,15 +95,15 @@ export default function Routes() {
             </>
           ),
         },
-        // {
-        //   path: '*',
-        //   element: (
-        //     <>
-        //       <Header />
-        //       404
-        //     </>
-        //   ),
-        // },
+        {
+          path: '/board/:id',
+          element: (
+            <>
+              <Header />
+              <BoardDetailPage />
+            </>
+          ),
+        },
       ],
     },
   ]);

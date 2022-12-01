@@ -99,9 +99,10 @@ const CardGroup = () => {
   return (
     <Box pb={10}>
       <TopDescription
-        type="TYPES"
-        title="Our Talents"
-        content="Lorem ipsum, dolor sit amet consectetur Suscipit nemo hic quos, ab,"
+        type="ALL TYPES"
+        title="MBTI별 유형"
+        // content="Lorem ipsum, dolor sit amet consectetur Suscipit nemo hic quos, ab,"
+        content="각 MBTI별 어떤 특성이 있는지 확인하세요!"
       />
       <Grid container columnSpacing={6} rowSpacing={3} justifyContent="center">
         {DATA.slice((page - 1) * MAX_CONTENTS, page * MAX_CONTENTS).map(

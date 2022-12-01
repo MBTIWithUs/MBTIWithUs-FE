@@ -14,27 +14,40 @@ import { appThemeMode } from '@atoms/theme';
 import ThemeSwitch from './buttons/ThemeSwitch';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
-import CommentIcon from '@mui/icons-material/Comment';
+// import CommentIcon from '@mui/icons-material/Comment';
 import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { UserStateContext } from '@contexts/UserContext';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { UserDispatchContext, UserStateContext } from '@contexts/UserContext';
 import { Link } from 'react-router-dom';
+import path from '@routes/path';
+import { authState } from '@atoms/auth';
+import { useState } from 'react';
 
 const PAGE = [
-  { title: 'Main', route: '/', icon: <HomeIcon /> },
-  { title: 'Mbti', route: '/mbti', icon: <SearchIcon /> },
-  { title: 'Board', route: '/Board', icon: <CommentIcon /> },
+  { ...path.home, icon: <HomeIcon /> },
+  { ...path.mbti, icon: <SearchIcon /> },
+  // { ...path.board, icon: <CommentIcon /> },
 ];
 
 const USER_PAGE = [
-  { title: 'Profile', route: '/profile', icon: <SettingsAccessibilityIcon /> },
-  { title: 'Setting', route: '/setting', icon: <SettingsIcon /> },
+  { ...path.profile, icon: <SettingsAccessibilityIcon /> },
+  // { ...path.setting, icon: <SettingsIcon /> },
+];
+
+const MBTI_TYPES = [
+  ['ISTJ', 'ISTP', 'ISFJ', 'ISFP'],
+  ['INTJ', 'INTP', 'INFJ', 'INFP'],
+  ['ESTJ', 'ESTP', 'ESFJ', 'ESFP'],
+  ['ENTJ', 'ENTP', 'ENFJ', 'ENFP'],
 ];
 
 const Drawer = () => {
   // const { auth.user } = useauth.user();
   const auth = useContext(UserStateContext);
+  const [, setToken] = useRecoilState(authState);
   const [mode, setMode] = useRecoilState(appThemeMode);
+  const dispatch = useContext(UserDispatchContext);
+  const [boardOpen, setBoardOpen] = useState(false);
   const toggleMode = () => {
     setMode((prevState) => (prevState === 'light' ? 'dark' : 'light'));
   };
@@ -68,6 +81,26 @@ const Drawer = () => {
             <ListItemText>{item.title}</ListItemText>
           </ListItemButton>
         ))}
+        <ListItemButton onClick={() => setBoardOpen((prev) => !prev)}>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText>{path.board.title}</ListItemText>
+        </ListItemButton>
+        {boardOpen && (
+          <List>
+            {MBTI_TYPES.flat().map((item) => (
+              <ListItemButton
+                key={item}
+                component={Link}
+                to={`${path.board.route}?mbti=${item}`}
+                sx={{ ml: 3 }}
+              >
+                <ListItemText>{item}</ListItemText>
+              </ListItemButton>
+            ))}
+          </List>
+        )}
       </List>
       <Divider />
       <List>
@@ -77,10 +110,27 @@ const Drawer = () => {
             <ListItemText>{item.title}</ListItemText>
           </ListItemButton>
         ))}
+        {auth?.user && (
+          <ListItemButton
+            onClick={() => {
+              if (dispatch) {
+                if (dispatch) {
+                  dispatch({ type: 'LOGOUT' });
+                }
+                setToken(null);
+              }
+            }}
+          >
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText>Logout</ListItemText>
+          </ListItemButton>
+        )}
       </List>
       <Divider />
       <ListItem sx={{ justifyContent: 'flex-end' }}>
-        <ListItemText>ThemeMode: {mode}</ListItemText>
+        {/* <ListItemText>ThemeMode: {mode}</ListItemText> */}
         <ThemeSwitch checked={mode !== 'light'} onChange={toggleMode} />
       </ListItem>
     </Box>
