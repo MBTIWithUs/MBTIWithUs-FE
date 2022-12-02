@@ -6,6 +6,6 @@ const { persistAtom } = recoilPersist();
 
 export const authState = atom<IToken | null>({
   key: 'auth',
-  default: ({} as IToken) || null,
+  default: null,
   effects: [persistAtom],
 });
