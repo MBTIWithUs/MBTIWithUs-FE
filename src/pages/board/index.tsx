@@ -8,6 +8,7 @@ import { UserStateContext } from '@contexts/UserContext';
 import api from '@libs/api';
 import BoardWriter from '@components/board/BoardWriter';
 import { useLocation } from 'react-router-dom';
+import useIntersection from '@hooks/useIntersection';
 
 const LIMIT = 10;
 
@@ -18,6 +19,8 @@ const BoardPage = () => {
 
   const auth = useContext(UserStateContext);
   const [isEnd, setIsEnd] = useState(false);
+
+  const [intersecting, ref] = useIntersection<HTMLDivElement>();
 
   const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
     if (previousPageData && pageIndex >= previousPageData.meta.total_pages) {
@@ -51,17 +54,10 @@ const BoardPage = () => {
   const articles = data ? [...data.map((item) => item.items).flat()] : [];
 
   useEffect(() => {
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } =
-        document.documentElement;
-
-      if (scrollTop + clientHeight >= scrollHeight) {
-        !isEnd && setSize((prev) => prev + 1);
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { capture: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isEnd]);
+    if (intersecting && !isValidating && !isEnd) {
+      setSize((size) => size + 1);
+    }
+  }, [isEnd, intersecting, isValidating, setSize]);
 
   useEffect(() => {
     mutate();
@@ -89,6 +85,9 @@ const BoardPage = () => {
               <BoardListItem key={item.id} {...item} mbti={mbti} />
             ))}
             {isValidating && !isEnd && <OverlayLoading isLoading />}
+            <div style={{ position: 'relative' }}>
+              <div ref={ref} style={{ position: 'absolute', top: 0 }}></div>
+            </div>
           </List>
         </Container>
       )}

@@ -55,8 +55,18 @@ const BoardDetailPage = () => {
         },
       )
       .then(() => {
-        toast.success(data?.is_liked ? '취소' : '공감');
-        mutate();
+        const cache = data;
+        if (cache) {
+          mutate(
+            {
+              ...data,
+              is_liked: !cache?.is_liked,
+              likes: cache?.is_liked ? cache?.likes - 1 : cache?.likes + 1,
+            },
+            false,
+          );
+          toast.success(data?.is_liked ? '취소' : '추천');
+        }
       })
       .catch(() => {
         toast.error('실패');

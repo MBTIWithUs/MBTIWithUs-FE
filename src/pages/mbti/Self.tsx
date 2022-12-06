@@ -72,7 +72,7 @@ const MbtiSelfPage = () => {
   useEffect(() => {
     if (auth?.user) getData();
 
-    if (!auth?.user) {
+    if (!auth?.token) {
       toast.info('로그인이 필요합니다');
 
       setCallbackUrl(location.pathname);

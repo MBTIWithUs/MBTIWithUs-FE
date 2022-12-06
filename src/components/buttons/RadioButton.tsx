@@ -8,29 +8,20 @@ enum ColorType {
 }
 
 const RadioButton = ({
-  fontSize,
   color,
   value,
   disabled,
+  sx,
   ...rest
 }: {
-  fontSize: number;
   color: ColorType;
   value: string;
   disabled?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sx?: any;
 }) => {
   return (
-    <Radio
-      sx={{
-        '& .MuiSvgIcon-root': {
-          fontSize: fontSize,
-        },
-      }}
-      color={color}
-      value={value}
-      disabled={disabled}
-      {...rest}
-    />
+    <Radio color={color} value={value} disabled={disabled} sx={sx} {...rest} />
   );
 };
 
