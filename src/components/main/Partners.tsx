@@ -45,7 +45,7 @@ const Partners = () => {
             // color="primary"
             fontFamily={'Kanit'}
           >
-            ISFJ
+            ISTP
           </Typography>
         </Grid>
         <Grid item xs={6} sm={6} md={3} sx={{ textAlign: 'center' }}>
@@ -58,7 +58,7 @@ const Partners = () => {
             // color="primary"
             fontFamily={'Kanit'}
           >
-            ENFP
+            ISFJ
           </Typography>
         </Grid>
       </Grid>

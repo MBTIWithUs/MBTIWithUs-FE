@@ -154,7 +154,8 @@ const Header = () => {
                       textDecoration: 'none',
                       color: 'inherit',
                     }}
-                    onClick={handlePopoverClick}
+                    // onClick={handlePopoverClick}
+                    onMouseOver={handlePopoverClick}
                   >
                     {path.board.title}
                   </Typography>
@@ -166,8 +167,10 @@ const Header = () => {
                       onClose={handlePopoverClose}
                       anchorOrigin={{
                         vertical: 'bottom',
-                        horizontal: 'right',
+                        horizontal: 'left',
                       }}
+                      elevation={0}
+                      transitionDuration={0}
                       sx={{ boxShadow: 'none' }}
                     >
                       <Stack
