@@ -38,7 +38,6 @@ const BoardDetailPage = () => {
         })
         .then((res) => res.data),
   );
-  const [liked, setLiked] = useState(data?.is_liked ? data?.is_liked : false);
 
   const handleLike = useCallback(async () => {
     if (!auth?.token) {
@@ -56,14 +55,23 @@ const BoardDetailPage = () => {
         },
       )
       .then(() => {
-        toast.success(liked ? '취소' : '공감');
-        setLiked((prev) => !prev);
-        // mutate();
+        const cache = data;
+        if (cache) {
+          mutate(
+            {
+              ...data,
+              is_liked: !cache?.is_liked,
+              likes: cache?.is_liked ? cache?.likes - 1 : cache?.likes + 1,
+            },
+            false,
+          );
+          toast.success(data?.is_liked ? '취소' : '추천');
+        }
       })
       .catch(() => {
         toast.error('실패');
       });
-  }, [auth, id, liked]);
+  }, [auth, id, data?.is_liked]);
 
   const commentWrapper: BoardCommentWrapperType[] | undefined = data?.comments
     .map((item) => ({
@@ -166,7 +174,7 @@ const BoardDetailPage = () => {
               <Button
                 variant="outlined"
                 startIcon={
-                  liked ? (
+                  data?.is_liked ? (
                     <ThumbUpAltIcon sx={{ mr: 0 }} />
                   ) : (
                     <ThumbUpOffAltIcon sx={{ mr: 0 }} />
@@ -175,7 +183,7 @@ const BoardDetailPage = () => {
                 size="small"
                 onClick={handleLike}
               >
-                {liked ? '취소' : '추천'}
+                {data?.is_liked ? '취소' : '추천'}
               </Button>
             </Box>
           </Box>
