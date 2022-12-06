@@ -356,19 +356,19 @@ const ProfilePage = () => {
                       <ListItem
                         key={item.id}
                         disablePadding
-                        secondaryAction={
-                          <IconButton
-                            onClick={() => {
-                              setTarget({
-                                id: item.id,
-                                target_id: item.target_id,
-                              });
-                              handleModal();
-                            }}
-                          >
-                            <MoreHorizIcon />
-                          </IconButton>
-                        }
+                        // secondaryAction={
+                        //   <IconButton
+                        //     onClick={() => {
+                        //       setTarget({
+                        //         id: item.id,
+                        //         target_id: item.target_id,
+                        //       });
+                        //       handleModal();
+                        //     }}
+                        //   >
+                        //     <MoreHorizIcon />
+                        //   </IconButton>
+                        // }
                       >
                         <ListItemButton
                           sx={{ height: 80 }}

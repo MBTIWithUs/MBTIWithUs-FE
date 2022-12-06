@@ -43,7 +43,7 @@ const DEFAULTBUTTON: {
     color: ColorType.primary,
     sx: {
       '& .MuiSvgIcon-root': {
-        fontSize: { xs: 20, sm: 35, md: 40 },
+        fontSize: { xs: 22, sm: 35, md: 40 },
       },
     },
   },
@@ -52,7 +52,7 @@ const DEFAULTBUTTON: {
     color: ColorType.primary,
     sx: {
       '& .MuiSvgIcon-root': {
-        fontSize: { xs: 15, sm: 30, md: 30 },
+        fontSize: { xs: 20, sm: 30, md: 30 },
       },
     },
   },
@@ -61,7 +61,7 @@ const DEFAULTBUTTON: {
     color: ColorType.primary,
     sx: {
       '& .MuiSvgIcon-root': {
-        fontSize: { xs: 15, sm: 30, md: 30 },
+        fontSize: { xs: 20, sm: 30, md: 30 },
       },
     },
   },
@@ -70,7 +70,7 @@ const DEFAULTBUTTON: {
     color: ColorType.primary,
     sx: {
       '& .MuiSvgIcon-root': {
-        fontSize: { xs: 20, sm: 35, md: 40 },
+        fontSize: { xs: 22, sm: 35, md: 40 },
       },
     },
   },
