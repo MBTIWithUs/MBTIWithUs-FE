@@ -89,12 +89,19 @@ const Drawer = () => {
         </ListItemButton>
         {boardOpen && (
           <List>
+            <ListItemButton
+              component={Link}
+              to={`${path.board.route}`}
+              sx={{ ml: 8 }}
+            >
+              <ListItemText>ALL</ListItemText>
+            </ListItemButton>
             {MBTI_TYPES.flat().map((item) => (
               <ListItemButton
                 key={item}
                 component={Link}
                 to={`${path.board.route}?mbti=${item}`}
-                sx={{ ml: 3 }}
+                sx={{ ml: 8 }}
               >
                 <ListItemText>{item}</ListItemText>
               </ListItemButton>

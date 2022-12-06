@@ -8,30 +8,16 @@ enum ColorType {
 }
 
 const RadioButton = ({
-  fontSize,
   color,
   value,
   disabled,
   ...rest
 }: {
-  fontSize: number;
   color: ColorType;
   value: string;
   disabled?: boolean;
 }) => {
-  return (
-    <Radio
-      sx={{
-        '& .MuiSvgIcon-root': {
-          fontSize: fontSize,
-        },
-      }}
-      color={color}
-      value={value}
-      disabled={disabled}
-      {...rest}
-    />
-  );
+  return <Radio color={color} value={value} disabled={disabled} {...rest} />;
 };
 
 export default RadioButton;

@@ -23,36 +23,65 @@ enum ChipColorType {
   primary = 'primary',
 }
 
-const DEFAULTBUTTON: { value: string; color: ColorType; fontSize: number }[] = [
+const DEFAULTBUTTON: {
+  value: string;
+  color: ColorType;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sx?: any;
+}[] = [
   {
     value: '-3',
     color: ColorType.primary,
-    fontSize: 50,
+    sx: {
+      '& .MuiSvgIcon-root': {
+        fontSize: { xs: 25, sm: 40, md: 50 },
+      },
+    },
   },
   {
     value: '-2',
     color: ColorType.primary,
-    fontSize: 40,
+    sx: {
+      '& .MuiSvgIcon-root': {
+        fontSize: { xs: 20, sm: 35, md: 40 },
+      },
+    },
   },
   {
     value: '-1',
     color: ColorType.primary,
-    fontSize: 30,
+    sx: {
+      '& .MuiSvgIcon-root': {
+        fontSize: { xs: 15, sm: 30, md: 30 },
+      },
+    },
   },
   {
     value: '1',
     color: ColorType.primary,
-    fontSize: 30,
+    sx: {
+      '& .MuiSvgIcon-root': {
+        fontSize: { xs: 15, sm: 30, md: 30 },
+      },
+    },
   },
   {
     value: '2',
     color: ColorType.primary,
-    fontSize: 40,
+    sx: {
+      '& .MuiSvgIcon-root': {
+        fontSize: { xs: 20, sm: 35, md: 40 },
+      },
+    },
   },
   {
     value: '3',
     color: ColorType.primary,
-    fontSize: 50,
+    sx: {
+      '& .MuiSvgIcon-root': {
+        fontSize: { xs: 25, sm: 40, md: 50 },
+      },
+    },
   },
 ];
 
