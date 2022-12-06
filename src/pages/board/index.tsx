@@ -56,12 +56,13 @@ const BoardPage = () => {
         document.documentElement;
 
       if (scrollTop + clientHeight >= scrollHeight) {
+        console.log(!isEnd);
         !isEnd && setSize((prev) => prev + 1);
       }
     };
     window.addEventListener('scroll', handleScroll, { capture: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isEnd]);
+  }, []);
 
   useEffect(() => {
     mutate();
