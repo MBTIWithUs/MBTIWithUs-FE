@@ -1,0 +1,23 @@
+name: CI
+on: [push]
+env:
+  NODE_VERSION: 16.15.1
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+steps:
+  - uses: action/checkout@v2
+  - name: Setup node
+    uses: actions/setup-node@v2
+    with:
+      node-version: ${{ env.NODE_VERSION }}
+  - name: Install dependencies
+    run: yarn ci --ignore-scripts
+  - name: Run linters
+    run: |
+      node_modules/.bin/eslint src --ext .ts, .tsx
+      node_modules/.bin/prettier --write src/**/*.{ts,tsx}
+  - name: test
+    run: yarn test
+  - name: build
+    run: yarn build
