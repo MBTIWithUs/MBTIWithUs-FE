@@ -86,7 +86,7 @@ const BoardCommentTemplate = ({
       .catch(() => {
         toast.error('실패');
       });
-  }, []);
+  }, [cache]);
   const handleDlete = useCallback(() => {
     if (!auth) {
       toast.error('로그인이 필요합니다.');
@@ -246,7 +246,7 @@ const BoardCommentItem = ({
       .catch(() => {
         toast.error('실패');
       });
-  }, []);
+  }, [cache]);
   const handleDlete = useCallback(() => {
     if (!auth) {
       toast.error('로그인이 필요합니다.');

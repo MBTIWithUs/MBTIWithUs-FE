@@ -76,7 +76,7 @@ const BoardDetailPage = () => {
       .catch(() => {
         toast.error('실패');
       });
-  }, [auth, id, data?.is_liked]);
+  }, [auth, id, data]);
 
   const commentWrapper: BoardCommentWrapperType[] | undefined = data?.comments
     .map((item) => ({
