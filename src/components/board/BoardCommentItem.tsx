@@ -116,7 +116,7 @@ const BoardCommentTemplate = ({
       <Box pb={3}>
         <Avatar
           alt={creator_nickname}
-          sx={{ float: 'left', mr: 1, width: 22, height: 22 }}
+          sx={{ float: 'left', mr: 1, width: 22, height: 22, fontSize: 16 }}
         >
           {getShortNickname({ is_anonymous, creator_nickname })}
         </Avatar>
@@ -276,7 +276,7 @@ const BoardCommentItem = ({
       <Box pb={3}>
         <Avatar
           alt={creator_nickname}
-          sx={{ float: 'left', mr: 1, width: 24, height: 24 }}
+          sx={{ float: 'left', mr: 1, width: 24, height: 24, fontSize: 16 }}
         >
           {getShortNickname({ is_anonymous, creator_nickname })}
         </Avatar>
