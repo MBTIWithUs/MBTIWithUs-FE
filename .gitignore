@@ -72,3 +72,5 @@ sketch
 .env*
 
 build/*
+
+key/*
