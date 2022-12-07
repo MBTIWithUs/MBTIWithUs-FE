@@ -6,6 +6,8 @@ import {
   Paper,
   RadioGroup,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -102,6 +104,8 @@ const RadioButtonsGroup = ({
   const [value, setValue] = useState('');
   const [left, setLeft] = useState<ChipColorType>(ChipColorType.default);
   const [right, setRight] = useState<ChipColorType>(ChipColorType.default);
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = (event.target as HTMLInputElement).value;
@@ -132,6 +136,8 @@ const RadioButtonsGroup = ({
     }
   };
 
+  console.log(theme.breakpoints.up('xs'));
+
   return (
     <Paper sx={{ my: 2, p: 2, boxShadow: 0 }}>
       <FormControl fullWidth>
@@ -142,7 +148,18 @@ const RadioButtonsGroup = ({
           {title}
         </Typography>
         <FormLabel>
-          <Chip label={leftQuestion} color={left} sx={{ fontSize: 14 }} />
+          <Chip
+            label={leftQuestion}
+            color={left}
+            size={isXs ? 'small' : undefined}
+            sx={{
+              fontSize: {
+                xs: 10,
+                sm: 12,
+                md: 14,
+              },
+            }}
+          />
         </FormLabel>
         <RadioGroup
           row
@@ -155,7 +172,18 @@ const RadioButtonsGroup = ({
           ))}
         </RadioGroup>
         <FormLabel sx={{ textAlign: 'right' }}>
-          <Chip label={rightQuestion} color={right} sx={{ fontSize: 14 }} />
+          <Chip
+            label={rightQuestion}
+            color={right}
+            size={isXs ? 'small' : undefined}
+            sx={{
+              fontSize: {
+                xs: 10,
+                sm: 12,
+                md: 14,
+              },
+            }}
+          />
         </FormLabel>
       </FormControl>
     </Paper>
