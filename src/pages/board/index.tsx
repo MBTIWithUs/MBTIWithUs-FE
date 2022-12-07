@@ -48,6 +48,7 @@ const BoardPage = () => {
       {
         refreshInterval: 0,
         revalidateOnFocus: false,
+        focusThrottleInterval: 0,
       },
     );
 

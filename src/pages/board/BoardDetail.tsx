@@ -5,7 +5,7 @@ import api from '@libs/api';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { BoardCommentWrapperType, BoardDetailType } from 'features/board/types';
 import React, { useCallback, useContext, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import useSWR from 'swr';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
@@ -18,8 +18,8 @@ import BoardWriter from '@components/board/BoardWriter';
 
 const BoardDetailPage = () => {
   const { id } = useParams();
-  const { state } = useLocation();
-  const { mbti }: { mbti: string | null } = state;
+  const [searchParams] = useSearchParams();
+  const mbti = searchParams.get('mbti');
 
   const auth = useContext(UserStateContext);
   const [doing, setDoing] = useState(false);
@@ -37,6 +37,11 @@ const BoardDetailPage = () => {
           },
         })
         .then((res) => res.data),
+    {
+      refreshInterval: 0,
+      focusThrottleInterval: 0,
+      revalidateOnFocus: false,
+    },
   );
 
   const handleLike = useCallback(async () => {

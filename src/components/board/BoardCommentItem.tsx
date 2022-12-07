@@ -2,6 +2,7 @@ import { Avatar, Box, Typography } from '@mui/material';
 import {
   BoardCommentType,
   BoardCommentWrapperType,
+  BoardDetailType,
 } from 'features/board/types';
 import React, { useCallback, useContext, useState } from 'react';
 import { getNickname, getShortNickname } from '@libs/utils';
@@ -34,7 +35,8 @@ const BoardCommentTemplate = ({
   ...props
 }: IPropsChild) => {
   const auth = useContext(UserStateContext);
-  const { mutate } = useSWRConfig();
+  const { cache, mutate: update } = useSWRConfig();
+
   const handleLike = useCallback(async () => {
     if (!auth) {
       toast.error('로그인이 필요합니다.');
@@ -51,12 +53,35 @@ const BoardCommentTemplate = ({
         },
       )
       .then(() => {
-        toast.success(is_liked ? '취소' : '공감');
-        mutate(
+        const data: BoardDetailType = cache.get(
           !auth?.token
             ? `/api/v1/community/anonymous/${community_id}`
             : `/api/v1/community/${community_id}`,
         );
+
+        const commentIndex = data.comments.findIndex((item) => item.id === id);
+        if (commentIndex === -1) throw Error('not find comment');
+        const comment = data.comments[commentIndex];
+
+        update(
+          !auth?.token
+            ? `/api/v1/community/anonymous/${community_id}`
+            : `/api/v1/community/${community_id}`,
+          {
+            ...data,
+            comments: [
+              ...data.comments.slice(0, commentIndex),
+              {
+                ...comment,
+                is_liked: !comment.is_liked,
+                likes: comment.is_liked ? comment.likes - 1 : comment.likes + 1,
+              },
+              ...data.comments.slice(commentIndex + 1),
+            ],
+          },
+          false,
+        );
+        toast.success(is_liked ? '취소' : '추천');
       })
       .catch(() => {
         toast.error('실패');
@@ -74,12 +99,12 @@ const BoardCommentTemplate = ({
         },
       })
       .then(() => {
-        toast.success('성공');
-        mutate(
+        update(
           !auth?.token
             ? `/api/v1/community/anonymous/${community_id}`
             : `/api/v1/community/${community_id}`,
         );
+        toast.success('성공');
       })
       .catch(() => {
         toast.error('실패');
@@ -167,11 +192,12 @@ const BoardCommentItem = ({
   creator_id,
 }: IProps) => {
   const auth = useContext(UserStateContext);
-  const { mutate } = useSWRConfig();
+  const { cache, mutate: update } = useSWRConfig();
   const [open, setOpen] = useState(false);
   const handleComment = useCallback(() => {
     setOpen((prev) => !prev);
   }, []);
+
   const handleLike = useCallback(async () => {
     if (!auth) {
       toast.error('로그인이 필요합니다.');
@@ -188,12 +214,34 @@ const BoardCommentItem = ({
         },
       )
       .then(() => {
-        toast.success(is_liked ? '취소' : '공감');
-        mutate(
+        const data: BoardDetailType = cache.get(
           !auth?.token
             ? `/api/v1/community/anonymous/${community_id}`
             : `/api/v1/community/${community_id}`,
         );
+
+        const commentIndex = data.comments.findIndex((item) => item.id === id);
+        if (commentIndex === -1) throw Error('not find comment');
+        const comment = data.comments[commentIndex];
+
+        update(
+          !auth?.token
+            ? `/api/v1/community/anonymous/${community_id}`
+            : `/api/v1/community/${community_id}`,
+          {
+            ...data,
+            comments: [
+              ...data.comments.slice(0, commentIndex),
+              {
+                ...comment,
+                is_liked: !comment.is_liked,
+                likes: comment.is_liked ? comment.likes - 1 : comment.likes + 1,
+              },
+              ...data.comments.slice(commentIndex + 1),
+            ],
+          },
+        );
+        toast.success(is_liked ? '취소' : '추천');
       })
       .catch(() => {
         toast.error('실패');
@@ -212,7 +260,7 @@ const BoardCommentItem = ({
       })
       .then(() => {
         toast.success('성공');
-        mutate(
+        update(
           !auth?.token
             ? `/api/v1/community/anonymous/${community_id}`
             : `/api/v1/community/${community_id}`,

@@ -75,11 +75,13 @@ const BoardCommentInput = ({ community_id, parent_comment_id }: IProps) => {
             },
           },
         )
-        .then(() => {
+        .then(({ data }) => {
           mutate(
             !auth?.token
               ? `/api/v1/community/anonymous/${community_id}`
               : `/api/v1/community/${community_id}`,
+            data,
+            false,
           ).then(() => {
             setContent('');
           });

@@ -3,7 +3,6 @@ import api from '@libs/api';
 import {
   Avatar,
   Box,
-  Button,
   Container,
   Dialog,
   Divider,
@@ -84,6 +83,9 @@ const ProfilePage = () => {
           },
         })
         .then((res) => res.data),
+    {
+      revalidateOnFocus: false,
+    },
   );
 
   const {
@@ -255,9 +257,9 @@ const ProfilePage = () => {
               <MbtiShareBox target_id={auth?.user?.id} />
             </Box>
             <Box textAlign="center">
-              <Button fullWidth variant="contained">
+              {/* <Button fullWidth variant="contained">
                 설정
-              </Button>
+              </Button> */}
             </Box>
             <Box py={4}>
               <Grid container rowSpacing={3}>
@@ -273,7 +275,7 @@ const ProfilePage = () => {
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <MbtiResultBox
-                    label="친구"
+                    label="친구가 생각하는 나"
                     mbti={
                       friendsResult
                         ? getMbtiResult2String(friendsResult)
@@ -283,7 +285,7 @@ const ProfilePage = () => {
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <MbtiResultBox
-                    label="나와 친구의 결과"
+                    label="나와 친구가 생각하는 나"
                     mbti={
                       meAndFriendsResult
                         ? getMbtiResult2String(meAndFriendsResult)

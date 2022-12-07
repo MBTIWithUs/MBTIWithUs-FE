@@ -35,8 +35,7 @@ const BoardListItem = ({
       <ListItemButton
         sx={{ p: 1, m: 0 }}
         component={Link}
-        to={`${id}`}
-        state={{ mbti }}
+        to={mbti ? `${id}?mbti=${mbti}` : `${id}`}
         style={{ alignItems: 'space-between' }}
       >
         <ListItemText
