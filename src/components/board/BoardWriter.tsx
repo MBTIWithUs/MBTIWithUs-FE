@@ -30,11 +30,11 @@ import { useNavigate } from 'react-router-dom';
 
 const REG = {
   title: {
-    min: 5,
+    min: 1,
     max: 64,
   },
   content: {
-    min: 10,
+    min: 1,
     max: 1024,
   },
 };
@@ -127,8 +127,8 @@ const BoardWriter = ({
       !(REG.content.min <= content.length && content.length <= REG.content.max)
     ) {
       setErrorMessage({
-        title: '제목은 5~64자여야 합니다.',
-        content: '내용은 10~1024자여야 합니다.',
+        title: '제목을 입력해주세요!',
+        content: '내용을 입력해주세요!',
       });
 
       return;

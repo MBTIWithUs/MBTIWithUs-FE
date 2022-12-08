@@ -22,7 +22,7 @@ interface IProps {
 
 const REG = {
   content: {
-    min: 5,
+    min: 1,
     max: 256,
   },
 };
@@ -51,9 +51,7 @@ const BoardCommentInput = ({ community_id, parent_comment_id }: IProps) => {
           REG.content.min <= content.length && content.length <= REG.content.max
         )
       ) {
-        setErrorMessage(
-          `댓글은 ${REG.content.min}~${REG.content.max}자여야 합니다.`,
-        );
+        setErrorMessage(`내용을 입력해주세요!`);
 
         return;
       }
