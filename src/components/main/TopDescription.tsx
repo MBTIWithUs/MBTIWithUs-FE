@@ -32,4 +32,4 @@ const TopDescription = ({
   );
 };
 
-export default TopDescription;
+export default React.memo(TopDescription);

@@ -102,4 +102,4 @@ const IntroSection = () => {
   );
 };
 
-export default IntroSection;
+export default React.memo(IntroSection);

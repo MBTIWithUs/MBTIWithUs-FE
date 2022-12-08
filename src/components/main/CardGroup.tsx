@@ -122,4 +122,4 @@ const CardGroup = () => {
   );
 };
 
-export default CardGroup;
+export default React.memo(CardGroup);

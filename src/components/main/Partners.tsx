@@ -82,4 +82,4 @@ const Partners = () => {
   );
 };
 
-export default Partners;
+export default React.memo(Partners);
