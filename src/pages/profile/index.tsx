@@ -110,13 +110,12 @@ const ProfilePage = () => {
   const me2me: IMbtiResult[] | undefined =
     recievedData &&
     recievedData.filter((item) => item.writer_id === auth?.user?.id);
-
   const friends2me: IMbtiResult[] | undefined =
     recievedData &&
     recievedData.filter((item) => item.writer_id !== auth?.user?.id);
-
   const me2friends: IMbtiResult[] | undefined =
     sentData && sentData.filter((item) => item.target_id !== auth?.user?.id);
+
   const friendsResult: IMbtiScoreType | undefined =
     friends2me && friends2me.length
       ? friends2me
@@ -147,18 +146,43 @@ const ProfilePage = () => {
             },
           )
       : undefined;
+
   // 5 : 5
   const meAndFriendsResult: IMbtiScoreType | undefined = me2me?.length
     ? friendsResult
       ? {
-          e_score: me2me[0].e_score + friendsResult.e_score,
-          f_score: me2me[0].f_score + friendsResult.f_score,
-          i_score: me2me[0].i_score + friendsResult.i_score,
-          j_score: me2me[0].j_score + friendsResult.j_score,
-          n_score: me2me[0].n_score + friendsResult.n_score,
-          p_score: me2me[0].p_score + friendsResult.p_score,
-          s_score: me2me[0].s_score + friendsResult.s_score,
-          t_score: me2me[0].t_score + friendsResult.t_score,
+          e_score:
+            me2me[0].e_score / (me2me[0].e_score + me2me[0].i_score) +
+            friendsResult.e_score /
+              (friendsResult.e_score + friendsResult.i_score),
+          f_score:
+            me2me[0].f_score / (me2me[0].f_score + me2me[0].t_score) +
+            friendsResult.f_score /
+              (friendsResult.f_score + friendsResult.t_score),
+          i_score:
+            me2me[0].i_score / (me2me[0].e_score + me2me[0].i_score) +
+            friendsResult.i_score /
+              (friendsResult.e_score + friendsResult.i_score),
+          j_score:
+            me2me[0].j_score / (me2me[0].f_score + me2me[0].p_score) +
+            friendsResult.j_score /
+              (friendsResult.j_score + friendsResult.p_score),
+          n_score:
+            me2me[0].n_score / (me2me[0].s_score + me2me[0].n_score) +
+            friendsResult.n_score /
+              (friendsResult.s_score + friendsResult.n_score),
+          p_score:
+            me2me[0].p_score / (me2me[0].f_score + me2me[0].p_score) +
+            friendsResult.p_score /
+              (friendsResult.f_score + friendsResult.p_score),
+          s_score:
+            me2me[0].s_score / (me2me[0].n_score + me2me[0].s_score) +
+            friendsResult.s_score /
+              (friendsResult.s_score + friendsResult.n_score),
+          t_score:
+            me2me[0].t_score / (me2me[0].f_score + me2me[0].t_score) +
+            friendsResult.t_score /
+              (friendsResult.t_score + friendsResult.f_score),
         }
       : me2me[0]
     : undefined;
@@ -276,9 +300,7 @@ const ProfilePage = () => {
                   <MbtiResultBox
                     label="나"
                     mbti={
-                      recievedData?.length
-                        ? getMbtiResult2String(recievedData[0])
-                        : 'NULL'
+                      me2me?.length ? getMbtiResult2String(me2me[0]) : 'NULL'
                     }
                   />
                 </Grid>
