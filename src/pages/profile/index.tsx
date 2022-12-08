@@ -77,12 +77,13 @@ const ProfilePage = () => {
       : `/api/v1/mbti/result/recieved/all`,
     (url) =>
       api
-        .get(url, {
+        .get<IMbtiResult[]>(url, {
           headers: {
             Authorization: `Bearer ${auth?.token?.access_token}`,
           },
         })
-        .then((res) => res.data),
+        .then((res) => res.data)
+        .then((data) => data.reverse()),
     {
       revalidateOnFocus: false,
     },
@@ -98,12 +99,13 @@ const ProfilePage = () => {
       : `/api/v1/mbti/result/sent/all`,
     (url) =>
       api
-        .get(url, {
+        .get<IMbtiResult[]>(url, {
           headers: {
             Authorization: `Bearer ${auth?.token?.access_token}`,
           },
         })
-        .then((res) => res.data),
+        .then((res) => res.data)
+        .then((data) => data.reverse()),
   );
 
   const isLoading = !recivedError && !recievedData && !sentData && !sentError;

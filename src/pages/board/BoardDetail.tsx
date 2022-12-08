@@ -15,6 +15,7 @@ import BoardCommentItem from '@components/board/BoardCommentItem';
 import BoardCommentInput from '@components/board/BoardCommentInput';
 import { toast } from 'react-toastify';
 import BoardWriter from '@components/board/BoardWriter';
+import NotFound from '@components/NotFound';
 
 const BoardDetailPage = () => {
   const { id } = useParams();
@@ -23,7 +24,7 @@ const BoardDetailPage = () => {
 
   const auth = useContext(UserStateContext);
   const [doing, setDoing] = useState(false);
-  const { data, mutate } = useSWR<BoardDetailType>(
+  const { data, mutate, error } = useSWR<BoardDetailType>(
     typeof window === 'undefined'
       ? 'null'
       : !auth?.token
@@ -41,6 +42,17 @@ const BoardDetailPage = () => {
       refreshInterval: 0,
       focusThrottleInterval: 0,
       revalidateOnFocus: false,
+      errorRetryCount: 2,
+      onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+        // Never retry on 404.
+        if (error.status === 404) return;
+
+        // Only retry up to 10 times.
+        if (retryCount >= 10) return;
+
+        // Retry after 5 seconds.
+        // setTimeout(() => revalidate({ retryCount }), 5000);
+      },
     },
   );
 
@@ -87,12 +99,14 @@ const BoardDetailPage = () => {
     }))
     .filter((item) => item.parent_comment_id === null);
 
-  const isLoading = !data;
+  const isLoading = !error && !data;
 
   return (
     <Container sx={{ py: 3 }}>
       {isLoading ? (
         <OverlayLoading isLoading />
+      ) : error || !data ? (
+        <NotFound />
       ) : doing ? (
         <>
           <Typography
