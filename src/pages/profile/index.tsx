@@ -286,7 +286,7 @@ const ProfilePage = () => {
                 </Typography>
               </Box>
             </Box>
-            <Box pb={4}>
+            <Box>
               <MbtiShareBox target_id={auth?.user?.id} />
             </Box>
             <Box textAlign="center">

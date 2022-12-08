@@ -23,12 +23,23 @@ const MbtiShareBox = ({ target_id }: { target_id: number | undefined }) => {
 
   return (
     <Box>
-      <Typography p={2} fontSize={24} fontWeight={900} fontFamily={'Kanit'}>
-        이제 퀴즈를 공유하세요!
+      <Typography
+        p={2}
+        sx={{
+          fontSize: {
+            xs: 18,
+            sm: 20,
+            md: 24,
+          },
+        }}
+        fontWeight={900}
+        fontFamily={'Kanit'}
+      >
+        아래 링크를 클릭해 퀴즈를 공유하세요!
       </Typography>
-      <CopyContentWrapper borderRadius={1} padding={2}>
+      <CopyContentWrapper borderRadius={1} padding={2} onClick={onClick}>
         <CopyContent component="span">{url}</CopyContent>
-        <IconButton onClick={onClick}>
+        <IconButton>
           <ContentCopyIcon />
         </IconButton>
       </CopyContentWrapper>
@@ -42,6 +53,7 @@ const CopyContentWrapper = styled(Box)`
   overflow: auto;
   background: rgb(247, 246, 243);
   font-weight: 600;
+  cursor: pointer;
 `;
 
 const CopyContent = styled(Box)`
