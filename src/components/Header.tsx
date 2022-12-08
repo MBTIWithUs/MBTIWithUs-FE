@@ -291,12 +291,15 @@ const Header = () => {
                 }}
               >
                 {USER_PAGE.map((item) => (
-                  <MenuItem key={item.title} onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    key={item.title}
+                    component={Link}
+                    to={item.route}
+                    onClick={handleCloseUserMenu}
+                  >
                     <Typography
-                      component={Link}
-                      to={item.route}
                       sx={{
-                        mr: 3,
+                        mr: 2,
                         fontWeight: 600,
                         color: 'inherit',
                         textDecoration: 'none',
