@@ -23,7 +23,7 @@ const Banner = () => {
               sx={{ letterSpacing: 5 }}
               pb={2}
             >
-              welcom
+              welcome
             </Typography>
             <Typography
               variant="h4"
