@@ -240,6 +240,7 @@ const BoardCommentItem = ({
               ...data.comments.slice(commentIndex + 1),
             ],
           },
+          false,
         );
         toast.success(is_liked ? '취소' : '추천');
       })
