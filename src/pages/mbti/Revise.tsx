@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Button, Container, Divider, Typography } from '@mui/material';
 import RadioButtonsGroup from '@components/buttons/RadioReviseButtonGroup';
-import { IQuestion, IQuestionLog } from 'types';
+import { IMbtiResult, IQuestion, IQuestionLog } from 'types';
 import OverlayLoading from '@components/OverlayLoading';
 import { UserStateContext } from '@contexts/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -57,7 +57,7 @@ const MbtiRevisePage = () => {
 
   const onSubmit = async () => {
     try {
-      const { data } = await api.put(
+      const { data } = await api.put<IMbtiResult>(
         `/api/v1/mbti/result/${target.id}`,
         {
           input: qa,
@@ -69,8 +69,8 @@ const MbtiRevisePage = () => {
         },
       );
       if (data) {
+        navigate('/profile/result', { state: data });
         toast.success('수정 완료!');
-        navigate('/profile');
       }
     } catch (e) {
       toast.error('수정 실패!');

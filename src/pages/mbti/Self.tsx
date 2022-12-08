@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Button, Container, Divider, Typography } from '@mui/material';
 import RadioButtonsGroup from '@components/buttons/RadioButtonGroup';
-import { IQuestion } from 'types';
+import { IMbtiResult, IQuestion } from 'types';
 import OverlayLoading from '@components/OverlayLoading';
 import { UserStateContext } from '@contexts/UserContext';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -49,7 +49,7 @@ const MbtiSelfPage = () => {
 
   const onSubmit = async () => {
     try {
-      const { data } = await api.post(
+      const { data } = await api.post<IMbtiResult>(
         `/api/v1/mbti/result`,
         {
           target_id: target_id !== null ? target_id : auth?.user?.id,
@@ -61,8 +61,9 @@ const MbtiSelfPage = () => {
           },
         },
       );
+
       if (data) {
-        navigate('/profile');
+        navigate('/profile/result', { state: data });
       }
     } catch (e) {
       console.log(e);
