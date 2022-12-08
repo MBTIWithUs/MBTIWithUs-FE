@@ -1,6 +1,6 @@
 import { authState } from '@atoms/auth';
 import { callbackState } from '@atoms/util';
-import { UserDispatchContext } from '@contexts/UserContext';
+import { UserStateContext, UserDispatchContext } from '@contexts/UserContext';
 import { Container, Typography } from '@mui/material';
 import React, { useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -14,6 +14,7 @@ const KakaoRedirect = () => {
   const [callbackUrl, setCallbackUrl] = useRecoilState(callbackState);
 
   const [, setAuthToken] = useRecoilState(authState);
+  const auth = useContext(UserStateContext);
 
   const confirmLogin = async () => {
     const params = new URLSearchParams(search);
@@ -36,17 +37,21 @@ const KakaoRedirect = () => {
           server_current_time: json.server_current_time,
           type: 'kakao',
         };
-
-        await dispatch({
+        setAuthToken(token);
+        dispatch({
           type: 'LOGIN',
           token,
         });
-        await setAuthToken(token);
       }
+    }
+  };
+
+  useEffect(() => {
+    if (auth?.token) {
       navigate(callbackUrl ? callbackUrl : '/');
       setCallbackUrl('');
     }
-  };
+  }, [callbackUrl, auth]);
 
   useEffect(() => {
     confirmLogin();

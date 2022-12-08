@@ -71,6 +71,8 @@ const MbtiSelfPage = () => {
   };
 
   useEffect(() => {
+    console.log(auth);
+
     if (auth?.user) getData();
 
     if (!auth?.token) {
