@@ -136,8 +136,6 @@ const RadioButtonsGroup = ({
     }
   };
 
-  console.log(theme.breakpoints.up('xs'));
-
   return (
     <Paper sx={{ my: 2, p: 2, boxShadow: 0 }}>
       <FormControl fullWidth>
