@@ -77,8 +77,7 @@ const MbtiSelfPage = () => {
 
     if (!auth?.token) {
       toast.info('로그인이 필요합니다');
-
-      setCallbackUrl(location.pathname);
+      setCallbackUrl(location.pathname + location.search);
       navigate(`/login`);
     }
     if (auth?.user) getData();
