@@ -1,7 +1,6 @@
 import React from 'react';
 import Main from '@pages/Main';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Test from '@pages/Test';
 import Login from '@pages/Login';
 import KakaoRedirect from '@pages/KakaoRedirect';
 import Header from '@components/Header';
@@ -24,14 +23,6 @@ export default function Routes() {
           element: (
             <>
               <Header /> <Main />
-            </>
-          ),
-        },
-        {
-          path: '/test',
-          element: (
-            <>
-              <Header /> <Test />
             </>
           ),
         },

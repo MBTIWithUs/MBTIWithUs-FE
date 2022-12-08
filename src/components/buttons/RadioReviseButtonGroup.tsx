@@ -152,8 +152,6 @@ const RadioButtonsGroup = ({
     }
   };
 
-  console.log(DEFAULTBUTTON);
-
   return (
     <Paper sx={{ my: 2, p: 2, boxShadow: 0 }}>
       <FormControl fullWidth>
