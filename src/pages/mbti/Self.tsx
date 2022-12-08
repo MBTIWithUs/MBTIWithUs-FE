@@ -71,9 +71,9 @@ const MbtiSelfPage = () => {
   };
 
   useEffect(() => {
-    console.log(auth);
-
-    if (auth?.user) getData();
+    if (auth?.userLoading) {
+      return;
+    }
 
     if (!auth?.token) {
       toast.info('로그인이 필요합니다');
@@ -81,6 +81,7 @@ const MbtiSelfPage = () => {
       setCallbackUrl(location.pathname);
       navigate(`/login`);
     }
+    if (auth?.user) getData();
   }, [auth]);
 
   return (

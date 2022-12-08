@@ -18,7 +18,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 import { IMbtiResult, IMbtiScoreType } from 'types';
@@ -40,9 +40,6 @@ const ProfilePage = () => {
   const auth = useContext(UserStateContext);
   const theme = useTheme();
   const navigate = useNavigate();
-  if (!auth?.token) {
-    navigate('/login');
-  }
 
   const [tab, setTab] = useState(0);
   const [open, setOpen] = useState(false);
@@ -188,6 +185,16 @@ const ProfilePage = () => {
       handleModalClose();
     }
   };
+
+  useEffect(() => {
+    if (auth?.userLoading) {
+      return;
+    }
+
+    if (!auth?.token) {
+      navigate('/login');
+    }
+  }, [auth]);
 
   return (
     <Container sx={{ py: 3 }}>

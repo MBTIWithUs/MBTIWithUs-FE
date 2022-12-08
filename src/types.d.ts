@@ -14,6 +14,7 @@ export interface IToken {
 export interface IProfile {
   user: IUser | null;
   token: IToken | null;
+  userLoading: boolean;
 }
 
 export interface IQuestion {

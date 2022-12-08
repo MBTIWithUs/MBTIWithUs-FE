@@ -17,11 +17,11 @@ export const UserDispatchContext = createContext<TodosDispatch | undefined>(
 const userReducers = (state: IProfile, action: Action): IProfile => {
   switch (action.type) {
     case 'LOGIN':
-      return { user: state.user, token: action.token };
+      return { user: state.user, token: action.token, userLoading: false };
     case 'SET_USER':
-      return { token: state.token, user: action.user };
+      return { token: state.token, user: action.user, userLoading: false };
     case 'LOGOUT':
-      return initializedValue;
+      return { ...initializedValue, userLoading: false };
     default:
       throw new Error('unhandled action');
   }
@@ -30,6 +30,7 @@ const userReducers = (state: IProfile, action: Action): IProfile => {
 const initializedValue: IProfile = {
   user: null,
   token: null,
+  userLoading: true,
 };
 
 export const UserContextProvider = ({
@@ -103,6 +104,7 @@ export const UserContextProvider = ({
 
   const handleTokenChange = async () => {
     if (!state.user && token) {
+      dispatch({ type: 'LOGIN', token });
       api
         .get(`/api/v1/user`, {
           headers: {
