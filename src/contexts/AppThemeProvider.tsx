@@ -17,13 +17,10 @@ function AppThemeProvider({ children }: Props): ReactElement {
         palette: {
           mode,
           // primary: {
-          //   main: '#74c69d',
+          //   main: '#845EC2',
           // },
           // secondary: {
-          //   main: '#EB9612CC',
-          // },
-          // white: {
-          //   main: '#ffffff',
+          //   main: '#F3C5FF',
           // },
         },
         // typography: {

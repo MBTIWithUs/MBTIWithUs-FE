@@ -1,55 +1,61 @@
-import { Box, Grid, IconButton, Typography } from '@mui/material';
+import { AppBar, Box, Grid, IconButton, Typography } from '@mui/material';
 import React from 'react';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import Logo from '@assets/logo.png';
 
 const Footer = () => {
   return (
-    <Box
+    <AppBar
+      position="static"
+      sx={{ top: 'auto', bottom: 0 }}
       component="footer"
-      bgcolor="primary.main"
-      p={5}
-      mt={5}
-      // sx={{ position: 'absolute', left: 0, bottom: 0, width: '100vw' }}
     >
-      <Grid container rowSpacing={2}>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          color={'primary.contrastText'}
-          sx={{
-            textAlign: {
-              xs: 'center',
-              sm: 'left',
-            },
-          }}
-        >
-          <IconButton
-            color="inherit"
-            LinkComponent="a"
-            href="https://github.com/MBTIWithUs"
+      <Box p={5}>
+        <Grid container rowSpacing={2}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            sx={{
+              textAlign: {
+                xs: 'center',
+                sm: 'left',
+              },
+            }}
           >
-            <GitHubIcon />
-          </IconButton>
+            <IconButton
+              color="inherit"
+              LinkComponent="a"
+              href="https://github.com/MBTIWithUs"
+            >
+              <GitHubIcon />
+            </IconButton>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            sx={{
+              textAlign: {
+                xs: 'center',
+                sm: 'right',
+              },
+              m: 'auto',
+            }}
+          >
+            <img
+              src={Logo}
+              style={{
+                verticalAlign: 'middle',
+                marginRight: 10,
+                height: 14,
+              }}
+            />
+            <Typography component="span">MbtiWithUs, umtuk ha4219</Typography>
+          </Grid>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          sx={{
-            textAlign: {
-              xs: 'center',
-              sm: 'right',
-            },
-            m: 'auto',
-          }}
-        >
-          <Typography color="primary.contrastText">
-            © MbtiWithUs, 2022. All rights reserved.
-          </Typography>
-        </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </AppBar>
   );
 };
 
