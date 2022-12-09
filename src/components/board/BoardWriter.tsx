@@ -86,6 +86,8 @@ const BoardWriter = ({
 
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
+    input.setAttribute('id', 'imageinput');
+    input.setAttribute('style', 'display: none');
     document.body.appendChild(input);
 
     input.click();
@@ -110,7 +112,7 @@ const BoardWriter = ({
             'image',
             `${config.deployUrl}${data}`,
           );
-          document.body.querySelector(':scope > input')?.remove();
+          document.body.querySelector('#imageinput')?.remove();
         }
       }
     });

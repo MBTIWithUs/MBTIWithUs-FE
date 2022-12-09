@@ -41,7 +41,7 @@ const BoardCommentInput = ({ community_id, parent_comment_id }: IProps) => {
   const handleSubmit = useCallback(
     async (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      if (!auth) {
+      if (!auth?.token) {
         toast.error('로그인이 필요합니다');
         return;
       }

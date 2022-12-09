@@ -81,7 +81,7 @@ const Header = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ py: 0.5, boxShadow: 0 }}>
+      <AppBar position="static" sx={{ py: 1, boxShadow: 0 }}>
         <Container>
           <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
             <Box
@@ -222,6 +222,24 @@ const Header = () => {
                   </Box>
                 </Box>
               </Box>
+              <Typography
+                variant="h6"
+                noWrap
+                component={Link}
+                to={path.about.route}
+                sx={{
+                  mr: 3,
+                  color: 'inherit',
+                  display: {
+                    xs: 'none',
+                    sm: 'none',
+                    md: 'flex',
+                  },
+                  textDecoration: 'none',
+                }}
+              >
+                {path.about.title}
+              </Typography>
             </Box>
             <Box
               sx={{
