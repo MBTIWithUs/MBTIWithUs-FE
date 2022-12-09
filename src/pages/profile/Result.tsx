@@ -2,8 +2,8 @@ import ProgressRow from '@components/mbti/ProgressRow';
 import { UserStateContext } from '@contexts/UserContext';
 import { Avatar, Box, Container, Divider, Typography } from '@mui/material';
 import LinkMui from '@mui/material/Link';
-import React, { useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { IMbtiResult } from 'types';
 import { getMbtiResult2String } from '@libs/mbti';
 
@@ -11,8 +11,18 @@ const ResultPage = () => {
   const location = useLocation();
   const result: IMbtiResult = location.state;
   const auth = useContext(UserStateContext);
-
   const mbti = getMbtiResult2String(result);
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (auth?.userLoading) {
+      return;
+    }
+
+    if (!auth?.token) {
+      navigate('/login');
+    }
+  }, [auth]);
 
   return (
     <Container sx={{ py: 3 }}>

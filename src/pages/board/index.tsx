@@ -9,6 +9,7 @@ import api from '@libs/api';
 import BoardWriter from '@components/board/BoardWriter';
 import { useLocation } from 'react-router-dom';
 import useIntersection from '@hooks/useIntersection';
+import SEO from '@components/SEO';
 
 const LIMIT = 10;
 
@@ -69,6 +70,11 @@ const BoardPage = () => {
 
   return (
     <Container sx={{ py: 3 }}>
+      <SEO
+        title="서로 다른 MBTI의 사람들과 소통하세요!"
+        description="여러 사람들과 만날 수 있습니다"
+        url={location?.pathname}
+      />
       {isLoading ? (
         <OverlayLoading isLoading />
       ) : (

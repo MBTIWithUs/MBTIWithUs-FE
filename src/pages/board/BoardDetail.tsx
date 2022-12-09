@@ -16,6 +16,7 @@ import BoardCommentInput from '@components/board/BoardCommentInput';
 import { toast } from 'react-toastify';
 import BoardWriter from '@components/board/BoardWriter';
 import NotFound from '@components/NotFound';
+import SEO from '@components/SEO';
 
 const BoardDetailPage = () => {
   const { id } = useParams();
@@ -103,6 +104,11 @@ const BoardDetailPage = () => {
 
   return (
     <Container sx={{ py: 3 }}>
+      <SEO
+        title={data?.title}
+        description={data?.content}
+        url={location?.pathname}
+      />
       {isLoading ? (
         <OverlayLoading isLoading />
       ) : error || !data ? (
