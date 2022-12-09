@@ -6,7 +6,11 @@ const AboutPage = () => {
   return (
     <Container maxWidth="sm">
       <Box sx={{ textAlign: 'center' }} py={10}>
-        <img src={Logo} alt="logo" style={{ width: 256, height: 256 }} />
+        <img
+          src={Logo}
+          alt="logo"
+          style={{ width: 256, height: 256, maxWidth: '100%' }}
+        />
         <Box py={3}>
           <Typography variant="h6">Beta version</Typography>
           <Typography>
