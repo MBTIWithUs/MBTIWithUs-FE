@@ -14,11 +14,11 @@ import { appThemeMode } from '@atoms/theme';
 import ThemeSwitch from './buttons/ThemeSwitch';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
-// import CommentIcon from '@mui/icons-material/Comment';
+import ContactsIcon from '@mui/icons-material/Contacts';
 import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { UserDispatchContext, UserStateContext } from '@contexts/UserContext';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import path from '@routes/path';
 import { authState } from '@atoms/auth';
 import { useState } from 'react';
@@ -31,6 +31,7 @@ const PAGE = [
 
 const USER_PAGE = [
   { ...path.profile, icon: <SettingsAccessibilityIcon /> },
+  { ...path.about, icon: <ContactsIcon /> },
   // { ...path.setting, icon: <SettingsIcon /> },
 ];
 
@@ -76,7 +77,7 @@ const Drawer = () => {
       <Divider />
       <List>
         {PAGE.map((item) => (
-          <ListItemButton key={item.title} component={Link} to={item.route}>
+          <ListItemButton key={item.title} component={NavLink} to={item.route}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText>{item.title}</ListItemText>
           </ListItemButton>
@@ -90,7 +91,7 @@ const Drawer = () => {
         {boardOpen && (
           <List>
             <ListItemButton
-              component={Link}
+              component={NavLink}
               to={`${path.board.route}`}
               sx={{ ml: 8 }}
             >
@@ -99,7 +100,7 @@ const Drawer = () => {
             {MBTI_TYPES.flat().map((item) => (
               <ListItemButton
                 key={item}
-                component={Link}
+                component={NavLink}
                 to={`${path.board.route}?mbti=${item}`}
                 sx={{ ml: 8 }}
               >
@@ -112,7 +113,7 @@ const Drawer = () => {
       <Divider />
       <List>
         {USER_PAGE.map((item) => (
-          <ListItemButton key={item.title} component={Link} to={item.route}>
+          <ListItemButton key={item.title} component={NavLink} to={item.route}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText>{item.title}</ListItemText>
           </ListItemButton>

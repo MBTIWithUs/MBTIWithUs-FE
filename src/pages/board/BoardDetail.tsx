@@ -16,6 +16,7 @@ import BoardCommentInput from '@components/board/BoardCommentInput';
 import { toast } from 'react-toastify';
 import BoardWriter from '@components/board/BoardWriter';
 import NotFound from '@components/NotFound';
+import SEO from '@components/SEO';
 
 const BoardDetailPage = () => {
   const { id } = useParams();
@@ -103,6 +104,11 @@ const BoardDetailPage = () => {
 
   return (
     <Container sx={{ py: 3 }}>
+      <SEO
+        title={data?.title}
+        description={data?.content}
+        url={location?.pathname}
+      />
       {isLoading ? (
         <OverlayLoading isLoading />
       ) : error || !data ? (
@@ -161,7 +167,7 @@ const BoardDetailPage = () => {
               <Typography
                 fontSize={13}
                 mr={1}
-                sx={{ float: 'left', color: '#c62917' }}
+                sx={{ float: 'right', color: '#c62917' }}
               >
                 <ThumbUpOffAltIcon
                   sx={{ fontSize: 13, verticalAlign: 'middle', mr: 0.3 }}
@@ -171,7 +177,7 @@ const BoardDetailPage = () => {
               <Typography
                 fontSize={13}
                 mr={1}
-                sx={{ float: 'left', color: '#0ca5af' }}
+                sx={{ float: 'right', color: '#0ca5af' }}
               >
                 <ChatBubbleOutlineIcon
                   sx={{ fontSize: 13, verticalAlign: 'middle', mr: 0.3 }}
@@ -181,7 +187,7 @@ const BoardDetailPage = () => {
               <Typography
                 fontSize={13}
                 mr={1}
-                sx={{ float: 'left', color: '#ffcc1c' }}
+                sx={{ float: 'right', color: '#ffcc1c' }}
               >
                 <VisibilityIcon
                   sx={{ fontSize: 13, verticalAlign: 'middle', mr: 0.3 }}
@@ -199,6 +205,7 @@ const BoardDetailPage = () => {
                     <ThumbUpOffAltIcon sx={{ mr: 0 }} />
                   )
                 }
+                sx={{ ml: 'auto' }}
                 size="small"
                 onClick={handleLike}
               >

@@ -73,7 +73,7 @@ const Partners = () => {
           }}
           variant="contained"
           LinkComponent="a"
-          href="https://m.blog.naver.com/taxandlove/221988052765"
+          href="https://www.16personalities.com/country-profiles/republic-of-korea"
         >
           <Typography fontWeight={500}>Learn More</Typography>
         </Button>

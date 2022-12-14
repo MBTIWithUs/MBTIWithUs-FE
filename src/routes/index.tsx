@@ -12,6 +12,7 @@ import ProfilePage from '@pages/profile';
 import ResultPage from '@pages/profile/Result';
 import BoardPage from '@pages/board';
 import BoardDetailPage from '@pages/board/BoardDetail';
+import AboutPage from '@pages/About';
 
 export default function Routes() {
   const router = createBrowserRouter([
@@ -92,6 +93,15 @@ export default function Routes() {
             <>
               <Header />
               <BoardDetailPage />
+            </>
+          ),
+        },
+        {
+          path: '/about',
+          element: (
+            <>
+              <Header />
+              <AboutPage />
             </>
           ),
         },
