@@ -12,7 +12,7 @@ const Main = () => {
   return (
     <div>
       <SEO
-        title="Welcome MBTIWithUs!"
+        title="MbtiWithUs"
         description="다양한 mbti를 만나보세요!"
         url={location?.pathname}
       />

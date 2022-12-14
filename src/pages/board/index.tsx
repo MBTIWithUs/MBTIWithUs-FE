@@ -71,7 +71,7 @@ const BoardPage = () => {
   return (
     <Container sx={{ py: 3 }}>
       <SEO
-        title="서로 다른 MBTI의 사람들과 소통하세요!"
+        title="MbtiWithUs"
         description="여러 사람들과 만날 수 있습니다"
         url={location?.pathname}
       />
