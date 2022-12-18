@@ -1,46 +1,101 @@
-# Getting Started with Create React App
+# [MBTIWithUs](https://www.mbtiwithus.com)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
+    <a href="https://www.mbtiwithus.com">
+        <img src="./assets/logo512.png">
+    </a>
+    <h3 align="center">
+        <a href="https://www.mbtiwithus.com">Visit the live app</a>
+    </h3>
+    
+</p>
+<p align="center">
+    <a href="https://github.com/MBTIWithUs/MBTIWithUs-FE/issues"><img src="https://img.shields.io/github/issues/MBTIWithUs/MBTIWithUs-FE"/></a>
+    <a href="https://github.com/MBTIWithUs/MBTIWithUs-FE/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/MBTIWithUs/MBTIWithUs-FE"/>
+    </a>
+    <img src="https://img.shields.io/github/actions/workflow/status/MBTIWithUs/MBTIWithUs-FE/main.yaml?branch=master"/>
+    <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black"/>
+    <img src="https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=flat-square&logo=Visual%20Studio%20Code&logoColor=white"/>
+</p>
 
-## Available Scripts
+## 🗂 Contents
 
-In the project directory, you can run:
+- [Features](#-features)
+- [About](#-about)
+- [Install](#-install)
+- [Author](#-author)
+- [Acknowledgements](#-acknowledgements)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-### `yarn start`
+## 🎉 Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **MBTI 검사**
+  <img src="./assets/mbti.png"/>
+  <br/><br/>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+  - 총 24개의 질문 문항을 서버에서 받아 이를 6개씩 pagination으로 표시했습니다.
+  - 고민했던 것은 "radio button을 눌렀을 때 재미를 느낄 수 있을까"였습니다.
 
-### `yarn test`
+  <br/>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **커뮤니티**
+  <img src="./assets/community.png"/><br/><br/>
 
-### `yarn build`
+  - 디자인은 심플하고 매력적인 everytime 게시판에서 가져왔습니다.
+    - 무한 스크롤링을 구현하고 서버측으로 쓸모 없는 요청이 없도록 고민했습니다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  <br/>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **다크 모드**
+  <img src="./assets/darkmode.png"/><br/><br/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  - 페이지를 작성할 때마다 색조합에 대해 고민하면서 component에 색을 적용할 때 특정 색 값이 아닌 전역으로 쓰이는 색을 사용하도록 했습니다.
 
-### `yarn eject`
+  <br/>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- **반응형 웹**<br/>
+  <img src="./assets/responsive.png" style='max-height: 400px;'/><br/><br/>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  - 페이지를 작성할 때마다 유저의 화면을 고려하면서 component 위치 구성에 대해 생각했습니다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 📖 About
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<br/>
+<aside>
+💡 <b> 자가 보고형 심리검사뿐 아니라 타인의 결과 반영 및 확인할 수 있는 서비스 </b>
+</aside>
+<br/>
 
-## Learn More
+## 🚘 Install
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Clone and install.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+git clone https://github.com/MBTIWithUs/MBTIWithUs-FE.git
+cd MBTIWithUs-FE
+yarn
+```
+
+Run a development server.
+
+```
+yarn start
+```
+
+## 😀 Author
+
+- [정동하](https://github.com/ha4219)
+
+## ✅ Acknowledgements
+
+- 서버 개발을 해준 [태욱](https://github.com/umtuk)아 고맙다!
+
+## 🌋 Contributing
+
+- I will not be accepting PR's on this repository. Feel free to fork and maintain your own version.
+
+## 📄 License
+
+- This project is open source and available under the [MIT License](LICENSE).
